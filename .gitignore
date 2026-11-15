@@ -1,0 +1,8 @@
+# secrets never go in git: they live in Hostinger's environment variables
+.env
+.env.*
+node_modules/
+*.zip
+.DS_Store
+.shots/
+img-source/

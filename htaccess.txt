@@ -1,0 +1,20 @@
+# For Apache / LiteSpeed hosting (Hostinger web hosting). Ignored by Vercel, Netlify and Node.js apps.
+# Keeps the server code and settings from being opened in a browser.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^api/ - [F,L]
+  RewriteRule ^(server\.mjs|package\.json|vercel\.json)$ - [F,L]
+</IfModule>
+<FilesMatch "^(server\.mjs|package\.json|vercel\.json)$">
+  Require all denied
+</FilesMatch>
+# /admin opens the owner dashboard, like on the other hosts
+<IfModule mod_rewrite.c>
+  RewriteRule ^admin/?$ admin.html [L]
+</IfModule>
+# Pages are always re-checked, so a new version reaches visitors straight away (scripts carry a version tag, images stay cached)
+<IfModule mod_headers.c>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>

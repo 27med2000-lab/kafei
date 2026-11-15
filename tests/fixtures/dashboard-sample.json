@@ -1,0 +1,1335 @@
+{
+ "_note": "TEST FIXTURE ONLY: made-up orders for checking the dashboard locally. Never shipped, never real sales.",
+ "orders": [
+  {
+   "id": "KFTEST000",
+   "days_ago": 41,
+   "hour": 17,
+   "status": "paid",
+   "method": "knet",
+   "total_fils": 18000,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 4,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000002",
+   "user": "u-c",
+   "gov": "capital",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST001",
+   "days_ago": 4,
+   "hour": 21,
+   "status": "paid",
+   "method": "knet",
+   "total_fils": 100000,
+   "items": [
+    {
+     "id": "kuvani-maestro",
+     "name": "Kuvani Maestro",
+     "qty": 1,
+     "price_fils": 100000
+    }
+   ],
+   "phone": "51000019",
+   "user": null,
+   "gov": "capital",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST002",
+   "days_ago": 80,
+   "hour": 16,
+   "status": "paid",
+   "method": "card",
+   "total_fils": 6000,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 1,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000005",
+   "user": "u-a",
+   "gov": "hawalli",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST003",
+   "days_ago": 18,
+   "hour": 17,
+   "status": "cod",
+   "method": "cod",
+   "total_fils": 15000,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 3,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000019",
+   "user": null,
+   "gov": "hawalli",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST004",
+   "days_ago": 12,
+   "hour": 18,
+   "status": "cod",
+   "method": "cod",
+   "total_fils": 6000,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 1,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000018",
+   "user": "u-b",
+   "gov": "mubarak",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST005",
+   "days_ago": 40,
+   "hour": 11,
+   "status": "paid",
+   "method": "knet",
+   "total_fils": 18000,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 4,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000003",
+   "user": "u-c",
+   "gov": "capital",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST006",
+   "days_ago": 67,
+   "hour": 16,
+   "status": "paid",
+   "method": "knet",
+   "total_fils": 15000,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 3,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000014",
+   "user": null,
+   "gov": "mubarak",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST007",
+   "days_ago": 43,
+   "hour": 9,
+   "status": "failed",
+   "method": "knet",
+   "total_fils": 80000,
+   "items": [
+    {
+     "id": "xbloom-studio",
+     "name": "xBloom Studio",
+     "qty": 1,
+     "price_fils": 80000
+    }
+   ],
+   "phone": "51000018",
+   "user": "u-c",
+   "gov": "mubarak",
+   "delivery_status": "to_deliver"
+  },
+  {
+   "id": "KFTEST008",
+   "days_ago": 40,
+   "hour": 9,
+   "status": "cod",
+   "method": "cod",
+   "total_fils": 15000,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 3,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000003",
+   "user": "u-a",
+   "gov": "hawalli",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST009",
+   "days_ago": 85,
+   "hour": 21,
+   "status": "paid",
+   "method": "knet",
+   "total_fils": 100000,
+   "items": [
+    {
+     "id": "kuvani-maestro",
+     "name": "Kuvani Maestro",
+     "qty": 1,
+     "price_fils": 100000
+    }
+   ],
+   "phone": "51000015",
+   "user": "u-a",
+   "gov": "farwaniya",
+   "delivery_status": "to_deliver"
+  },
+  {
+   "id": "KFTEST010",
+   "days_ago": 49,
+   "hour": 15,
+   "status": "paid",
+   "method": "apple",
+   "total_fils": 15000,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 3,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000002",
+   "user": null,
+   "gov": "mubarak",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST011",
+   "days_ago": 36,
+   "hour": 15,
+   "status": "pending",
+   "method": "card",
+   "total_fils": 80000,
+   "items": [
+    {
+     "id": "xbloom-studio",
+     "name": "xBloom Studio",
+     "qty": 1,
+     "price_fils": 80000
+    }
+   ],
+   "phone": "51000003",
+   "user": null,
+   "gov": "hawalli",
+   "delivery_status": "to_deliver"
+  },
+  {
+   "id": "KFTEST012",
+   "days_ago": 51,
+   "hour": 14,
+   "status": "cod",
+   "method": "cod",
+   "total_fils": 10500,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 2,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000012",
+   "user": "u-b",
+   "gov": "capital",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST013",
+   "days_ago": 19,
+   "hour": 15,
+   "status": "cod",
+   "method": "cod",
+   "total_fils": 100000,
+   "items": [
+    {
+     "id": "kuvani-maestro",
+     "name": "Kuvani Maestro",
+     "qty": 1,
+     "price_fils": 100000
+    }
+   ],
+   "phone": "51000019",
+   "user": null,
+   "gov": "capital",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST014",
+   "days_ago": 36,
+   "hour": 10,
+   "status": "paid",
+   "method": "card",
+   "total_fils": 100000,
+   "items": [
+    {
+     "id": "kuvani-maestro",
+     "name": "Kuvani Maestro",
+     "qty": 1,
+     "price_fils": 100000
+    }
+   ],
+   "phone": "51000017",
+   "user": "u-c",
+   "gov": "farwaniya",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST015",
+   "days_ago": 86,
+   "hour": 14,
+   "status": "cod",
+   "method": "cod",
+   "total_fils": 18000,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 4,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000013",
+   "user": "u-b",
+   "gov": "hawalli",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST016",
+   "days_ago": 13,
+   "hour": 15,
+   "status": "failed",
+   "method": "knet",
+   "total_fils": 18000,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 4,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000006",
+   "user": null,
+   "gov": "hawalli",
+   "delivery_status": "to_deliver"
+  },
+  {
+   "id": "KFTEST017",
+   "days_ago": 76,
+   "hour": 17,
+   "status": "paid",
+   "method": "knet",
+   "total_fils": 104500,
+   "items": [
+    {
+     "id": "kuvani-maestro",
+     "name": "Kuvani Maestro",
+     "qty": 1,
+     "price_fils": 100000
+    },
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 1,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000001",
+   "user": null,
+   "gov": "ahmadi",
+   "delivery_status": "to_deliver"
+  },
+  {
+   "id": "KFTEST018",
+   "days_ago": 26,
+   "hour": 9,
+   "status": "paid",
+   "method": "card",
+   "total_fils": 10500,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 2,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000016",
+   "user": "u-b",
+   "gov": "hawalli",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST019",
+   "days_ago": 61,
+   "hour": 19,
+   "status": "paid",
+   "method": "card",
+   "total_fils": 64500,
+   "items": [
+    {
+     "id": "kuvani-gevi-v60",
+     "name": "Kuvani x Gevi V60",
+     "qty": 1,
+     "price_fils": 60000
+    },
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 1,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000006",
+   "user": "u-c",
+   "gov": "capital",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST020",
+   "days_ago": 26,
+   "hour": 20,
+   "status": "cod",
+   "method": "cod",
+   "total_fils": 15000,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 3,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000017",
+   "user": "u-a",
+   "gov": "farwaniya",
+   "delivery_status": "to_deliver"
+  },
+  {
+   "id": "KFTEST021",
+   "days_ago": 11,
+   "hour": 16,
+   "status": "paid",
+   "method": "knet",
+   "total_fils": 15000,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 3,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000017",
+   "user": "u-a",
+   "gov": "farwaniya",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST022",
+   "days_ago": 28,
+   "hour": 16,
+   "status": "paid",
+   "method": "card",
+   "total_fils": 10500,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 2,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000016",
+   "user": "u-a",
+   "gov": "farwaniya",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST023",
+   "days_ago": 3,
+   "hour": 15,
+   "status": "paid",
+   "method": "knet",
+   "total_fils": 15000,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 3,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000012",
+   "user": "u-a",
+   "gov": "capital",
+   "delivery_status": "to_deliver"
+  },
+  {
+   "id": "KFTEST024",
+   "days_ago": 28,
+   "hour": 22,
+   "status": "paid",
+   "method": "card",
+   "total_fils": 100000,
+   "items": [
+    {
+     "id": "kuvani-maestro",
+     "name": "Kuvani Maestro",
+     "qty": 1,
+     "price_fils": 100000
+    }
+   ],
+   "phone": "51000020",
+   "user": null,
+   "gov": "hawalli",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST025",
+   "days_ago": 83,
+   "hour": 20,
+   "status": "pending",
+   "method": "knet",
+   "total_fils": 6000,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 1,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000007",
+   "user": "u-b",
+   "gov": "jahra",
+   "delivery_status": "to_deliver"
+  },
+  {
+   "id": "KFTEST026",
+   "days_ago": 22,
+   "hour": 9,
+   "status": "paid",
+   "method": "card",
+   "total_fils": 15000,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 3,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000006",
+   "user": null,
+   "gov": "capital",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST027",
+   "days_ago": 3,
+   "hour": 21,
+   "status": "cod",
+   "method": "cod",
+   "total_fils": 80000,
+   "items": [
+    {
+     "id": "xbloom-studio",
+     "name": "xBloom Studio",
+     "qty": 1,
+     "price_fils": 80000
+    }
+   ],
+   "phone": "51000020",
+   "user": "u-b",
+   "gov": "farwaniya",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST028",
+   "days_ago": 44,
+   "hour": 18,
+   "status": "paid",
+   "method": "knet",
+   "total_fils": 80000,
+   "items": [
+    {
+     "id": "xbloom-studio",
+     "name": "xBloom Studio",
+     "qty": 1,
+     "price_fils": 80000
+    }
+   ],
+   "phone": "51000004",
+   "user": "u-c",
+   "gov": "farwaniya",
+   "delivery_status": "to_deliver"
+  },
+  {
+   "id": "KFTEST029",
+   "days_ago": 17,
+   "hour": 16,
+   "status": "paid",
+   "method": "knet",
+   "total_fils": 10500,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 2,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000008",
+   "user": "u-c",
+   "gov": "hawalli",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST030",
+   "days_ago": 33,
+   "hour": 18,
+   "status": "pending",
+   "method": "card",
+   "total_fils": 10500,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 2,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000019",
+   "user": "u-c",
+   "gov": "hawalli",
+   "delivery_status": "to_deliver"
+  },
+  {
+   "id": "KFTEST031",
+   "days_ago": 64,
+   "hour": 15,
+   "status": "cod",
+   "method": "cod",
+   "total_fils": 80000,
+   "items": [
+    {
+     "id": "xbloom-studio",
+     "name": "xBloom Studio",
+     "qty": 1,
+     "price_fils": 80000
+    }
+   ],
+   "phone": "51000006",
+   "user": "u-c",
+   "gov": "capital",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST032",
+   "days_ago": 19,
+   "hour": 16,
+   "status": "paid",
+   "method": "knet",
+   "total_fils": 80000,
+   "items": [
+    {
+     "id": "xbloom-studio",
+     "name": "xBloom Studio",
+     "qty": 1,
+     "price_fils": 80000
+    }
+   ],
+   "phone": "51000017",
+   "user": "u-c",
+   "gov": "hawalli",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST033",
+   "days_ago": 13,
+   "hour": 15,
+   "status": "paid",
+   "method": "knet",
+   "total_fils": 6000,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 1,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000018",
+   "user": null,
+   "gov": "mubarak",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST034",
+   "days_ago": 8,
+   "hour": 16,
+   "status": "paid",
+   "method": "apple",
+   "total_fils": 10500,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 2,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000008",
+   "user": "u-c",
+   "gov": "jahra",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST035",
+   "days_ago": 33,
+   "hour": 13,
+   "status": "paid",
+   "method": "knet",
+   "total_fils": 10500,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 2,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000003",
+   "user": null,
+   "gov": "hawalli",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST036",
+   "days_ago": 9,
+   "hour": 10,
+   "status": "pending",
+   "method": "knet",
+   "total_fils": 80000,
+   "items": [
+    {
+     "id": "xbloom-studio",
+     "name": "xBloom Studio",
+     "qty": 1,
+     "price_fils": 80000
+    }
+   ],
+   "phone": "51000021",
+   "user": "u-a",
+   "gov": "capital",
+   "delivery_status": "to_deliver"
+  },
+  {
+   "id": "KFTEST037",
+   "days_ago": 32,
+   "hour": 18,
+   "status": "paid",
+   "method": "knet",
+   "total_fils": 18000,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 4,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000008",
+   "user": null,
+   "gov": "farwaniya",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST038",
+   "days_ago": 55,
+   "hour": 13,
+   "status": "paid",
+   "method": "knet",
+   "total_fils": 18000,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 4,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000001",
+   "user": "u-a",
+   "gov": "hawalli",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST039",
+   "days_ago": 58,
+   "hour": 16,
+   "status": "cod",
+   "method": "cod",
+   "total_fils": 6000,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 1,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000003",
+   "user": null,
+   "gov": "jahra",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST040",
+   "days_ago": 29,
+   "hour": 12,
+   "status": "paid",
+   "method": "knet",
+   "total_fils": 6000,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 1,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000005",
+   "user": "u-b",
+   "gov": "ahmadi",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST041",
+   "days_ago": 86,
+   "hour": 17,
+   "status": "cod",
+   "method": "cod",
+   "total_fils": 15000,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 3,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000016",
+   "user": "u-a",
+   "gov": "capital",
+   "delivery_status": "to_deliver"
+  },
+  {
+   "id": "KFTEST042",
+   "days_ago": 35,
+   "hour": 12,
+   "status": "pending",
+   "method": "card",
+   "total_fils": 100000,
+   "items": [
+    {
+     "id": "kuvani-maestro",
+     "name": "Kuvani Maestro",
+     "qty": 1,
+     "price_fils": 100000
+    }
+   ],
+   "phone": "51000001",
+   "user": null,
+   "gov": "mubarak",
+   "delivery_status": "to_deliver"
+  },
+  {
+   "id": "KFTEST043",
+   "days_ago": 33,
+   "hour": 8,
+   "status": "paid",
+   "method": "knet",
+   "total_fils": 100000,
+   "items": [
+    {
+     "id": "kuvani-maestro",
+     "name": "Kuvani Maestro",
+     "qty": 1,
+     "price_fils": 100000
+    }
+   ],
+   "phone": "51000011",
+   "user": "u-c",
+   "gov": "hawalli",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST044",
+   "days_ago": 34,
+   "hour": 10,
+   "status": "failed",
+   "method": "knet",
+   "total_fils": 6000,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 1,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000009",
+   "user": null,
+   "gov": "capital",
+   "delivery_status": "to_deliver"
+  },
+  {
+   "id": "KFTEST045",
+   "days_ago": 25,
+   "hour": 10,
+   "status": "paid",
+   "method": "knet",
+   "total_fils": 15000,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 3,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000009",
+   "user": "u-a",
+   "gov": "mubarak",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST046",
+   "days_ago": 2,
+   "hour": 16,
+   "status": "cod",
+   "method": "cod",
+   "total_fils": 6000,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 1,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000007",
+   "user": "u-c",
+   "gov": "hawalli",
+   "delivery_status": "to_deliver"
+  },
+  {
+   "id": "KFTEST047",
+   "days_ago": 31,
+   "hour": 15,
+   "status": "cod",
+   "method": "cod",
+   "total_fils": 6000,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 1,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000018",
+   "user": "u-b",
+   "gov": "hawalli",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST048",
+   "days_ago": 39,
+   "hour": 13,
+   "status": "cod",
+   "method": "cod",
+   "total_fils": 10500,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 2,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000002",
+   "user": null,
+   "gov": "capital",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST049",
+   "days_ago": 9,
+   "hour": 21,
+   "status": "paid",
+   "method": "knet",
+   "total_fils": 15000,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 3,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000017",
+   "user": "u-a",
+   "gov": "hawalli",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST050",
+   "days_ago": 31,
+   "hour": 13,
+   "status": "paid",
+   "method": "knet",
+   "total_fils": 6000,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 1,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000011",
+   "user": "u-c",
+   "gov": "hawalli",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST051",
+   "days_ago": 31,
+   "hour": 14,
+   "status": "paid",
+   "method": "knet",
+   "total_fils": 100000,
+   "items": [
+    {
+     "id": "kuvani-maestro",
+     "name": "Kuvani Maestro",
+     "qty": 1,
+     "price_fils": 100000
+    }
+   ],
+   "phone": "51000003",
+   "user": "u-b",
+   "gov": "capital",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST052",
+   "days_ago": 64,
+   "hour": 10,
+   "status": "paid",
+   "method": "knet",
+   "total_fils": 10500,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 2,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000013",
+   "user": "u-c",
+   "gov": "capital",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST053",
+   "days_ago": 50,
+   "hour": 21,
+   "status": "paid",
+   "method": "knet",
+   "total_fils": 100000,
+   "items": [
+    {
+     "id": "kuvani-maestro",
+     "name": "Kuvani Maestro",
+     "qty": 1,
+     "price_fils": 100000
+    }
+   ],
+   "phone": "51000005",
+   "user": "u-c",
+   "gov": "hawalli",
+   "delivery_status": "to_deliver"
+  },
+  {
+   "id": "KFTEST054",
+   "days_ago": 41,
+   "hour": 8,
+   "status": "cod",
+   "method": "cod",
+   "total_fils": 18000,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 4,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000017",
+   "user": "u-b",
+   "gov": "farwaniya",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST055",
+   "days_ago": 64,
+   "hour": 21,
+   "status": "cod",
+   "method": "cod",
+   "total_fils": 80000,
+   "items": [
+    {
+     "id": "xbloom-studio",
+     "name": "xBloom Studio",
+     "qty": 1,
+     "price_fils": 80000
+    }
+   ],
+   "phone": "51000001",
+   "user": "u-c",
+   "gov": "mubarak",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST056",
+   "days_ago": 87,
+   "hour": 9,
+   "status": "paid",
+   "method": "knet",
+   "total_fils": 10500,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 2,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000013",
+   "user": "u-b",
+   "gov": "hawalli",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST057",
+   "days_ago": 6,
+   "hour": 22,
+   "status": "paid",
+   "method": "knet",
+   "total_fils": 10500,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 2,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000017",
+   "user": "u-c",
+   "gov": "capital",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST058",
+   "days_ago": 84,
+   "hour": 20,
+   "status": "paid",
+   "method": "knet",
+   "total_fils": 18000,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 4,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000007",
+   "user": null,
+   "gov": "farwaniya",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST059",
+   "days_ago": 83,
+   "hour": 20,
+   "status": "paid",
+   "method": "knet",
+   "total_fils": 18000,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 4,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000002",
+   "user": "u-c",
+   "gov": "farwaniya",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST060",
+   "days_ago": 82,
+   "hour": 12,
+   "status": "paid",
+   "method": "card",
+   "total_fils": 80000,
+   "items": [
+    {
+     "id": "xbloom-studio",
+     "name": "xBloom Studio",
+     "qty": 1,
+     "price_fils": 80000
+    }
+   ],
+   "phone": "51000020",
+   "user": "u-c",
+   "gov": "capital",
+   "delivery_status": "delivered"
+  },
+  {
+   "id": "KFTEST061",
+   "days_ago": 1,
+   "hour": 9,
+   "status": "cod",
+   "method": "cod",
+   "total_fils": 18000,
+   "items": [
+    {
+     "id": "sias-cattopia",
+     "name": "SIAS Cattopia Blend 200 g",
+     "qty": 4,
+     "price_fils": 4500
+    }
+   ],
+   "phone": "51000007",
+   "user": "u-b",
+   "gov": "capital",
+   "delivery_status": "to_deliver"
+  },
+  {
+   "id": "KFTEST062",
+   "days_ago": 66,
+   "hour": 16,
+   "status": "failed",
+   "method": "knet",
+   "total_fils": 60000,
+   "items": [
+    {
+     "id": "kuvani-gevi-v60",
+     "name": "Kuvani x Gevi V60",
+     "qty": 1,
+     "price_fils": 60000
+    }
+   ],
+   "phone": "51000007",
+   "user": "u-a",
+   "gov": "capital",
+   "delivery_status": "to_deliver"
+  },
+  {
+   "id": "KFTEST063",
+   "days_ago": 60,
+   "hour": 15,
+   "status": "cod",
+   "method": "cod",
+   "total_fils": 100000,
+   "items": [
+    {
+     "id": "kuvani-maestro",
+     "name": "Kuvani Maestro",
+     "qty": 1,
+     "price_fils": 100000
+    }
+   ],
+   "phone": "51000009",
+   "user": "u-b",
+   "gov": "capital",
+   "delivery_status": "to_deliver"
+  }
+ ],
+ "stock": [
+  {
+   "product_id": "kuvani-maestro",
+   "units": 3,
+   "low_at": 2
+  },
+  {
+   "product_id": "xbloom-studio",
+   "units": 1,
+   "low_at": 2
+  },
+  {
+   "product_id": "kuvani-gevi-v60",
+   "units": 4,
+   "low_at": 2
+  },
+  {
+   "product_id": "sias-cattopia",
+   "units": 18,
+   "low_at": 6
+  }
+ ],
+ "signups_days_ago": [
+  26,
+  9,
+  74,
+  11,
+  18,
+  67,
+  33,
+  46,
+  16,
+  77,
+  80,
+  65,
+  35,
+  14
+ ]
+}

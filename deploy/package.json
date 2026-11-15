@@ -1,0 +1,8 @@
+{
+  "name": "kafei-shop",
+  "private": true,
+  "type": "module",
+  "main": "server.mjs",
+  "scripts": { "start": "node server.mjs" },
+  "engines": { "node": ">=18" }
+}

@@ -1,0 +1,8 @@
+{
+  "_note": "MADE-UP TEST PRICES for the MyFatoorah test server only. Not Kafei's real prices.",
+  "_delivery": { "freeOverFils": 15000, "feeFils": 1500 },
+  "kuvani-maestro": { "name": "Kuvani Maestro", "price": 100000 },
+  "xbloom-studio": { "name": "xBloom Studio", "price": 80000 },
+  "kuvani-gevi-v60": { "name": "Kuvani x Gevi V60", "price": 60000 },
+  "sias-cattopia": { "name": "SIAS Cattopia Blend 200 g", "price": 4500 }
+}

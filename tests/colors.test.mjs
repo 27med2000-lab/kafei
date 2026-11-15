@@ -1,0 +1,17 @@
+import { buildOrder } from "../api/_lib.js";
+import { cleanProduct } from "../api/admin.js";
+const cat = { _delivery: { freeOverFils: 15000, feeFils: 1500 }, "xbloom-studio": { name: "xBloom Studio", price: 199000, colors: [{ id: "twilight", name: "Twilight" }, { id: "offline-blue", name: "Offline Blue", soldOut: true }] }, "sias-cattopia": { name: "SIAS", price: 4500 } };
+const base = { customer: { name: "Test Buyer", phone: "66123456" }, address: { gov: "capital", area: "Shuwaikh", block: "1", street: "2", house: "3" } };
+let fail = 0; const ok = (c, m) => { console.log((c ? "PASS " : "FAIL ") + m); if (!c) fail++; };
+let r = buildOrder({ ...base, items: [{ id: "xbloom-studio", qty: 1, color: "twilight" }] }, cat);
+ok(!r.error && r.items[0].color === "twilight" && r.items[0].name === "xBloom Studio (Twilight)" && r.lines[0] === "1 x xBloom Studio (Twilight)", "colour is named on the order and on the payment line");
+r = buildOrder({ ...base, items: [{ id: "xbloom-studio", qty: 1 }] }, cat); ok(r.error && r.error.body.error === "color", "a colour product without a colour is refused");
+r = buildOrder({ ...base, items: [{ id: "xbloom-studio", qty: 1, color: "pink" }] }, cat); ok(r.error && r.error.body.error === "color", "an unknown colour is refused");
+r = buildOrder({ ...base, items: [{ id: "xbloom-studio", qty: 1, color: "offline-blue" }] }, cat); ok(r.error && /sold out/.test(r.error.body.message), "a sold-out colour is refused");
+r = buildOrder({ ...base, items: [{ id: "sias-cattopia", qty: 1, color: "twilight" }] }, cat); ok(r.error && r.error.body.error === "color", "a colour on a product without colours is refused");
+r = buildOrder({ ...base, items: [{ id: "sias-cattopia", qty: 2 }, { id: "xbloom-studio", qty: 1, color: "twilight" }] }, cat); ok(!r.error && r.sub === 208000 && r.fee === 0, "mixed cart prices correctly");
+const c = cleanProduct({ name_en: "xBloom Studio", name_ar: "إكس بلوم", cat: "pourover-machines", colors: [{ id: "twilight", name_en: "Twilight", name_ar: "توايلايت", hex: "#E9E7E3", trim: "#3A3A3C", img: "img/xbloom-twilight.webp", sold_out: true }, { id: "x", name_en: "<b>", name_ar: "", hex: "red", img: "javascript:alert(1)" }] }, []);
+ok(c.row.colors.length === 1 && c.row.colors[0].sold_out === true && c.row.colors[0].trim === "#3A3A3C", "dashboard save keeps valid colours and the sold-out flag, drops broken ones");
+const c2 = cleanProduct({ name_en: "Mug", name_ar: "كوب", cat: "cups", colors: [{ id: "red", name_en: "Red", name_ar: "أحمر", hex: "nope", img: "javascript:alert(1)" }] }, []);
+ok(c2.row.colors[0].img === null && c2.row.colors[0].hex === "#cccccc", "unsafe colour photo and bad hex are cleaned");
+console.log(fail ? "FAILED " + fail : "ALL PASS"); process.exit(fail ? 1 : 0);

@@ -1,0 +1,15 @@
+// Products taken off the shop on 2026-11-07 until stock arrives. To bring one back, paste its entry into P in parts/js1.js
+// (and into api/prices.json), set its price in fils, then run build.py. With the database connected, untick 'hidden' in the dashboard instead.
+ {id:"kuvani-maestro", cat:"espresso-machines", motif:"tree", band:"caramel", img:"img/kuvani.webp", fit:"cover", price:null,
+  name:{en:"Kuvani Maestro",ar:"كوفاني مايسترو"}, kind:{en:"Espresso machine",ar:"ماكينة إسبريسو"},
+  what:{en:"An espresso machine with its own grinder.",ar:"ماكينة إسبريسو بمطحنتها الخاصة."},
+  desc:{en:"A grinder with its own touchscreen sits beside the group head, and a steam wand with a wooden handle stands on each side. Beans go from hopper to cup on one counter.",ar:"مطحنة بشاشة لمس خاصة بها بجانب رأس الاستخلاص، وذراع بخار بمقبض خشبي على كل جانب. من الحاوية إلى الكوب على سطح واحد."}},
+ {id:"kuvani-gevi-v60", cat:"pourover-machines", motif:"tri", band:"coffee", img:"img/gevi.webp", fit:"cover", price:null,
+  name:{en:"Kuvani × Gevi V60",ar:"كوفاني × جيفي V60"}, kind:{en:"Automatic pour-over",ar:"تقطير أوتوماتيكي"},
+  what:{en:"A grinder and a V60 brewer in one machine.",ar:"مطحنة وجهاز V60 في ماكينة واحدة."},
+  desc:{en:"It grinds the beans at the top, pours over a V60-style cone and brews into a glass server. A round plate on the base holds a second cup.",ar:"تطحن البن في الأعلى، وتصب فوق قمع بطراز V60 في إبريق زجاجي. وعلى القاعدة صحن دائري لكوب ثانٍ."}},
+ {id:"sias-cattopia", cat:"beans", sub:"filter", motif:"grain", band:"cream", img:"img/sias.webp", fit:"cover", price:null,
+  name:{en:"SIAS Cattopia Blend",ar:"سياس كاتوبيا بلند"}, kind:{en:"Coffee beans, 200 g",ar:"بن، 200 غ"},
+  what:{en:"A sweet house blend from SIAS Coffee Roaster.",ar:"خلطة حلوة من محمصة سياس."},
+  desc:{en:"Blueberry, cheesecake and candy in the cup. A medium-light roast that suits a V60 or either pour-over machine.",ar:"توت أزرق وتشيز كيك وحلوى في الكوب. تحميص متوسط فاتح يناسب V60 أو أي من ماكينتي التقطير."},
+  facts:[["Roaster","المحمصة","SIAS Coffee Roaster","محمصة سياس"],["Process","المعالجة","Washed","مغسولة"],["Origin","المنشأ","Chiang Mai","تشيانغ ماي"],["Notes","النكهات","Blueberry, cheesecake, candy","توت أزرق، تشيز كيك، حلوى"],["Roast","التحميص","Medium-light","متوسط فاتح"],["Weight","الوزن","200 g","200 غ"]]}

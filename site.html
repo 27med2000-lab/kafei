@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Kafei كفي: coffee machines and gear in Kuwait</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Kafei كفي sells coffee gear in Kuwait, starting with the xBloom Studio pour-over machine in four colours. Same-day delivery in the Capital and Hawalli.">
+<meta property="og:title" content="Kafei كفي">
+<meta property="og:description" content="Coffee machines and gear, delivered in Kuwait. Pay by KNET, card, Apple Pay or cash on delivery.">
+<meta property="og:image" content="img/og-kafei.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#F1E7D9">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 168 168%22 role=%22img%22 aria-label=%22Kafei%22%3E%3Ctitle%3EKafei%3C/title%3E%3Crect width=%22168%22 height=%22168%22 fill=%22#1D1209%22/%3E%3Cg transform=%22translate%2834 34%29%22%3E%3Cg transform=%22translate%280 4%29 rotate%28-9 50 72%29%22%3E%3Cpath d=%22M22 16H78C77 38 71 60 61 69Q58 72 54 72H46Q42 72 39 69C29 60 23 38 22 16Z%22 fill=%22#F1E7D9%22/%3E%3CclipPath id=%22kafei-avatar-espressoq%22%3E%3Cpath d=%22M0 35C12 31 22 31 34 35S56 39 68 35S92 31 100 35V100H0Z%22/%3E%3C/clipPath%3E%3Cpath d=%22M29.5 22.5H70.5C69.6 40 64.6 56.6 56.8 63.6Q55 65.2 52.6 65.2H47.4Q45 65.2 43.2 63.6C35.4 56.6 30.4 40 29.5 22.5Z%22 fill=%22#B9824B%22 clip-path=%22url%28#kafei-avatar-espressoq%29%22/%3E%3C/g%3E%3Cpath d=%22M11.5 58.5C12.5 82 37 95 60 90C76.5 86.4 87.5 73 92.5 53.5Q93.4 50.2 91.2 52.4C84.4 68.6 74.4 78.2 60.2 81.2C41.6 85 24.2 78.2 20.6 61.6Q19.8 56.4 15.4 56.2Q11.4 56.2 11.5 58.5Z%22 fill=%22#F1E7D9%22/%3E%3C/g%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="img/apple-touch-icon-180.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap">
+<script>document.documentElement.classList.add("js");if(!matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.classList.add("motion");if(/^#?(home)?$/.test(location.hash))document.documentElement.classList.add("intro");}</script>
+<style>
+/* Kafei v3. Concept: the page pours its stock one cup at a time, the way a Gulf host pours until you
+   shake your finjan to say enough (كفي). Motion verb: fill from below and settle. */
+:root{
+  /* four colours, each with one job. ground: the limestone wall in the hero photo. ink: the black of the Sadu weave.
+     roast: the brown of the weave, for Arabic names and secondary text. crema: the coffee itself, for what you can act on. */
+  --ground:#F1E7D9; --ink:#1D1209; --roast:#644A31; --crema:#B9824B;
+  /* everything else is a tint of ink on ground, not a new colour */
+  --sand:color-mix(in srgb,var(--ink) 6%,var(--ground)); --recess:color-mix(in srgb,var(--ink) 10%,var(--ground));
+  --dust:color-mix(in srgb,var(--ink) 16%,var(--ground)); --muted:color-mix(in srgb,var(--ink) 70%,var(--ground));
+  --danger:#A8321F; /* errors only */
+  --lat:"Bricolage Grotesque","IBM Plex Sans Arabic",system-ui,sans-serif;
+  --txt:"IBM Plex Sans Arabic","Segoe UI",Tahoma,system-ui,sans-serif;
+  --t-mega:clamp(4.5rem,1rem + 13vw,13rem);
+  --t-h1:clamp(2.75rem,1.4rem + 4.4vw,5.5rem);
+  --t-h2:clamp(2rem,1.2rem + 2.6vw,3.5rem);
+  --t-lead:clamp(1.1875rem,1.05rem + .4vw,1.375rem);
+  --t-body:1.0625rem; --t-small:.875rem;
+  --ease:cubic-bezier(.16,1,.3,1); --ease-in:cubic-bezier(.5,0,.75,0);
+  --hdr:72px;
+  color-scheme:light;
+}
+[hidden]{display:none!important}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:calc(var(--hdr) + 12px);scrollbar-color:var(--roast) var(--ground)}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+body{margin:0;background:var(--ground);color:var(--ink);font:400 var(--t-body)/1.6 var(--txt);-webkit-font-smoothing:antialiased;overflow-x:clip;caret-color:var(--crema)}
+::selection{background:var(--crema);color:var(--ink)}
+h1,h2,h3{margin:0;font-family:var(--lat);font-weight:800;letter-spacing:-.042em;line-height:.98;font-variation-settings:"opsz" 96;text-wrap:balance}
+:root[lang="ar"] :is(h1,h2,h3){font-family:var(--txt);font-weight:700;letter-spacing:0;line-height:1.25}
+p{margin:0;text-wrap:pretty}
+a{color:inherit;text-underline-offset:.22em;text-decoration-thickness:1px}
+img,video,svg{display:block;max-width:100%}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--crema);outline-offset:3px;border-radius:4px}
+.sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.num{font-variant-numeric:tabular-nums}
+.wrap{max-width:1400px;margin-inline:auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+@media (min-width:900px){.wrap{padding-left:max(48px,env(safe-area-inset-left,0px));padding-right:max(48px,env(safe-area-inset-right,0px))}}
+.skip{position:fixed;inset-inline-start:12px;top:-80px;z-index:200;background:var(--ink);color:var(--ground);padding:12px 18px;text-decoration:none;font-weight:700;border-radius:999px}
+.skip:focus{top:calc(env(safe-area-inset-top,0px) + 10px)}
+.ar2{color:var(--roast);font-family:var(--txt);font-weight:700;letter-spacing:0}
+.sec{padding-block:clamp(88px,11vw,180px)}
+.muted{color:var(--muted)}
+
+/* ---- the fill: every primary target answers by filling from below ---- */
+.btn{position:relative;isolation:isolate;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;gap:10px;white-space:nowrap;min-height:54px;padding:0 28px;border:0;border-radius:999px;background:var(--ink);color:var(--ground);font:700 var(--t-body)/1 var(--txt);text-decoration:none;cursor:pointer;touch-action:manipulation;transition:transform 200ms var(--ease),color 300ms var(--ease)}
+.btn::before{content:"";position:absolute;inset:-2px;z-index:-1;background:var(--roast);border-radius:46% 46% 0 0/18px 18px 0 0;transform:translateY(102%);transition:transform 450ms var(--ease),border-radius 450ms var(--ease)}
+.btn:active{transform:scale(.97)}
+.btn svg{width:20px;height:20px;flex:none}
+.btn.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink)}
+.btn.ghost::before{background:var(--ink)}
+.textlink{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 2px;font-weight:700;text-decoration:none;background:linear-gradient(var(--crema),var(--crema)) 0 calc(100% - 9px)/100% 2px no-repeat;transition:background-size 420ms var(--ease),background-position 420ms var(--ease)}
+@media (hover:hover) and (pointer:fine){
+  .btn:hover::before{transform:translateY(0);border-radius:0}
+  .btn.ghost:hover{color:var(--ground)}
+  .textlink:hover{background-size:100% calc(100% - 18px);background-position:0 calc(100% - 9px)}
+}
+
+/* ---- header: steps aside on scroll down, returns on scroll up ---- */
+.hdr{position:sticky;top:0;z-index:50;background:var(--ground);box-shadow:0 1px 0 var(--dust);translate:0 0;transition:translate 600ms var(--ease)}
+html.frame-away .hdr{translate:0 -110%}
+.hdr .wrap{display:flex;align-items:center;gap:22px;min-height:var(--hdr)}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;min-height:44px}
+.logo .lm{width:34px;height:34px;flex:none;transform-origin:50% 78%}
+.logo .lw{height:24px;width:auto;flex:none}
+@media (max-width:380px){.logo .lw{height:20px}.logo .lm{width:28px;height:28px}}
+.nav{display:flex;gap:4px;margin-inline-start:22px}
+.nav a{position:relative;padding:10px 12px;text-decoration:none;font-size:var(--t-small);font-weight:500;color:var(--muted);background:linear-gradient(var(--crema),var(--crema)) 12px calc(100% - 6px)/calc(100% - 24px) 0 no-repeat;transition:background-size 380ms var(--ease),color 200ms ease}
+.nav a[aria-current="page"]{color:var(--ink);font-weight:700;background-size:calc(100% - 24px) 2px}
+@media (hover:hover) and (pointer:fine){.nav a:hover{color:var(--ink);background-size:calc(100% - 24px) 2px}}
+.hdr-end{margin-inline-start:auto;display:flex;align-items:center;gap:8px}
+.acct{position:relative;isolation:isolate;overflow:hidden;width:44px;height:44px;display:grid;place-items:center;border-radius:999px;box-shadow:inset 0 0 0 1px var(--dust);color:var(--ink);transition:color 300ms var(--ease)}
+.acct svg{width:20px;height:20px}
+.acct::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--ink);transform:translateY(102%);transition:transform 420ms var(--ease)}
+.acct .dot{position:absolute;top:9px;inset-inline-end:9px;width:8px;height:8px;border-radius:50%;background:var(--crema);display:none}
+.acct.in .dot{display:block}
+@media (hover:hover) and (pointer:fine){.acct:hover{color:var(--ground)}.acct:hover::before{transform:none}}
+.acct-card{display:grid;gap:18px;max-width:440px;margin-top:28px}
+.acct-card .f input{font-size:1.0625rem}
+.acct-card .code{letter-spacing:.4em;font-variant-numeric:tabular-nums;font-size:1.375rem}
+.acct-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(28px,5vw,72px);align-items:start;padding-bottom:clamp(64px,8vw,112px)}
+.acct-grid h2{font-size:1.75rem;margin-bottom:16px}
+.olist{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.olist li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 16px;padding:14px 16px;background:var(--sand);border-radius:10px}
+.olist .st{font-size:var(--t-small);font-weight:700}
+.olist .st.paid{color:#2F5D2C}.olist .st.failed{color:var(--danger)}
+.olist .meta{grid-column:1/-1;font-size:var(--t-small);color:var(--muted)}
+.check{display:flex;align-items:center;gap:12px;min-height:48px;cursor:pointer}
+.check input{width:20px;height:20px;accent-color:var(--roast);margin:0}
+.okmsg{color:#2F5D2C;font-weight:700;font-size:var(--t-small)}
+@media (max-width:900px){.acct-grid{grid-template-columns:minmax(0,1fr)}}
+.lang{position:relative;isolation:isolate;overflow:hidden;min-height:44px;min-width:44px;padding:0 16px;border:0;border-radius:999px;background:transparent;box-shadow:inset 0 0 0 1px var(--dust);cursor:pointer;font-size:var(--t-small);font-weight:500;transition:transform 160ms var(--ease),box-shadow 200ms}
+.lang .short{display:none}
+.lang::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--ink);transform:translateY(102%);transition:transform 420ms var(--ease)}
+.lang{transition:transform 160ms var(--ease),color 300ms var(--ease)}
+@media (hover:hover) and (pointer:fine){.lang:hover{color:var(--ground)}.lang:hover::before{transform:none}}
+.cart-btn{position:relative;isolation:isolate;overflow:hidden;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 8px 0 16px;border:0;border-radius:999px;background:var(--ink);color:var(--ground);font-weight:700;font-size:var(--t-small);cursor:pointer;transition:transform 160ms var(--ease)}
+.cart-btn::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--roast);transform:translateY(102%);transition:transform 420ms var(--ease)}
+@media (hover:hover) and (pointer:fine){.cart-btn:hover::before{transform:none}}
+:root[dir="rtl"] .cart-btn{padding:0 16px 0 8px}
+.cart-btn svg{width:18px;height:18px}
+.count{min-width:28px;height:28px;padding:0 8px;border-radius:999px;background:var(--crema);color:var(--ink);display:inline-grid;place-items:center;font-size:.8125rem}
+.lang:active,.cart-btn:active{transform:scale(.96)}
+.menu-btn{display:none;width:44px;height:44px;border:0;background:transparent;cursor:pointer;place-items:center;border-radius:999px}
+@media (max-width:820px){
+  .nav{display:none}.menu-btn{display:inline-grid;margin-inline-start:-10px}.cart-btn .lbl{display:none}
+  .nav.open{display:flex;flex-direction:column;position:absolute;inset-inline:0;top:100%;margin:0;background:var(--ground);box-shadow:0 1px 0 var(--dust);padding:8px max(20px,env(safe-area-inset-right,0px)) 20px max(20px,env(safe-area-inset-left,0px))}
+  .nav.open a{padding:14px 4px;font-size:1.25rem;color:var(--ink);background:none}
+  .hdr .wrap{gap:12px}
+}
+@media (max-width:380px){.lang .full{display:none}.lang .short{display:inline}.lang{padding:0 10px}}
+
+/* ---- hero ---- */
+.hero{position:relative;overflow:hidden;min-height:calc(100svh - var(--hdr));display:grid;background:#E4DACD;color:#1D1209}
+.hero video,.hero .poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:68% 50%}
+.hero video{opacity:0;transition:opacity 600ms ease}.hero video.on{opacity:1}
+.hero-in{position:relative;display:flex;align-items:flex-end;width:100%;padding-block:clamp(40px,7vh,96px)}
+:root[dir="rtl"] .hero-in{justify-content:flex-end}
+.hero-copy{max-width:640px}
+.hero h1{font-size:var(--t-mega);line-height:.82;letter-spacing:-.055em}
+.hero h1 .w{display:block;overflow:hidden;padding-bottom:.06em}
+.hero h1 .ch{display:inline-block}
+/* first load with motion: the hero text waits in its start position until the intro plays.
+   If the animation code never arrives, it shows anyway after 3 seconds. */
+html.intro .hero .ch,html.intro .hero h1 .ar span{transform:translateY(110%);animation:intro-safe 0s 3s forwards}
+html.intro .hero [data-intro]{opacity:0;transform:translateY(26px);animation:intro-safe 0s 3s forwards}
+@keyframes intro-safe{to{transform:none;opacity:1}}
+.hero h1 .ar{display:block;overflow:hidden;padding-bottom:.32em;margin-bottom:-.32em;font-family:var(--txt);font-weight:700;letter-spacing:0;color:#644A31;font-size:.52em;line-height:1.25;margin-top:.05em}
+.hero h1 .ar span{display:inline-block}
+.hero .lead{margin-top:22px;font-size:var(--t-lead);line-height:1.5;max-width:26ch}
+.hero .btn{margin-top:30px}
+/* Arabic: the Latin wordmark keeps its own direction and typeface */
+:root[dir="rtl"] .hero h1 .w{direction:ltr;unicode-bidi:isolate;text-align:right}
+:root[lang="ar"] .hero h1{line-height:.82}
+:root[lang="ar"] .hero h1 .w{font-family:var(--lat);font-weight:800;letter-spacing:-.055em}
+/* Arabic on wide screens: keep the copy on the plain wall at the left of the photo, clear of the woven cloth */
+@media (min-width:761px){
+  :root[dir="rtl"] .hero h1,:root[dir="rtl"] .hero h1 .w{text-align:left}
+  :root[dir="rtl"] .hero .lead{margin-inline-start:auto;max-width:21ch}
+  :root[dir="rtl"] .hero .btn{display:flex;width:fit-content;margin-inline-start:auto}
+}
+@media (max-width:760px){
+  .hero{display:block;min-height:0;background:var(--ground)}
+  .hero .poster{position:relative;height:auto;aspect-ratio:4/3.4;object-position:64% 50%}
+  .hero video{inset:0 0 auto;height:auto;aspect-ratio:4/3.4;object-position:64% 50%}
+  .hero-in{padding-block:24px 48px}
+  .hero h1{font-size:clamp(4.25rem,24vw,6rem)}
+}
+
+/* ---- the pour (signature) ---- */
+.pour-head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:12px 40px;margin-bottom:clamp(28px,4vw,48px)}
+.pour-head h2{font-size:var(--t-h2)}
+.pour-head p{max-width:36ch;color:var(--muted);font-size:1.125rem}
+.serve{list-style:none;margin:0;padding:0;display:grid;gap:clamp(72px,9vw,120px)}
+.cup{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,6vw,110px);align-items:center}
+.vessel{position:relative;width:100%;max-width:520px;aspect-ratio:4/5;overflow:hidden;background:var(--recess);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 125' preserveAspectRatio='none'%3E%3Cpath d='M0 3Q0 0 3 0H97Q100 0 100 3L95 64C91 102 71 125 50 125S9 102 5 64Z'/%3E%3C/svg%3E") 0 0/100% 100% no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 125' preserveAspectRatio='none'%3E%3Cpath d='M0 3Q0 0 3 0H97Q100 0 100 3L95 64C91 102 71 125 50 125S9 102 5 64Z'/%3E%3C/svg%3E") 0 0/100% 100% no-repeat;
+  box-shadow:inset 0 30px 40px -28px rgba(41,34,30,.35),inset 0 -20px 40px -30px rgba(41,34,30,.25)}
+.vessel img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.vessel img.contain{object-fit:contain;object-position:50% 80%;padding:7% 5% 11%}
+.vessel:has(img.contain){background:#DCD2C4}
+.cup-copy h3{font-size:clamp(2.5rem,1.4rem + 3.4vw,4.75rem)}
+.cup-copy h3 a,.prow h2 a{text-decoration:none;background:linear-gradient(var(--crema),var(--crema)) 0 100%/0 4px no-repeat;transition:background-size 450ms var(--ease)}
+@media (hover:hover) and (pointer:fine){.cup-copy h3 a:hover,.prow h2 a:hover{background-size:100% 4px}.logo:hover .lm{animation:shake 700ms ease-in-out}.meter button:hover{transform:translateY(-2px)}}
+@keyframes shake{0%,100%{transform:rotate(0)}20%{transform:rotate(-12deg)}40%{transform:rotate(9deg)}60%{transform:rotate(-6deg)}80%{transform:rotate(3deg)}}
+.meter button{transition:color 200ms,transform 300ms var(--ease)}
+.cup-copy .ar2{font-size:clamp(1.25rem,1rem + .8vw,1.75rem);margin-top:10px}
+.cup-copy .kind{color:var(--muted);margin-top:6px}
+.cup-copy .what{font-size:var(--t-lead);line-height:1.5;max-width:28ch;margin-top:26px}
+.cup-copy .acts{display:flex;flex-wrap:wrap;align-items:center;gap:12px 26px;margin-top:34px}
+.meter{display:none}
+.vessel img.contain{background:#DCD2C4}
+@media (min-width:861px){.cup .vessel{order:2}}
+html.motion .pour.staged .cup{pointer-events:none}
+html.motion .pour.staged .cup.on .cup-copy{pointer-events:auto}
+
+/* staged: the cups share one sticky stage and pour into each other */
+html.motion .pour.staged{height:calc(var(--n) * 85svh + 100svh)}
+html.motion .pour.staged .stage{position:sticky;top:0;height:100svh;padding-top:calc(var(--hdr) + 24px);padding-bottom:28px;display:flex;flex-direction:column}
+html.motion .pour.staged .serve{position:relative;flex:1;display:block;min-height:0}
+html.motion .pour.staged .cup{position:absolute;inset:0;height:100%}
+html.motion .pour.staged .vessel{height:100%;max-height:100%;width:auto;justify-self:end;margin-inline-start:auto}
+:root[dir="rtl"].motion .pour.staged .vessel{justify-self:start}
+html.motion .pour.staged .cup-copy{align-self:center}
+html.motion .pour.staged .cup:not(:first-child) .vessel img{clip-path:inset(100% 0 0 0)}
+html.motion .pour.staged .cup:not(.on) .cup-copy{visibility:hidden}
+html.motion .pour.staged .cup:not(:first-child) .vessel{background:transparent;box-shadow:none}
+.surface{position:absolute;left:0;width:100%;height:22px;overflow:hidden;top:0;pointer-events:none;color:var(--roast);opacity:0}
+.surface svg{width:200%;max-width:none;height:100%}
+html.motion .pour.staged .meter{display:flex;align-items:center;gap:6px;margin-top:20px}
+.meter-cup{width:40px;height:40px;flex:none;color:var(--ink)}
+.meter ol{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:2px}
+.meter button{position:relative;min-height:44px;padding:0 12px;border:0;border-radius:999px;background:transparent;cursor:pointer;font-size:var(--t-small);font-weight:500;color:var(--muted);overflow:hidden;isolation:isolate;transition:color 200ms}
+.meter button::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--sand);transform:translateY(102%);transition:transform 380ms var(--ease)}
+.meter button[aria-current="true"]{color:var(--ink);font-weight:700}
+.meter button[aria-current="true"]::before{transform:none}
+@media (hover:hover) and (pointer:fine){.meter button:hover{color:var(--ink)}.meter button:hover::before{transform:none}}
+@media (max-width:860px){
+  .cup{grid-template-columns:minmax(0,1fr);gap:22px;align-items:start}
+  .vessel{max-width:360px}
+  html.motion .pour.staged{height:calc(var(--n) * 75svh + 100svh)}
+  html.motion .pour.staged .stage{padding-top:calc(var(--hdr) + 12px)}
+  html.motion .pour.staged .cup{grid-template-rows:minmax(0,1fr) auto;gap:16px}
+  html.motion .pour.staged .vessel{height:100%;max-height:none;justify-self:start;margin-inline-start:0}
+  html.motion .pour.staged .cup-copy{align-self:end}
+  .cup-copy h3{font-size:2.25rem}.cup-copy .ar2{margin-top:4px}
+  .cup-copy .what{margin-top:12px;font-size:1.0625rem}.cup-copy .acts{margin-top:16px}
+  .pour-head{margin-bottom:12px}.pour-head p{display:none}
+  html.motion .pour.staged .pour-head h2{font-size:1.75rem}
+  .meter .nm{display:none}
+  .meter button{width:32px;padding:0;display:grid;place-items:center}
+  .meter ol{flex-wrap:nowrap}.meter{gap:2px}
+  .meter button .dot{display:block;width:10px;height:10px;border-radius:50%;background:var(--dust)}
+  .meter button[aria-current="true"] .dot{background:var(--crema)}
+}
+@media (min-width:861px){.meter .dot{display:none}}
+@media (max-width:860px){.meter li:has([aria-current]) {display:flex;align-items:center}.meter li:has([aria-current]) button{width:auto;padding:0 12px 0 16px;gap:8px;grid-auto-flow:column}.meter li:has([aria-current]) .nm{display:inline;font-size:var(--t-small)}}
+.soonline{margin-top:24px;color:var(--muted);max-width:72ch;line-height:1.9}
+.soonline span{color:var(--ink);font-weight:500}
+.soonline a:not(.textlink){color:var(--ink)}
+.soonline .textlink{margin-inline-start:6px;min-height:0;background-position:0 100%}
+
+/* ---- categories ---- */
+.cats-head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:12px 40px;margin-bottom:28px}
+.cats-head h2{font-size:var(--t-h2)}
+.catlist{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:clamp(24px,5vw,80px)}
+.catlist a{position:relative;isolation:isolate;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:2px 16px;padding:20px 12px;text-decoration:none;box-shadow:inset 0 -1px 0 var(--dust)}
+.catlist a::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--sand);transform:translateY(101%);transition:transform 450ms var(--ease)}
+.catlist b{font:700 clamp(1.25rem,1.1rem + .5vw,1.5rem)/1.2 var(--lat);letter-spacing:-.02em}
+:root[lang="ar"] .catlist b{font-family:var(--txt)}
+.catlist .ar2{grid-column:1;font-size:.9375rem;font-weight:500}
+.catlist .ct{grid-column:2;grid-row:1/3;font-size:var(--t-small);color:var(--muted);text-align:end}
+.catlist .ct.has{color:var(--ink);font-weight:700}
+@media (hover:hover) and (pointer:fine){.catlist a:hover::before{transform:none}}
+@media (max-width:700px){.catlist{grid-template-columns:minmax(0,1fr)}}
+
+/* ---- delivery field ---- */
+/* busy buttons: a small turning ring while something is sent */
+.spin{width:16px;height:16px;border-radius:50%;border:2px solid currentColor;border-right-color:transparent;animation:spin .8s linear infinite;flex:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.spin{animation:none;border-right-color:currentColor;opacity:.6}}
+/* small replies to actions: the cart count ticks when something lands in it; a language switch slides in its reading direction */
+@keyframes tick{0%{transform:scale(1)}35%{transform:scale(1.4)}100%{transform:scale(1)}}
+.count.tick{animation:tick 440ms var(--ease)}
+@keyframes langin{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
+@keyframes langin-rtl{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:none}}
+#main.lang-in{animation:langin 340ms var(--ease)}
+[dir="rtl"] #main.lang-in{animation-name:langin-rtl}
+@media (prefers-reduced-motion:reduce){.count.tick,#main.lang-in{animation:none}}
+/* delivery: one strip of three facts, between the stock and the footer */
+.pour:not(.staged){padding-bottom:clamp(48px,6vw,96px)}
+.pour + .strip{margin-top:0}
+.strip{background:var(--sand);margin-top:clamp(64px,8vw,128px);box-shadow:inset 0 1px 0 var(--dust),inset 0 -1px 0 var(--dust)}
+.strip .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 40px;padding-block:clamp(22px,2.6vw,32px)}
+.strip ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:14px clamp(24px,3.4vw,48px)}
+.strip li{display:flex;align-items:flex-start;gap:12px;max-width:34ch;font-size:1rem;line-height:1.45}
+.strip li svg{flex:none;width:22px;height:22px;color:var(--roast);margin-top:1px}
+.strip b{font-weight:700}
+@media (max-width:820px){.strip ul{flex-direction:column}.strip .wrap{align-items:flex-start}}
+.field{background:var(--ink);color:var(--ground)}
+.field .in{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:clamp(32px,6vw,96px);align-items:end;padding-block:clamp(72px,9vw,140px)}
+.field h2{font-size:var(--t-h2);max-width:16ch}
+.field .sub{margin-top:18px;font-size:var(--t-lead);color:var(--dust)}
+.field ul{list-style:none;margin:0;padding:0;display:grid;gap:16px;font-size:1.125rem}
+.field li{display:grid;grid-template-columns:24px minmax(0,1fr);gap:14px}
+.field li svg{width:24px;height:24px;color:var(--crema);margin-top:3px}
+.field .textlink{margin-top:14px;color:var(--ground)}
+@media (hover:hover) and (pointer:fine){.field .textlink:hover{color:var(--ink)}}
+@media (max-width:820px){.field .in{grid-template-columns:minmax(0,1fr)}}
+
+/* ---- inner pages ---- */
+.page-head{padding-block:clamp(36px,6vw,80px) clamp(24px,4vw,44px)}
+.page-head h1{font-size:var(--t-h1)}
+.page-head .ar2{font-size:clamp(1.25rem,1rem + .8vw,1.75rem);margin-top:8px}
+.page-head .lead{margin-top:20px;font-size:var(--t-lead);max-width:44ch;color:var(--muted)}
+.crumbs{display:flex;flex-wrap:wrap;gap:4px 8px;list-style:none;margin:0 0 18px;padding:0;font-size:var(--t-small);color:var(--muted)}
+.crumbs li+li::before{content:"/";margin-inline-end:8px}
+.crumbs a{text-decoration:none;display:inline-block;padding-block:12px;margin-block:-12px}
+@media (hover:hover) and (pointer:fine){.crumbs a:hover{color:var(--ink);text-decoration:underline}}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+/* phones: categories become one row you swipe, running to the screen edge */
+@media (max-width:640px){.chips{flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;scroll-snap-type:x proximity;margin-inline:-20px;padding:2px 20px}.chips::-webkit-scrollbar{display:none}.chips a{flex:none;scroll-snap-align:start}}
+.chips a{position:relative;isolation:isolate;overflow:hidden;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 18px;border-radius:999px;box-shadow:inset 0 0 0 1px var(--dust);text-decoration:none;font-size:var(--t-small);font-weight:500;transition:color 250ms}
+.chips a::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--ink);transform:translateY(102%);transition:transform 420ms var(--ease)}
+.chips a span{color:var(--muted);transition:color 250ms}
+.chips a[aria-current="page"]{color:var(--ground)}
+.chips a[aria-current="page"]::before{transform:none}
+.chips a[aria-current="page"] span{color:var(--dust)}
+@media (hover:hover) and (pointer:fine){.chips a:hover{color:var(--ground)}.chips a:hover::before{transform:none}.chips a:hover span{color:var(--dust)}}
+
+/* the pour list (shop and category) */
+.plist{list-style:none;margin:0;padding:0}
+.prow{position:relative;overflow:hidden;display:grid;grid-template-columns:120px minmax(0,1fr) auto;gap:clamp(18px,3vw,40px);align-items:center;padding:22px 12px;box-shadow:inset 0 -1px 0 var(--dust);isolation:isolate}
+.prow:first-child{box-shadow:inset 0 1px 0 var(--dust),inset 0 -1px 0 var(--dust)}
+.prow::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--sand);transform:translateY(101%);transition:transform 500ms var(--ease)}
+.prow .vessel{width:120px;max-width:none}
+.prow h2{font-size:clamp(1.75rem,1.1rem + 2.4vw,3.25rem)}
+.prow h2 a{text-decoration:none}
+.prow h2 a::after{content:"";position:absolute;inset:0}
+.prow .ar2{font-size:1.125rem;margin-top:6px}
+.prow .kind{color:var(--muted);margin-top:2px;font-size:var(--t-small)}
+.prow .textlink{position:relative;z-index:1}
+@media (hover:hover) and (pointer:fine){.prow:hover::before{transform:none}}
+@media (max-width:640px){.prow{grid-template-columns:84px minmax(0,1fr);padding:18px 4px}.prow .vessel{width:84px}.prow .textlink{grid-column:2}}
+.soon{display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(24px,5vw,72px);align-items:center;padding-block:24px 8px}
+.soon .vessel{width:min(240px,40vw)}
+.soon h2{font-size:var(--t-h2)}
+.soon p{margin-top:14px;max-width:40ch;color:var(--muted);font-size:1.125rem}
+.soon .textlink{margin-top:12px}
+@media (max-width:640px){.soon{grid-template-columns:minmax(0,1fr)}.soon .vessel{width:180px}}
+
+/* product page */
+.pdp{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,6vw,110px);align-items:start;padding-bottom:clamp(64px,8vw,120px)}
+.pdp .vessel{max-width:560px}
+.stage-col{display:grid;gap:12px;max-width:560px}
+.details{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.details li{border-radius:18px;overflow:hidden;background:#000;aspect-ratio:4/5}
+.details img{display:block;width:100%;height:100%;object-fit:cover}
+.pdp .copy{display:flex;flex-direction:column;gap:20px;padding-top:clamp(0px,4vw,56px)}
+.pdp h1{font-size:var(--t-h1)}
+.pdp .ar2{font-size:clamp(1.25rem,1rem + .8vw,1.75rem);margin-top:-8px}
+.pdp .kind{color:var(--muted);margin-top:-10px}
+.pdp .what{font-size:var(--t-lead);line-height:1.5;max-width:30ch}
+.pdp .desc{max-width:52ch;color:var(--muted)}
+.pdp .price{font:600 var(--t-lead)/1.3 var(--txt);letter-spacing:0;margin-top:22px}
+.price-note{font-weight:600;font-size:1.0625rem;color:var(--ink)}
+.facts{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px 28px;margin:0}
+.facts dt{color:var(--muted)}
+.facts dd{margin:0;font-weight:500}
+.pdp .acts{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.stepper{display:inline-flex;align-items:center;background:var(--sand);height:54px;border-radius:999px}
+.stepper button{width:48px;height:100%;border:0;background:transparent;cursor:pointer;font-size:1.25rem;border-radius:999px;transition:transform 160ms var(--ease)}
+.stepper button:active{transform:scale(.9)}
+.stepper output{min-width:28px;text-align:center;font-weight:700}
+@media (max-width:860px){.pdp{grid-template-columns:minmax(0,1fr)}.pdp .vessel{max-width:400px}}
+@media (max-width:700px){
+  .pdp{padding-bottom:110px}
+  .pdp .acts.sticky{position:fixed;inset-inline:0;bottom:0;z-index:30;flex-wrap:nowrap;padding:10px max(20px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(20px,env(safe-area-inset-left,0px));background:var(--ground);box-shadow:0 -1px 0 var(--dust)}
+  .pdp .acts.sticky .btn{flex:1;min-width:0}
+}
+.steps{margin:0;padding:0 0 0 1.4em;display:grid;gap:16px;font-size:1.1875rem;max-width:52ch}
+:root[dir="rtl"] .steps{padding:0 1.4em 0 0}
+.steps li::marker{font-weight:800;color:var(--crema)}
+.dl{margin:0}
+.dl>div{display:grid;grid-template-columns:minmax(0,.6fr) minmax(0,1.4fr);gap:20px;padding:24px 0;box-shadow:inset 0 -1px 0 var(--dust)}
+.dl dt{font:700 1.375rem/1.2 var(--lat);letter-spacing:-.02em}
+:root[lang="ar"] .dl dt{font-family:var(--txt)}
+.dl dd{margin:0;max-width:46ch;font-size:1.125rem}
+@media (max-width:700px){.dl>div{grid-template-columns:minmax(0,1fr);gap:6px}}
+.split{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(24px,5vw,88px);align-items:start}
+.split h2{font-size:var(--t-h2)}
+.split p{max-width:50ch;font-size:1.125rem}
+.split p+p{margin-top:14px}
+.big-ar{font:700 clamp(5rem,2rem + 10vw,10rem)/1.05 var(--txt);color:var(--roast)}
+.brands{list-style:none;margin:0;padding:0}
+.brands a{position:relative;isolation:isolate;overflow:hidden;display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:22px 8px;text-decoration:none;box-shadow:inset 0 -1px 0 var(--dust)}
+.brands a::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--sand);transform:translateY(101%);transition:transform 450ms var(--ease)}
+@media (hover:hover) and (pointer:fine){.brands a:hover::before{transform:none}}
+.brands b{font:800 clamp(1.5rem,1.2rem + 1vw,2.25rem)/1.1 var(--lat);letter-spacing:-.03em}
+.brands span{color:var(--muted);font-size:var(--t-small);text-align:end}
+@media (max-width:820px){.split{grid-template-columns:minmax(0,1fr)}}
+
+/* 404: an empty finjan */
+.nf{min-height:calc(80svh - var(--hdr));display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(28px,6vw,96px);align-items:center;padding-block:48px}
+.nf .vessel{width:min(280px,42vw)}
+.nf h1{font-size:var(--t-h1)}
+.nf p{margin-top:18px;font-size:var(--t-lead);color:var(--muted);max-width:32ch}
+.nf .btn{margin-top:28px}
+@media (max-width:640px){.nf{grid-template-columns:minmax(0,1fr)}}
+
+/* footer: the name, the custom, the links */
+.ftr{background:var(--ink);color:var(--ground);overflow:hidden}
+.ftr .wrap{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) minmax(0,1fr);gap:36px 32px;padding-block:clamp(48px,6vw,88px) calc(28px + env(safe-area-inset-bottom,0px))}
+.ftr .name{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px 40px}
+.ftr .word{font:700 clamp(6rem,3rem + 14vw,15rem)/1.5 var(--txt);margin:-.25em 0 0!important;color:var(--crema);margin:0}
+.ftr .custom{max-width:30ch;font-size:var(--t-lead);line-height:1.5;padding-bottom:.6em}
+.ftr .finjan{width:clamp(84px,9vw,128px);height:auto;color:var(--ground);transform-origin:50% 78%}
+.ftr h2{font:700 var(--t-small)/1.4 var(--txt);letter-spacing:0;margin-bottom:10px;color:var(--dust)}
+.ftr ul{list-style:none;margin:0;padding:0}
+.ftr ul a{display:inline-block;padding-block:8px;text-decoration:none;color:var(--ground);background:linear-gradient(var(--crema),var(--crema)) 0 calc(100% - 6px)/0 2px no-repeat;transition:background-size 380ms var(--ease)}
+@media (hover:hover) and (pointer:fine){.ftr ul a:hover{background-size:100% 2px}}
+.ftr .brand{color:var(--dust);max-width:36ch;font-size:var(--t-small)}
+.ftr bdi{white-space:nowrap}
+.ftr .imprint{grid-column:1/-1;font-size:var(--t-small);color:var(--dust);padding-top:24px;box-shadow:inset 0 1px 0 rgba(245,241,232,.14)}
+@media (max-width:820px){.ftr .wrap{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.ftr .brand{grid-column:1/-1}}
+
+/* curtain: a pour in, a drain out */
+.curtain{position:fixed;inset:0;z-index:150;pointer-events:none;visibility:hidden}
+.curtain .fill{position:absolute;inset:-30px 0 0;background:var(--ink);transform:translateY(105%)}
+.curtain svg{position:absolute;left:0;top:-29px;width:100%;height:30px;color:var(--ink)}
+
+/* drawer, cart, checkout (shared logic from v2, restyled) */
+.scrim{position:fixed;inset:0;background:rgba(30,24,21,.45);z-index:70;opacity:0;transition:opacity 240ms ease}
+.scrim.show{opacity:1}
+.drawer{position:fixed;top:0;bottom:0;inset-inline-end:0;width:min(440px,100%);z-index:80;background:var(--ground);display:flex;flex-direction:column;padding-bottom:env(safe-area-inset-bottom,0px);transform:translateX(104%);transition:transform 240ms var(--ease-in);box-shadow:-24px 0 48px -24px rgba(30,24,21,.4)}
+:root[dir="rtl"] .drawer{transform:translateX(-104%);box-shadow:24px 0 48px -24px rgba(30,24,21,.4)}
+.drawer.open{transform:none!important;transition:transform 420ms var(--ease)}
+.drawer-head{display:flex;align-items:center;justify-content:space-between;padding:calc(16px + env(safe-area-inset-top,0px)) 22px 16px;box-shadow:0 1px 0 var(--dust)}
+.drawer-head h2{font-size:1.75rem}
+.x-btn{width:44px;height:44px;border:0;background:transparent;cursor:pointer;display:grid;place-items:center;border-radius:999px;transition:transform 160ms var(--ease),background-color 200ms}
+@media (hover:hover) and (pointer:fine){.x-btn:hover{background:var(--sand)}}
+.x-btn:active{transform:scale(.92)}
+.drawer-body{flex:1;overflow:auto;padding:18px 22px;display:grid;gap:10px;align-content:start}
+.line{display:grid;grid-template-columns:64px minmax(0,1fr) auto;gap:14px;align-items:center;background:var(--sand);padding:10px;border-radius:6px}
+.line img{width:64px;height:80px;object-fit:cover;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 125' preserveAspectRatio='none'%3E%3Cpath d='M0 3Q0 0 3 0H97Q100 0 100 3L95 64C91 102 71 125 50 125S9 102 5 64Z'/%3E%3C/svg%3E") 0 0/100% 100%;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 125' preserveAspectRatio='none'%3E%3Cpath d='M0 3Q0 0 3 0H97Q100 0 100 3L95 64C91 102 71 125 50 125S9 102 5 64Z'/%3E%3C/svg%3E") 0 0/100% 100%;background:var(--recess)}
+.line h3{font-size:var(--t-body);letter-spacing:-.01em}
+.line .ctl{display:flex;gap:10px;align-items:center;margin-top:6px}
+.line .stepper{height:36px}.line .stepper button{width:34px}
+.linkbtn{background:none;border:0;padding:6px 0;cursor:pointer;text-decoration:underline;text-underline-offset:3px;font-size:var(--t-small);color:var(--muted)}
+.drawer-foot{padding:18px 22px 22px;background:var(--sand);display:grid;gap:12px}
+.totals{display:grid;grid-template-columns:1fr auto;gap:6px;margin:0;font-size:var(--t-small)}
+.totals dd{margin:0;text-align:end}
+.totals .grand{font-size:var(--t-body);font-weight:700}
+.empty{display:grid;gap:14px;justify-items:start;padding:20px 0}
+.empty p{color:var(--muted);max-width:40ch}
+.co{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:clamp(28px,5vw,64px);align-items:start;padding-bottom:clamp(64px,8vw,112px)}
+.co fieldset{border:0;padding:0;margin:0 0 36px;min-width:0}
+.co legend{font:800 1.75rem/1.1 var(--lat);letter-spacing:-.02em;padding:0;margin-bottom:16px}
+:root[lang="ar"] .co legend{font-family:var(--txt);font-weight:700}
+.fgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.fgrid .full{grid-column:1/-1}
+.f label{display:block;font-weight:500;font-size:var(--t-small);margin-bottom:6px}
+.f .req{color:var(--danger)}
+.f input,.f select,.f textarea{width:100%;min-height:54px;padding:10px 16px;border:0;border-radius:10px;box-shadow:inset 0 0 0 1px var(--dust);background:var(--sand);font-size:1rem}
+.f input:focus,.f select:focus,.f textarea:focus{outline:2px solid var(--crema);outline-offset:0}
+.f [aria-invalid="true"]{box-shadow:inset 0 0 0 2px var(--danger)}
+.f .err{font-size:var(--t-small);color:var(--danger);margin-top:6px}
+.f .help{font-size:var(--t-small);color:var(--muted);margin-top:6px}
+.tel{display:flex;direction:ltr}.tel span{display:grid;place-items:center;padding:0 14px;background:var(--dust);border-radius:10px 0 0 10px}.tel input{border-radius:0 10px 10px 0}
+.radios{display:grid;gap:8px}
+.radio{display:flex;align-items:center;gap:12px;min-height:56px;padding:0 16px;background:var(--sand);border-radius:10px;cursor:pointer}
+.radio input{width:20px;height:20px;accent-color:var(--roast);margin:0}
+.radio:has(input:checked){box-shadow:inset 0 0 0 2px var(--ink)}
+.summary{background:var(--sand);padding:24px;border-radius:6px;position:sticky;top:96px}
+.summary h2{font-size:1.75rem;margin-bottom:12px}
+.err-summary{padding:16px 18px;margin-bottom:28px;border-radius:10px;box-shadow:inset 0 0 0 2px var(--danger)}
+.err-summary h2{font-size:1.125rem;color:var(--danger);font-family:var(--txt);letter-spacing:0}
+.err-summary a{color:var(--danger)}
+.demo{font-size:var(--t-small);color:var(--muted);margin-top:12px}
+@media (max-width:900px){.co{grid-template-columns:minmax(0,1fr)}.summary{position:relative;top:0;order:-1}}
+@media (max-width:520px){.fgrid{grid-template-columns:minmax(0,1fr)}}
+.toast{position:fixed;z-index:90;inset-inline-start:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,16px);opacity:0;background:var(--ink);color:var(--ground);padding:12px 22px;border-radius:999px;font-size:var(--t-small);transition:opacity 160ms ease,transform 160ms ease;pointer-events:none;max-width:calc(100% - 32px)}
+:root[dir="rtl"] .toast{transform:translate(50%,16px)}
+.toast.show{opacity:1;transform:translate(-50%,0);transition:opacity 220ms ease,transform 320ms var(--ease)}
+:root[dir="rtl"] .toast.show{transform:translate(50%,0)}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition-duration:1ms!important}}
+
+/* colour swatches on a product page */
+.swatches{border:0;padding:0;margin:20px 0 4px}
+.swatches legend{font-size:.95rem;color:var(--muted);margin-bottom:10px;padding:0}
+.swatches legend b{color:var(--ink);font-weight:600}
+.sw-row{display:flex;flex-wrap:wrap;gap:6px}
+.sw{position:relative;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;cursor:pointer}
+.sw input{position:absolute;inset:0;margin:0;opacity:0;cursor:inherit}
+.sw .dot{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--c) 0 58%,var(--t) 58% 100%);box-shadow:inset 0 0 0 1px rgba(41,34,30,.22);transition:transform .18s cubic-bezier(.2,.8,.2,1)}
+.sw:hover .dot{transform:scale(1.08)}
+.sw input:checked+.dot{box-shadow:inset 0 0 0 1px rgba(41,34,30,.22),0 0 0 3px var(--ground),0 0 0 5px var(--ink)}
+.sw input:focus-visible+.dot{outline:2px solid var(--crema);outline-offset:6px}
+.sw.out{cursor:not-allowed}
+.sw.out .dot{opacity:.45;background:linear-gradient(135deg,var(--c) 0 58%,var(--t) 58% 100%)}
+.sw.out::after{content:"";position:absolute;width:34px;height:2px;background:var(--ink);transform:rotate(-45deg);opacity:.7}
+@media (prefers-reduced-motion:reduce){.sw .dot{transition:none}.sw:hover .dot{transform:none}}
+</style>
+</head>
+<body>
+
+
+<a class="skip" href="#main" id="skip">Skip to content</a>
+<header class="hdr">
+  <div class="wrap">
+    <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="nav"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg><span class="sr" data-t="menu">Menu</span></button>
+    <a class="logo" href="#home" aria-label="Kafei كفي, home"><svg class="lm" viewBox="0 0 100 100" aria-hidden="true"><g transform="translate(0 4) rotate(-9 50 72)"><path d="M22 16H78C77 38 71 60 61 69Q58 72 54 72H46Q42 72 39 69C29 60 23 38 22 16Z" fill="#1D1209"/><clipPath id="hq"><path d="M0 35C12 31 22 31 34 35S56 39 68 35S92 31 100 35V100H0Z"/></clipPath><path d="M29.5 22.5H70.5C69.6 40 64.6 56.6 56.8 63.6Q55 65.2 52.6 65.2H47.4Q45 65.2 43.2 63.6C35.4 56.6 30.4 40 29.5 22.5Z" fill="#B9824B" clip-path="url(#hq)"/></g><path d="M11.5 58.5C12.5 82 37 95 60 90C76.5 86.4 87.5 73 92.5 53.5Q93.4 50.2 91.2 52.4C84.4 68.6 74.4 78.2 60.2 81.2C41.6 85 24.2 78.2 20.6 61.6Q19.8 56.4 15.4 56.2Q11.4 56.2 11.5 58.5Z" fill="#1D1209"/></svg><svg class="lw" viewBox="0 -78 361 112" aria-hidden="true"><path d="M4.0 0.0V-66.0H20.200000000000003V-37.800000000000004Q25.0 -39.400000000000006 28.650000000000002 -42.35000000000001Q32.300000000000004 -45.300000000000004 34.900000000000006 -49.10000000000001Q37.5 -52.900000000000006 39.2 -57.25Q40.900000000000006 -61.6 41.800000000000004 -66.0H60.0Q58.800000000000004 -60.300000000000004 56.550000000000004 -55.25Q54.300000000000004 -50.2 50.900000000000006 -46.0Q47.5 -41.800000000000004 43.0 -38.550000000000004Q38.5 -35.300000000000004 32.800000000000004 -33.2V-32.4Q38.900000000000006 -32.9 42.900000000000006 -31.65Q46.900000000000006 -30.400000000000002 49.400000000000006 -28.0Q51.900000000000006 -25.6 53.35000000000001 -22.55Q54.800000000000004 -19.5 55.800000000000004 -16.400000000000002L61.1 0.0H43.1L39.300000000000004 -14.700000000000001Q38.400000000000006 -18.3 36.75 -20.55Q35.1 -22.8 32.5 -23.8Q29.900000000000002 -24.8 25.900000000000002 -24.8H20.200000000000003V0.0ZM74.1 1.4000000000000001Q70.1 1.4000000000000001 66.5 0.0Q62.900000000000006 -1.4000000000000001 60.60000000000001 -4.55Q58.300000000000004 -7.7 58.300000000000004 -13.0Q58.300000000000004 -17.900000000000002 60.2 -20.950000000000003Q62.1 -24.0 65.3 -25.85Q68.5 -27.700000000000003 72.3 -28.650000000000002Q76.1 -29.6 79.80000000000001 -30.3Q85.0 -31.3 87.6 -31.9Q90.2 -32.5 91.15 -33.3Q92.1 -34.1 92.1 -35.5Q92.1 -38.400000000000006 89.95 -39.900000000000006Q87.80000000000001 -41.400000000000006 84.30000000000001 -41.400000000000006Q82.1 -41.400000000000006 79.9 -40.60000000000001Q77.7 -39.800000000000004 76.30000000000001 -37.75Q74.9 -35.7 75.0 -31.900000000000002L60.6 -32.9Q60.4 -39.2 62.5 -43.35Q64.6 -47.5 68.25 -49.85Q71.9 -52.2 76.25 -53.2Q80.6 -54.2 84.9 -54.2Q92.80000000000001 -54.2 97.9 -51.25Q103.0 -48.300000000000004 105.45 -42.75Q107.9 -37.2 107.9 -29.3V-19.900000000000002Q107.9 -16.6 107.9 -13.25Q107.9 -9.9 107.9 -6.6000000000000005Q107.9 -3.3000000000000003 107.9 0.0H93.9Q93.9 -3.6 93.9 -7.3Q93.9 -11.0 93.9 -15.100000000000001H93.30000000000001Q92.9 -10.600000000000001 90.35000000000001 -6.8500000000000005Q87.80000000000001 -3.1 83.65 -0.85Q79.5 1.4000000000000001 74.1 1.4000000000000001ZM80.80000000000001 -10.4Q82.5 -10.4 84.45 -11.05Q86.4 -11.700000000000001 88.15 -13.200000000000001Q89.9 -14.700000000000001 91.0 -17.35Q92.1 -20.0 92.1 -23.900000000000002V-26.3L94.80000000000001 -26.6Q94.0 -25.3 92.15 -24.5Q90.30000000000001 -23.700000000000003 88.0 -23.25Q85.7 -22.8 83.35 -22.35Q81.0 -21.900000000000002 79.0 -21.150000000000002Q77.0 -20.400000000000002 75.75 -19.150000000000002Q74.5 -17.900000000000002 74.5 -15.700000000000001Q74.5 -13.100000000000001 76.35 -11.75Q78.2 -10.4 80.80000000000001 -10.4ZM114.50000000000001 0.0V-32.300000000000004H107.2V-43.900000000000006L123.30000000000001 -42.800000000000004V-43.6Q117.20000000000002 -44.300000000000004 114.10000000000002 -46.5Q111.00000000000001 -48.7 109.95000000000002 -51.5Q108.9 -54.300000000000004 108.9 -56.6Q108.9 -61.1 111.35000000000001 -64.45Q113.80000000000001 -67.8 118.15 -69.6Q122.50000000000001 -71.4 128.0 -71.4Q132.5 -71.4 136.05 -70.2Q139.60000000000002 -69.0 142.5 -66.7L141.20000000000002 -51.900000000000006Q138.5 -53.800000000000004 136.0 -54.75Q133.5 -55.7 130.9 -55.7Q127.9 -55.7 125.95000000000002 -54.400000000000006Q124.00000000000001 -53.1 124.00000000000001 -50.300000000000004Q124.00000000000001 -48.800000000000004 124.80000000000001 -47.5Q125.60000000000001 -46.2 127.35000000000002 -45.45Q129.10000000000002 -44.7 132.10000000000002 -44.7H142.10000000000002V-32.300000000000004H130.5V0.0ZM167.10000000000002 1.4000000000000001Q159.60000000000002 1.4000000000000001 154.55 -0.7500000000000001Q149.5 -2.9000000000000004 146.4 -6.65Q143.3 -10.4 141.95 -15.2Q140.6 -20.0 140.6 -25.3Q140.6 -31.0 142.05 -36.2Q143.5 -41.400000000000006 146.55 -45.45Q149.6 -49.5 154.45 -51.85Q159.3 -54.2 166.10000000000002 -54.2Q172.9 -54.2 177.75 -51.85Q182.60000000000002 -49.5 185.5 -45.3Q188.4 -41.1 189.25 -35.6Q190.10000000000002 -30.1 189.0 -23.700000000000003L150.70000000000002 -23.1V-31.900000000000002L176.60000000000002 -32.4L174.5 -27.3Q175.10000000000002 -31.900000000000002 174.35000000000002 -35.050000000000004Q173.60000000000002 -38.2 171.60000000000002 -39.85Q169.60000000000002 -41.5 166.10000000000002 -41.5Q162.4 -41.5 160.2 -39.6Q158.0 -37.7 157.10000000000002 -34.25Q156.20000000000002 -30.8 156.20000000000002 -26.1Q156.20000000000002 -18.0 158.90000000000003 -14.3Q161.60000000000002 -10.600000000000001 167.20000000000002 -10.600000000000001Q169.60000000000002 -10.600000000000001 171.20000000000002 -11.200000000000001Q172.8 -11.8 173.8 -12.950000000000001Q174.8 -14.100000000000001 175.20000000000002 -15.750000000000002Q175.60000000000002 -17.400000000000002 175.5 -19.5L190.3 -18.7Q190.60000000000002 -15.4 189.65000000000003 -11.9Q188.70000000000002 -8.4 186.10000000000002 -5.4Q183.5 -2.4000000000000004 178.85000000000002 -0.5000000000000001Q174.20000000000002 1.4000000000000001 167.10000000000002 1.4000000000000001ZM191.4 0.0V-52.800000000000004H207.60000000000002V0.0ZM199.4 -56.6Q194.8 -56.6 192.35000000000002 -58.550000000000004Q189.9 -60.50000000000001 189.9 -64.2Q189.9 -68.0 192.35000000000002 -69.94999999999999Q194.8 -71.89999999999999 199.4 -71.89999999999999Q204.1 -71.89999999999999 206.55 -69.89999999999999Q209.0 -67.89999999999999 209.0 -64.2Q209.0 -60.6 206.55 -58.6Q204.1 -56.6 199.4 -56.6Z" fill="#1D1209"/><g transform="translate(233.2 0) scale(.8)"><path d="M37.6 24.0Q29.6 24.0 23.25 22.15Q16.900000000000002 20.3 12.5 16.75Q8.1 13.200000000000001 5.8 8.15Q3.5 3.1 3.5 -3.4000000000000004Q3.5 -7.9 4.75 -13.55Q6.0 -19.200000000000003 8.200000000000001 -24.5L17.8 -21.700000000000003Q15.8 -17.400000000000002 14.65 -13.0Q13.5 -8.6 13.5 -5.4Q13.5 0.9 18.8 4.3500000000000005Q24.1 7.800000000000001 33.6 7.800000000000001H41.6Q50.2 7.800000000000001 55.85 5.7Q61.5 3.6 63.7 -0.2L40.1 -3.9000000000000004V-18.900000000000002L52.0 -17.1Q55.800000000000004 -16.5 58.800000000000004 -16.1Q61.800000000000004 -15.700000000000001 64.35000000000001 -15.450000000000001Q66.9 -15.200000000000001 69.05000000000001 -15.100000000000001Q71.2 -15.0 73.2 -15.0V-8.6L74.9 -6.0Q74.9 1.1 72.35 6.65Q69.8 12.200000000000001 65.0 16.05Q60.2 19.900000000000002 53.300000000000004 21.950000000000003Q46.400000000000006 24.0 37.6 24.0ZM44.5 45.50000000000001Q41.900000000000006 45.50000000000001 40.25 43.900000000000006Q38.6 42.30000000000001 38.6 38.80000000000001Q38.6 35.30000000000001 40.25 33.70000000000001Q41.900000000000006 32.10000000000001 44.5 32.10000000000001H46.5Q49.1 32.10000000000001 50.75 33.70000000000001Q52.400000000000006 35.30000000000001 52.400000000000006 38.80000000000001Q52.400000000000006 42.30000000000001 50.75 43.900000000000006Q49.1 45.50000000000001 46.5 45.50000000000001ZM28.700000000000003 45.50000000000001Q26.1 45.50000000000001 24.450000000000003 43.900000000000006Q22.8 42.30000000000001 22.8 38.80000000000001Q22.8 35.30000000000001 24.450000000000003 33.70000000000001Q26.1 32.10000000000001 28.700000000000003 32.10000000000001H30.700000000000003Q33.3 32.10000000000001 34.95 33.70000000000001Q36.6 35.30000000000001 36.6 38.80000000000001Q36.6 42.30000000000001 34.95 43.900000000000006Q33.3 45.50000000000001 30.700000000000003 45.50000000000001ZM70.2 -12.0 73.2 -15.0H83.9L84.10000000000001 -15.5Q80.3 -19.3 78.85 -23.55Q77.4 -27.8 77.4 -31.8Q77.4 -36.300000000000004 78.80000000000001 -40.25Q80.2 -44.2 82.80000000000001 -47.150000000000006Q85.4 -50.1 89.05000000000001 -51.8Q92.7 -53.5 97.10000000000001 -53.5Q101.5 -53.5 105.15 -51.8Q108.80000000000001 -50.1 111.4 -47.150000000000006Q114.0 -44.2 115.4 -40.25Q116.80000000000001 -36.300000000000004 116.80000000000001 -31.8Q116.80000000000001 -27.8 115.35000000000001 -23.55Q113.9 -19.3 110.1 -15.5L110.30000000000001 -15.0H121.4V-3.0L118.4 0.0H117.4Q112.0 0.0 106.9 -1.4000000000000001Q101.80000000000001 -2.8000000000000003 97.2 -6.4Q92.60000000000001 -2.8000000000000003 87.5 -1.4000000000000001Q82.4 0.0 77.0 0.0H70.2ZM97.10000000000001 -16.3Q102.2 -19.200000000000003 104.80000000000001 -22.35Q107.4 -25.5 107.4 -29.5Q107.4 -33.7 104.60000000000001 -36.1Q101.80000000000001 -38.5 97.7 -38.5H96.5Q92.4 -38.5 89.60000000000001 -36.1Q86.80000000000001 -33.7 86.80000000000001 -29.5Q86.80000000000001 -25.5 89.4 -22.35Q92.0 -19.200000000000003 97.10000000000001 -16.3ZM96.10000000000001 -61.50000000000001Q93.5 -61.50000000000001 91.85 -63.10000000000001Q90.2 -64.7 90.2 -68.2Q90.2 -71.7 91.85 -73.30000000000001Q93.5 -74.9 96.10000000000001 -74.9H98.10000000000001Q100.7 -74.9 102.35 -73.30000000000001Q104.0 -71.7 104.0 -68.2Q104.0 -64.7 102.35 -63.10000000000001Q100.7 -61.50000000000001 98.10000000000001 -61.50000000000001ZM118.4 -12.0 121.4 -15.0H138.6Q142.0 -15.0 143.3 -15.75Q144.60000000000002 -16.5 144.60000000000002 -18.5Q144.60000000000002 -20.3 143.40000000000003 -21.6Q142.20000000000002 -22.900000000000002 138.5 -24.900000000000002L122.4 -33.6V-60.0L170.4 -75.2V-62.0L127.4 -48.5V-47.900000000000006L138.5 -41.7Q143.0 -39.2 146.10000000000002 -36.85Q149.20000000000002 -34.5 151.05 -32.0Q152.9 -29.5 153.75 -26.75Q154.60000000000002 -24.0 154.60000000000002 -20.6Q154.60000000000002 -10.0 149.95000000000002 -5.0Q145.3 0.0 134.6 0.0H118.4Z" fill="#644A31"/></g></svg></a>
+    <nav class="nav" id="nav" aria-label="Main">
+      <a href="#shop" data-nav="shop" data-t="nav_shop">Shop</a>
+      <a href="#delivery" data-nav="delivery" data-t="nav_delivery">Delivery</a>
+      <a href="#about" data-nav="about" data-t="nav_about">About us</a>
+    </nav>
+    <div class="hdr-end">
+      <a class="acct" id="acctBtn" href="#account" hidden aria-label="Sign in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8.5" r="3.6"/><path d="M4.8 20c1.2-3.6 4-5.4 7.2-5.4s6 1.8 7.2 5.4"/></svg><span class="dot" aria-hidden="true"></span></a>
+      <button class="lang" id="langBtn" type="button">العربية</button>
+      <button class="cart-btn" id="cartBtn" type="button" aria-haspopup="dialog" aria-controls="drawer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1.2 12H6.2z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="lbl" data-t="cart">Cart</span><span class="count num" id="cartCount" aria-hidden="true">0</span><span class="sr" id="cartSr"></span></button>
+    </div>
+  </div>
+</header>
+<main id="main" tabindex="-1"><section class="hero" aria-labelledby="heroH"><img class="poster" src="img/hero-1280.webp" srcset="img/hero-760.webp 760w, img/hero-1280.webp 1280w" sizes="100vw" alt="" fetchpriority="high" width="1280" height="720"><video muted="" loop="" playsinline="" preload="none" aria-hidden="true" data-src="img/hero-pourover.mp4"></video>
+    <div class="wrap hero-in"><div class="hero-copy"><h1 id="heroH" aria-label="Kafei, كفي"><span class="w" aria-hidden="true"><span class="ch">K</span><span class="ch">a</span><span class="ch">f</span><span class="ch">e</span><span class="ch">i</span></span><span class="ar" lang="ar" aria-hidden="true"><span>كفي</span></span></h1>
+    <p class="lead" data-intro="">In the Gulf, you shake your finjan when you've had enough. That little shake is our name.</p><a class="btn" href="#stock" data-intro=""><span>See what's in stock</span></a></div></div></section>
+  <section class="pour sec" id="stock" style="--n:1" aria-labelledby="stockH"><div class="stage wrap">
+    <div class="pour-head"><h2 id="stockH">In stock now</h2><p>What we have on the counter today, poured for you one at a time.</p></div>
+    <ol class="serve"><li class="cup on" data-i="0">
+      <div class="vessel"><img src="img/xbloom-twilight.webp" alt="xBloom Studio" class="contain" fetchpriority="high" decoding="async" width="800" height="1000"><div class="surface" aria-hidden="true"><svg viewBox="0 0 240 28" preserveAspectRatio="none" aria-hidden="true"><path fill="currentColor" d="M0 14C20 6 40 6 60 14S100 22 120 14S160 6 180 14S220 22 240 14V28H0Z"></path></svg></div></div>
+      <div class="cup-copy"><h3><a href="#p-xbloom-studio">xBloom Studio</a></h3><p class="ar2"><bdi lang="ar" dir="rtl">إكس بلوم ستوديو</bdi></p><p class="kind">Pour-over machine</p><p class="what">Pour-over that grinds, weighs and pours for you.</p>
+      <p class="acts"><a class="btn" href="#p-xbloom-studio"><span>View colours</span></a><span class="price-note num">KWD 199.000</span></p></div></li></ol></div></section>
+  
+  <section class="strip" aria-labelledby="delH"><div class="wrap"><h2 id="delH" class="sr">Delivery</h2>
+    <ul><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" aria-hidden="true"><path d="M3 6h11v10H3zM14 9h4l3 3v4h-7"></path><circle cx="7" cy="17.5" r="1.8"></circle><circle cx="17" cy="17.5" r="1.8"></circle></svg><span><b>Same day in the Capital and Hawalli</b> Order before 2 pm.</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" aria-hidden="true"><path d="M3 12V4h8l10 10-8 8z"></path><circle cx="7.5" cy="8.5" r="1.4"></circle></svg><span>Free over KWD 15. Under that, KWD 1.500</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13"></rect><path d="M3 10h18M7 15h4"></path></svg><span>Pay with KNET, card, Apple Pay or cash</span></li></ul>
+    <a class="textlink" href="#delivery">Delivery details</a></div></section></main>
+<footer class="ftr" id="footer"><div class="wrap"><div class="name"><p class="word" lang="ar">كفي</p><svg class="finjan" viewBox="0 0 100 100" aria-hidden="true"><defs><clipPath id="fj-finjan"><path d="M22 16H78C77 38 71 60 61 69Q58 72 54 72H46Q42 72 39 69C29 60 23 38 22 16Z"></path></clipPath></defs><g transform="translate(0 4) rotate(-9 50 72)"><g clip-path="url(#fj-finjan)"><rect class="fj-level" x="0" y="40" width="100" height="100" fill="#B9824B"></rect></g><path d="M22 16H78C77 38 71 60 61 69Q58 72 54 72H46Q42 72 39 69C29 60 23 38 22 16Z" fill="none" stroke="currentColor" stroke-width="6" stroke-linejoin="round"></path></g><path d="M11.5 58.5C12.5 82 37 95 60 90C76.5 86.4 87.5 73 92.5 53.5Q93.4 50.2 91.2 52.4C84.4 68.6 74.4 78.2 60.2 81.2C41.6 85 24.2 78.2 20.6 61.6Q19.8 56.4 15.4 56.2Q11.4 56.2 11.5 58.5Z" fill="currentColor"></path></svg><p class="custom">A short list of coffee gear, chosen and delivered in Kuwait.</p></div>
+  <p class="brand">Not sure which one suits your counter? Ask us on WhatsApp before you buy.</p>
+  <nav aria-labelledby="fShop"><h2 id="fShop">Shop</h2><ul><li><a href="#shop">Every product</a></li><li><a href="#shop-pourover-machines">Pour-over machines</a></li></ul></nav>
+  <nav aria-labelledby="fHelp"><h2 id="fHelp">Help</h2><ul><li><a href="#delivery">Delivery</a></li><li><a href="#about">About us</a></li><li><a href="https://wa.me/96566908822?text=Hello%20Kafei%2C%20could%20you%20send%20me%20today's%20prices%3F" target="_blank" rel="noopener">WhatsApp <bdi dir="ltr" class="num">+965 6690 8822</bdi></a></li></ul></nav>
+  <p class="imprint">Kafei, Kuwait. Prices in Kuwaiti dinar.</p></div></footer>
+<div class="curtain" id="curtain" aria-hidden="true"><div class="fill"><svg viewBox="0 0 120 30" preserveAspectRatio="none"><path id="cwave" fill="currentColor" d="M0 30V14C10 8 20 8 30 14S50 20 60 14S80 8 90 14S110 20 120 14V30Z"/></svg></div></div>
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" hidden></aside>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<noscript><p style="padding:24px">Kafei needs JavaScript to show the store. Message us on WhatsApp at +965 6690 8822 to order.</p></noscript>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
