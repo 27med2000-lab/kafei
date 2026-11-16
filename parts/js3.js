@@ -10,7 +10,7 @@ function viewCheckout(){
     <fieldset><legend>${t("co_addr")}</legend><div class="fgrid">
       <div class="f"><label for="gov">${t("f_gov")} <span class="req" aria-hidden="true">*</span></label><select id="gov" required aria-required="true"><option value="">${t("f_choose")}</option>${GOVS.map(g=>`<option value="${g[0]}">${lang==="ar"?g[2]:g[1]}</option>`).join("")}</select><p class="err" id="gov-err" hidden></p></div>
       ${field("area",t("f_area"))}${field("block",t("f_block"),{mode:"numeric"})}${field("street",t("f_street"))}${field("avenue",t("f_avenue"),{req:false})}${field("house",t("f_house"))}${field("notes",t("f_notes"),{type:"textarea",req:false,full:true})}</div></fieldset>
-    <fieldset><legend>${t("co_pay")}</legend><div class="radios">${["knet","card","apple","cod"].map((m,i)=>`<label class="radio"><input type="radio" name="pay" value="${m}" ${i===0?"checked":""}><span>${t("pay_"+m)}</span></label>`).join("")}</div></fieldset>
+    <fieldset><legend>${t("co_pay")}</legend><div class="radios">${["knet","card","apple"].map((m,i)=>`<label class="radio"><input type="radio" name="pay" value="${m}" ${i===0?"checked":""}><span>${t("pay_"+m)}</span></label>`).join("")}</div></fieldset>
     <button class="btn" type="submit" style="width:100%;min-height:58px">${t("place")}, <span class="num">${money(s+f)}</span></button><p class="demo">${t(CONFIG.payments?"demo_live":"demo")}</p>
   </form>
   <aside class="summary" aria-labelledby="sumH"><h2 id="sumH">${t("cart_h")}</h2>${cart.map(l=>`<p style="display:flex;justify-content:space-between;gap:12px;padding:6px 0"><span>${l.qty} × ${esc(cName(byId[l.id],colorOf(byId[l.id],l.color)))}</span><span class="num">${money(byId[l.id].price*l.qty)}</span></p>`).join("")}

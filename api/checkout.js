@@ -3,7 +3,7 @@
 // records the order as pending and returns {link, orderId, total}. The browser never decides the price.
 import { METHODS, json, readBody, mf, paymentMethodId, money, buildOrder, getCatalogue, saveOrder, userFromToken, bearer } from "./_lib.js";
 
-const FAIL = "The payment page could not open. Try again, or choose cash on delivery.";
+const FAIL = "The payment page could not open. Try again, or choose another payment method.";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") return json(res, 405, { error: "method", message: "Use POST." });
@@ -12,7 +12,7 @@ export default async function handler(req, res) {
   if (!site) return json(res, 500, { error: "config", message: "SITE_URL is not set." });
   const { data: b } = await readBody(req);
   const code = METHODS[b?.method];
-  if (b && !code) return json(res, 400, { error: "method", message: "Choose KNET, card or Apple Pay. Cash on delivery goes through WhatsApp." });
+  if (b && !code) return json(res, 400, { error: "method", message: "Choose KNET, card or Apple Pay." });
   const o = buildOrder(b, await getCatalogue());
   if (o.error) return json(res, o.error.status, o.error.body);
 

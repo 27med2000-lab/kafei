@@ -20,8 +20,7 @@ function submitCheckout(e){
   const lines=[t("wa_order"),...cart.map(l=>`• ${l.qty} × ${cName(byId[l.id],colorOf(byId[l.id],l.color))}: ${money(byId[l.id].price*l.qty)}`),`${t("delivery")}: ${f?money(f):t("free")}`,`${t("total")}: ${money(s+f)}`,`${t("f_name")}: ${v("name")}`,`${t("f_phone")}: +965 ${v("phone")}`,`${t("co_addr")}: ${lang==="ar"?g[2]:g[1]}, ${v("area")}, ${t("f_block")} ${v("block")}, ${t("f_street")} ${v("street")}${v("avenue")?", "+v("avenue"):""}, ${v("house")}`,`${t("co_pay")}: ${t("pay_"+$("input[name=pay]:checked").value)}`];
   if(sbUser&&$("#saveAddr")&&$("#saveAddr").checked) saveProfile({name:v("name"),phone:v("phone").replace(/\D/g,""),gov:v("gov"),area:v("area"),block:v("block"),street:v("street"),avenue:v("avenue"),house:v("house"),notes:v("notes")},true);
   const method=$("input[name=pay]:checked").value;
-  if(method!=="cod"&&CONFIG.payments){ startPayment(method,v,g,lines); return; }
-  if(CONFIG.payments){ placeCod(v,g,lines,s,f); return; }
+  if(CONFIG.payments){ startPayment(method,v,g,lines); return; }
   lastOrder={id:"KF-"+(20000+Math.floor(Math.random()*79999)),wa:wa(lines.join("\n"))};
   demoRecordOrder({id:lastOrder.id,status:"sent",method:"cod",total_fils:s+f,items:cart.map(l=>({id:l.id,color:l.color,name:cName(byId[l.id],colorOf(byId[l.id],l.color)),qty:l.qty}))});
   cart=[]; saveCart(); location.hash="order";
@@ -54,8 +53,8 @@ async function startPayment(method,v,g,lines){
     location.href=d.link;
   }catch(err){
     btn.disabled=false; btn.innerHTML=label;
-    box.innerHTML=`<div class="err-summary" role="alert" tabindex="-1" id="errBox"><h2>${esc(err.message||t("pay_fail"))}</h2><ul><li><a href="#" data-focus="pay-cod">${t("cod_instead")}</a></li></ul></div>`;
-    const c=$('input[name=pay][value=cod]'); if(c) c.id="pay-cod"; $("#errBox").focus();
+    box.innerHTML=`<div class="err-summary" role="alert" tabindex="-1" id="errBox"><h2>${esc(err.message||t("pay_fail"))}</h2></div>`;
+    $("#errBox").focus();
   }
 }
 

@@ -11,7 +11,7 @@ const port = Number(process.env.PORT || 3000);
 const types = { ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".json": "application/json", ".webp": "image/webp",
   ".png": "image/png", ".jpg": "image/jpeg", ".svg": "image/svg+xml", ".mp4": "video/mp4", ".txt": "text/plain; charset=utf-8", ".xml": "application/xml" };
 const routes = { "/api/checkout": "checkout.js", "/api/status": "status.js", "/api/myfatoorah-webhook": "myfatoorah-webhook.js",
-  "/api/order-cod": "order-cod.js", "/api/admin": "admin.js", "/api/products": "products.js" };
+  "/api/admin": "admin.js", "/api/products": "products.js" };
 const pages = { "/": "index.html", "/admin": "admin.html" };
 const security = { "X-Content-Type-Options": "nosniff", "Referrer-Policy": "strict-origin-when-cross-origin", "X-Frame-Options": "SAMEORIGIN" };
 
