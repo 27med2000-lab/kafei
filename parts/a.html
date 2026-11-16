@@ -541,7 +541,9 @@ html.motion .pour.staged .meter{display:flex;align-items:center;gap:6px;margin-t
 
 /* ---- review fixes ---- */
 /* category cards: the mark, centred on the category colour */
-.tile.cat .cat-ico{width:40%;height:auto;color:var(--tf);transition:transform 450ms var(--ease)}
+.tile.cat .tile-img{container-type:inline-size}
+.tile.cat .cat-ico{width:46%;height:auto;color:var(--tf);overflow:visible;transition:transform 450ms var(--ease)}
+.tile.cat .cat-ico *{vector-effect:non-scaling-stroke;stroke-width:max(2.25px,1.4cqi)}
 @media (hover:hover) and (pointer:fine){.tile.cat>a:hover .cat-ico{transform:translateY(-6px)}}
 @media (prefers-reduced-motion:reduce){.tile.cat .cat-ico{transition:none}}
 .tile.cat .tile-txt{padding:16px 18px 18px}
