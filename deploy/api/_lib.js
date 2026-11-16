@@ -44,7 +44,7 @@ export async function readBody(req, rawFirst = false) {
 
 // Calls the MyFatoorah API (POST, JSON). Returns {ok, status, data} where ok means HTTP 2xx and IsSuccess.
 export async function mf(apiPath, body) {
-  const key = process.env.MYFATOORAH_API_KEY;
+  const key = (process.env.MYFATOORAH_API_KEY || "").trim().replace(/^bearer\s+/i, "").replace(/^["']|["']$/g, "");
   if (!key) throw Object.assign(new Error("MYFATOORAH_API_KEY is not set"), { code: "config" });
   const r = await fetch(`${MF_BASE}/v2/${apiPath}`, { method: "POST", headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(body || {}) });
   const text = await r.text();
