@@ -182,7 +182,7 @@ export function cleanProduct(p, existingIds) {
   const colors = (Array.isArray(p.colors) ? p.colors : []).slice(0, 12).map(c => ({ id: slug(c && c.id), name_en: clip(c && c.name_en, 40), name_ar: clip(c && c.name_ar, 40),
     hex: /^#[0-9a-f]{6}$/i.test(c && c.hex) ? c.hex : "#cccccc", ...(/^#[0-9a-f]{6}$/i.test(c && c.trim) ? { trim: c.trim } : {}), img: okImg(c && c.img), sold_out: !!(c && c.sold_out) }))
     .filter((c, i, a) => c.id && c.name_en && c.name_ar && a.findIndex(x => x.id === c.id) === i);
-  return { row: { id, cat: p.cat, sub, name_en, name_ar, kind_en: clip(p.kind_en, 60), kind_ar: clip(p.kind_ar, 60), what_en: clip(p.what_en, 160), what_ar: clip(p.what_ar, 160),
+  return { row: { id, cat: p.cat, sub, name_en, name_ar, brand: clip(p.brand, 40) || null, kind_en: clip(p.kind_en, 60), kind_ar: clip(p.kind_ar, 60), what_en: clip(p.what_en, 160), what_ar: clip(p.what_ar, 160),
     desc_en: clip(p.desc_en, 800), desc_ar: clip(p.desc_ar, 800), facts, colors, price_fils, img, fit: p.fit === "contain" ? "contain" : "cover", visible: p.visible !== false,
     sort: Number.isFinite(Number(p.sort)) ? Math.max(0, Math.min(9999, Math.floor(Number(p.sort)))) : 100, updated_at: new Date().toISOString() }, isNew: !(p.id && existingIds.includes(p.id)) };
 }

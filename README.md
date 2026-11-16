@@ -7,7 +7,7 @@ The online shop at https://kafeikw.com. It runs as a Node.js web app on Hostinge
 - `img/`: photos used on the site.
 - `api/`: server functions (payments with MyFatoorah, cash orders, products, dashboard). `api/prices.json` = prices the server charges.
 - `admin.html`, `admin.js`: the owner dashboard (kafeikw.com/admin).
-- `supabase/`: database setup. Run schema.sql, then 002, 003, 004 and 005 in order in Supabase > SQL Editor (all already done for the live site).
+- `supabase/`: database setup. Run schema.sql, then 002, 003, 004, 005 and 006 in order in Supabase > SQL Editor (all already done for the live site).
 - `server.mjs`: runs the shop on Node.js hosts (Hostinger: `npm start`).
 - `deploy/`: the built site, exactly what Hostinger runs. Made by `build.py`; don't edit it by hand.
 - `tests/`: automatic checks (`node tests/dashboard.test.mjs`, `colors`, `myfatoorah`, `inventory`).

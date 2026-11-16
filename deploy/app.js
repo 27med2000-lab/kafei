@@ -17,7 +17,7 @@ const CONFIG = {
 
 /* ===== real stock only. Set price in fils (e.g. 389000 = KWD 389.000) once known. ===== */
 const P = [
- {id:"xbloom-studio", cat:"pourover-machines", motif:"eyes", band:"espresso", img:"img/xbloom-twilight.webp", fit:"contain", price:199000,
+ {id:"xbloom-studio", brand:"xBloom", cat:"pourover-machines", motif:"eyes", band:"espresso", img:"img/xbloom-twilight.webp", fit:"contain", price:199000,
   facts:[["In one machine","في ماكينة واحدة","Grinder, brewer and scale","مطحنة وجهاز تقطير وميزان"],
    ["Colours","الألوان","Twilight, Moonlight White, Midnight Black, Offline Blue","توايلايت، أبيض مونلايت، أسود ميدنايت، أزرق أوفلاين"],
    ["Delivery","التوصيل","Free. Same day in the Capital and Hawalli when you order before 2 pm","مجاني. في نفس اليوم للعاصمة وحولي عند الطلب قبل 2 ظهرًا"]],
@@ -173,12 +173,12 @@ Object.assign(T.en,{hero_cta:"See what's in stock",pour_p:"What we have on the c
   deliv_h:"Same day in the Capital and Hawalli",deliv_sub:"Order before 2 pm.",back:"Back to",
   custom:"In the Gulf, you shake your finjan when you've had enough. That little shake is our name.",
   brand:"Not sure which one suits your counter? Ask us on WhatsApp before you buy.",
-  nf_h:"Nothing poured here",nf_p:"This page doesn't exist. The shop is one tap away.",nf_btn:"Go to the shop",acct_signin:"Sign in",sending:"Sending code…",verifying:"Checking the code…",saving:"Saving…",e_link:"That sign-in link has expired or was already used. Enter your email for a new code.",e_wait:n=>`We just sent you a code. Check your email (and spam folder), or wait ${n} seconds to ask for a new one.`,acct_mine:"Your account",acct_h_in:"Sign in to Kafei",acct_p_in:"We email you a sign-in code. No password needed, and checkout works without an account.",f_email:"Email",send_code:"Send code",code_sent:e=>`We sent a code to ${e}. Use the newest email: each new code replaces the last one.`,f_code:"Code from the email",sign_in:"Sign in",other_email:"Use another email",acct_h:"Your account",saved_h:"Saved details",saved_p:"Checkout fills these in for you.",save:"Save details",saved:"Details saved",orders_h:"Your orders",no_orders:"No orders yet. Orders you pay online appear here.",sign_out:"Sign out",e_email:"Enter an email address, for example name@gmail.com.",e_code:"That code didn't work. Use the code from the newest email, or request a new one.",e_send:"We couldn't send the code. Wait a minute and try again.",e_save:"Your details weren't saved. Check the phone number and try again.",save_addr:"Save these details to my account",st_pending:"Waiting for payment",st_paid:"Paid",st_failed:"Not paid",st_sent:"Sent on WhatsApp",demo_code:"Demo: no email is sent. Your code is",loading:"Loading",paying:"Opening the secure payment page",pay_fail:"The payment page could not open. Try again, or choose another payment method.",cod_instead:"Pay cash on delivery instead",demo_live:"KNET, card and Apple Pay open MyFatoorah's secure page.",checking:"Checking your payment",paid_h:id=>`Paid. Order ${id} is ours to deliver`,paid_p:"We have your payment. Send the order on WhatsApp so we can confirm the delivery time.",paid_send:"Send order on WhatsApp",unpaid_h:"Payment not completed",unpaid_p:"Nothing was charged, and your cart is still here. Try again, or choose another payment method.",back_co:"Back to checkout",check_fail:"We couldn't confirm the payment yet. Message us on WhatsApp with your order number and we'll check.",soon_line:"Not in stock yet:",wa_hello_soon:"Hello Kafei, I'm looking for something you don't list yet.",ask_wa_short:"WhatsApp"});
+  nf_h:"Nothing poured here",nf_p:"This page doesn't exist. The shop is one tap away.",nf_btn:"Go to the shop",acct_signin:"Sign in",sending:"Sending code…",verifying:"Checking the code…",saving:"Saving…",e_link:"That sign-in didn't finish. Try again, or sign in with your email and password.",e_wait:n=>`We just sent you a code. Check your email (and spam folder), or wait ${n} seconds to ask for a new one.`,acct_mine:"Your account",acct_h_in:"Sign in to Kafei",acct_p_in:"We email you a sign-in code. No password needed, and checkout works without an account.",f_email:"Email",send_code:"Send code",code_sent:e=>`We sent a code to ${e}. Use the newest email: each new code replaces the last one.`,f_code:"Code from the email",sign_in:"Sign in",other_email:"Use another email",acct_h:"Your account",saved_h:"Saved details",saved_p:"Checkout fills these in for you.",save:"Save details",saved:"Details saved",orders_h:"Your orders",no_orders:"No orders yet. Orders you pay online appear here.",sign_out:"Sign out",e_email:"Enter an email address, for example name@gmail.com.",e_code:"That code didn't work. Use the code from the newest email, or request a new one.",e_send:"We couldn't send the code. Wait a minute and try again.",e_save:"Your details weren't saved. Check the phone number and try again.",save_addr:"Save these details to my account",st_pending:"Waiting for payment",st_paid:"Paid",st_failed:"Not paid",st_sent:"Sent on WhatsApp",demo_code:"Demo: no email is sent. Your code is",loading:"Loading",paying:"Opening the secure payment page",pay_fail:"The payment page could not open. Try again, or choose another payment method.",cod_instead:"Pay cash on delivery instead",demo_live:"KNET, card and Apple Pay open MyFatoorah's secure page.",checking:"Checking your payment",paid_h:id=>`Paid. Order ${id} is ours to deliver`,paid_p:"We have your payment. Send the order on WhatsApp so we can confirm the delivery time.",paid_send:"Send order on WhatsApp",unpaid_h:"Payment not completed",unpaid_p:"Nothing was charged, and your cart is still here. Try again, or choose another payment method.",back_co:"Back to checkout",check_fail:"We couldn't confirm the payment yet. Message us on WhatsApp with your order number and we'll check.",soon_line:"Not in stock yet:",wa_hello_soon:"Hello Kafei, I'm looking for something you don't list yet.",ask_wa_short:"WhatsApp"});
 Object.assign(T.ar,{hero_cta:"شاهد المتوفر",pour_p:"ما لدينا اليوم، نصبّه لك واحدًا تلو الآخر.",meter:"المنتجات المتوفرة",
   deliv_h:"في نفس اليوم للعاصمة وحولي",deliv_sub:"اطلب قبل الساعة 2 ظهرًا.",back:"العودة إلى",
   custom:"في الخليج، تهزّ فنجالك حين تكتفي. ومن هذه الهزّة جاء اسمنا.",
   brand:"محتار أيها يناسب مطبخك؟ اسألنا عبر واتساب قبل الشراء.",
-  nf_h:"لم نصبّ شيئًا هنا",nf_p:"هذه الصفحة غير موجودة. المتجر على بعد نقرة.",nf_btn:"اذهب إلى المتجر",acct_signin:"تسجيل الدخول",sending:"جارٍ إرسال الرمز…",verifying:"جارٍ التحقق من الرمز…",saving:"جارٍ الحفظ…",e_link:"انتهت صلاحية رابط الدخول أو استُخدم من قبل. أدخل بريدك لنرسل لك رمزًا جديدًا.",e_wait:n=>`أرسلنا لك رمزًا للتو. تحقق من بريدك (ومجلد الرسائل غير المرغوب فيها)، أو انتظر ${n} ثانية لطلب رمز جديد.`,acct_mine:"حسابك",acct_h_in:"سجّل الدخول إلى كفي",acct_p_in:"نرسل لك رمز دخول بالبريد. لا حاجة لكلمة مرور، ويمكنك الطلب دون حساب.",f_email:"البريد الإلكتروني",send_code:"أرسل الرمز",code_sent:e=>`أرسلنا رمزًا إلى ${e}. استخدم أحدث رسالة: كل رمز جديد يلغي الرمز السابق.`,f_code:"الرمز من البريد",sign_in:"دخول",other_email:"استخدم بريدًا آخر",acct_h:"حسابك",saved_h:"بياناتك المحفوظة",saved_p:"نملؤها لك عند إتمام الطلب.",save:"احفظ البيانات",saved:"تم حفظ البيانات",orders_h:"طلباتك",no_orders:"لا توجد طلبات بعد. تظهر هنا الطلبات المدفوعة إلكترونيًا.",sign_out:"تسجيل الخروج",e_email:"اكتب بريدًا إلكترونيًا، مثل name@gmail.com.",e_code:"لم يعمل هذا الرمز. استخدم الرمز من أحدث رسالة، أو اطلب رمزًا جديدًا.",e_send:"تعذّر إرسال الرمز. انتظر دقيقة وحاول مرة أخرى.",e_save:"لم تُحفظ بياناتك. تحقق من رقم الهاتف وحاول مرة أخرى.",save_addr:"احفظ هذه البيانات في حسابي",st_pending:"بانتظار الدفع",st_paid:"مدفوع",st_failed:"لم يُدفع",st_sent:"أُرسل عبر واتساب",demo_code:"تجربة: لا يُرسل بريد. رمزك هو",loading:"جارٍ التحميل",paying:"جارٍ فتح صفحة الدفع الآمنة",pay_fail:"تعذّر فتح صفحة الدفع. حاول مرة أخرى، أو اختر طريقة دفع أخرى.",cod_instead:"ادفع نقدًا عند الاستلام بدلًا من ذلك",demo_live:"الكي نت والبطاقة وApple Pay تفتح صفحة ماي فاتورة الآمنة.",checking:"نتحقق من الدفع",paid_h:id=>`تم الدفع. الطلب ${id} جاهز للتوصيل`,paid_p:"وصلنا الدفع. أرسل الطلب عبر واتساب لنؤكد لك موعد التوصيل.",paid_send:"أرسل الطلب عبر واتساب",unpaid_h:"لم يكتمل الدفع",unpaid_p:"لم يُخصم أي مبلغ، وسلتك كما هي. حاول مرة أخرى أو اختر طريقة دفع أخرى.",back_co:"العودة إلى إتمام الطلب",check_fail:"لم نتمكن من تأكيد الدفع بعد. راسلنا عبر واتساب برقم الطلب وسنتحقق.",soon_line:"غير متوفر بعد:",wa_hello_soon:"مرحبًا كفي، أبحث عن منتج غير معروض لديكم بعد.",ask_wa_short:"واتساب"});
+  nf_h:"لم نصبّ شيئًا هنا",nf_p:"هذه الصفحة غير موجودة. المتجر على بعد نقرة.",nf_btn:"اذهب إلى المتجر",acct_signin:"تسجيل الدخول",sending:"جارٍ إرسال الرمز…",verifying:"جارٍ التحقق من الرمز…",saving:"جارٍ الحفظ…",e_link:"لم يكتمل تسجيل الدخول. حاول مرة أخرى، أو ادخل ببريدك وكلمة المرور.",e_wait:n=>`أرسلنا لك رمزًا للتو. تحقق من بريدك (ومجلد الرسائل غير المرغوب فيها)، أو انتظر ${n} ثانية لطلب رمز جديد.`,acct_mine:"حسابك",acct_h_in:"سجّل الدخول إلى كفي",acct_p_in:"نرسل لك رمز دخول بالبريد. لا حاجة لكلمة مرور، ويمكنك الطلب دون حساب.",f_email:"البريد الإلكتروني",send_code:"أرسل الرمز",code_sent:e=>`أرسلنا رمزًا إلى ${e}. استخدم أحدث رسالة: كل رمز جديد يلغي الرمز السابق.`,f_code:"الرمز من البريد",sign_in:"دخول",other_email:"استخدم بريدًا آخر",acct_h:"حسابك",saved_h:"بياناتك المحفوظة",saved_p:"نملؤها لك عند إتمام الطلب.",save:"احفظ البيانات",saved:"تم حفظ البيانات",orders_h:"طلباتك",no_orders:"لا توجد طلبات بعد. تظهر هنا الطلبات المدفوعة إلكترونيًا.",sign_out:"تسجيل الخروج",e_email:"اكتب بريدًا إلكترونيًا، مثل name@gmail.com.",e_code:"لم يعمل هذا الرمز. استخدم الرمز من أحدث رسالة، أو اطلب رمزًا جديدًا.",e_send:"تعذّر إرسال الرمز. انتظر دقيقة وحاول مرة أخرى.",e_save:"لم تُحفظ بياناتك. تحقق من رقم الهاتف وحاول مرة أخرى.",save_addr:"احفظ هذه البيانات في حسابي",st_pending:"بانتظار الدفع",st_paid:"مدفوع",st_failed:"لم يُدفع",st_sent:"أُرسل عبر واتساب",demo_code:"تجربة: لا يُرسل بريد. رمزك هو",loading:"جارٍ التحميل",paying:"جارٍ فتح صفحة الدفع الآمنة",pay_fail:"تعذّر فتح صفحة الدفع. حاول مرة أخرى، أو اختر طريقة دفع أخرى.",cod_instead:"ادفع نقدًا عند الاستلام بدلًا من ذلك",demo_live:"الكي نت والبطاقة وApple Pay تفتح صفحة ماي فاتورة الآمنة.",checking:"نتحقق من الدفع",paid_h:id=>`تم الدفع. الطلب ${id} جاهز للتوصيل`,paid_p:"وصلنا الدفع. أرسل الطلب عبر واتساب لنؤكد لك موعد التوصيل.",paid_send:"أرسل الطلب عبر واتساب",unpaid_h:"لم يكتمل الدفع",unpaid_p:"لم يُخصم أي مبلغ، وسلتك كما هي. حاول مرة أخرى أو اختر طريقة دفع أخرى.",back_co:"العودة إلى إتمام الطلب",check_fail:"لم نتمكن من تأكيد الدفع بعد. راسلنا عبر واتساب برقم الطلب وسنتحقق.",soon_line:"غير متوفر بعد:",wa_hello_soon:"مرحبًا كفي، أبحث عن منتج غير معروض لديكم بعد.",ask_wa_short:"واتساب"});
 
 /* ===== shared parts ===== */
 const arName=o=>`<p class="ar2"><bdi lang="${lang==="ar"?"en":"ar"}" dir="${lang==="ar"?"ltr":"rtl"}">${esc(other(o))}</bdi></p>`;
@@ -214,7 +214,7 @@ function viewHome(){
   <section class="pour sec" id="stock" style="--n:${P.length}" aria-labelledby="stockH"><div class="stage wrap">
     <div class="pour-head"><h2 id="stockH">${t("stock_h")}</h2><p>${t("pour_p")}</p></div>
     <ol class="serve">${cups}</ol>${meter}</div></section>
-  ${CATS.filter(c=>inCat(c).length).length>1?`<section class="wrap" aria-labelledby="catsH"><div class="cats-head"><h2 id="catsH" data-rise>${t("cats_h")}</h2></div>${catList(null,true)}</section>`:""}
+  ${catRail()}${brandRail()}
   <section class="strip" aria-labelledby="delH"><div class="wrap"><h2 id="delH" class="sr">${t("nav_delivery")}</h2>
     <ul><li>${ICON.truck}<span><b>${t("deliv_h")}</b> ${t("deliv_sub")}</span></li><li>${ICON.tag}<span>${t("d2")}</span></li><li>${ICON.card}<span>${t("d3")}</span></li></ul>
     <a class="textlink" href="#delivery">${t("deliv_more")}</a></div></section>`;
@@ -298,7 +298,7 @@ function viewPaid(){
   return `<div class="wrap page-head"><h1>${t("unpaid_h")}</h1><p class="lead">${t("unpaid_p")}</p><p style="display:flex;flex-wrap:wrap;gap:10px;margin-top:28px"><a class="btn" href="#checkout"><span>${t("back_co")}</span></a><a class="btn ghost" href="#shop"><span>${t("ok_back")}</span></a></p></div>`;
 }
 /* ===== customer accounts (Supabase): email code sign-in, saved details, order history ===== */
-let sb=null, sbUser=null, sbProfile=null, sbReady=null, acctStep="email", acctEmail="", acctMsg="";
+let sb=null, sbUser=null, sbProfile=null, sbReady=null, acctStep="signin", acctEmail="", acctMsg="";
 const accountsDemo=()=>!!(CONFIG.accounts&&CONFIG.accounts.demo);
 const accountsOn=()=>!!(CONFIG.accounts&&(accountsDemo()||(/^https?:$/.test(location.protocol)&&!/claude|anthropic/i.test(location.hostname))));
 /* demo stand-in for Supabase: same calls, kept in this browser. Used only when CONFIG.accounts.demo is true. */
@@ -340,7 +340,8 @@ async function sbToken(){ if(!sb) return null; try{ const {data}=await sb.auth.g
 async function loadProfile(){ try{ const {data}=await sb.from("profiles").select("*").eq("id",sbUser.id).maybeSingle(); sbProfile=data||null; }catch(e){ sbProfile=null; } }
 async function saveProfile(p,quiet){ if(!sb||!sbUser) return false;
   const row={id:sbUser.id,updated_at:new Date().toISOString()}; for(const k of ["name","phone","gov","area","block","street","avenue","house","notes"]) row[k]=(p[k]||"").trim()||null;
-  const {error}=await sb.from("profiles").upsert(row); if(!error){ sbProfile=row; if(!quiet) toast(t("saved")); return true; } if(!quiet) toast(t("e_save")); return false; }
+  if(p.username!==undefined) row.username=(p.username||"").trim()||null;
+  const {error}=await sb.from("profiles").upsert(row); if(!error){ sbProfile={...(sbProfile||{}),...row}; if(!quiet) toast(t("saved")); return true; } if(!quiet) toast(error.code==="23505"?t("e_user_taken"):t("e_save")); return false; }
 function updateAcct(){ const b=$("#acctBtn"); if(!b) return; b.hidden=!accountsOn(); b.classList.toggle("in",!!sbUser); b.setAttribute("aria-label",sbUser?t("acct_mine"):t("acct_signin")); if(location.hash==="#account") b.setAttribute("aria-current","page"); else b.removeAttribute("aria-current"); }
 function viewAccount(){
   if(!accountsOn()) return view404();
@@ -352,25 +353,15 @@ async function renderAccount(){
   const head=crumbs([["home",t("home")],["",sbUser?t("acct_h"):t("acct_signin")]]);
   const err=acctMsg?`<div class="err-summary" role="alert"><h2>${esc(acctMsg)}</h2></div>`:""; acctMsg="";
   if(!sb){ box.innerHTML=`<div class="wrap page-head">${head}<h1>${t("acct_signin")}</h1><p class="lead">${t("e_send")}</p></div>`; return; }
-  if(!sbUser){
-    if(acctStep==="code"){
-      box.innerHTML=`<div class="wrap page-head">${head}<h1>${t("acct_h_in")}</h1><p class="lead">${esc(t("code_sent",acctEmail))}</p>${accountsDemo()&&demoCode?`<p class="okmsg" style="margin-top:14px;font-size:1.125rem">${t("demo_code")} <span class="num" dir="ltr">${demoCode}</span></p>`:""}
-      <form class="acct-card" id="acctCode" novalidate>${err}<div class="f"><label for="otp">${t("f_code")}</label><input id="otp" class="code" inputmode="numeric" autocomplete="one-time-code" maxlength="12" required></div>
-      <button class="btn" type="submit"><span>${t("sign_in")}</span></button><button class="linkbtn" type="button" id="acctBack">${t("other_email")}</button></form></div>`;
-      $("#otp").focus(); return;
-    }
-    box.innerHTML=`<div class="wrap page-head">${head}<h1>${t("acct_h_in")}</h1><p class="lead">${t("acct_p_in")}</p>
-    <form class="acct-card" id="acctEmail" novalidate>${err}<div class="f"><label for="email">${t("f_email")}</label><input id="email" type="email" inputmode="email" autocomplete="email" required value="${esc(acctEmail)}" dir="ltr"></div>
-    <button class="btn" type="submit"><span>${t("send_code")}</span></button></form></div>`;
-    return;
-  }
+  if(!sbUser){ await checkGoogle(); if($("#acctView")!==box) return; box.innerHTML=authCard(head,err); const f=box.querySelector("form input"); if(f&&acctStep!=="signin") f.focus(); return; }
   let orders=[]; try{ const {data}=await sb.from("orders").select("id,created_at,status,method,total_fils,items").order("created_at",{ascending:false}).limit(20); orders=data||[]; }catch(e){}
   const p=sbProfile||{}, val=k=>esc(p[k]||"");
   const df=new Intl.DateTimeFormat(lang==="ar"?"ar-KW":"en-GB",{day:"numeric",month:"short",year:"numeric"});
-  box.innerHTML=`<div class="wrap page-head">${head}<h1>${t("acct_h")}</h1><p class="lead" dir="ltr" style="text-align:start">${esc(sbUser.email||"")}</p></div>
+  box.innerHTML=`<div class="wrap page-head">${head}<h1>${t("acct_h")}</h1><p class="lead" dir="ltr" style="text-align:start">${p.username?`<b>@${esc(p.username)}</b><br>`:""}${esc(sbUser.email||"")}</p></div>
   <div class="wrap acct-grid">
     <form id="acctProfile" novalidate><h2>${t("saved_h")}</h2><p class="muted" style="margin:-6px 0 18px">${t("saved_p")}</p>${err}
       <div class="fgrid">
+        <div class="f full"><label for="puser">${t("f_user")}</label><input id="puser" autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="20" dir="ltr" value="${val("username")}"><p class="help">${t("f_user_h")}</p></div>
         <div class="f full"><label for="pname">${t("f_name")}</label><input id="pname" autocomplete="name" value="${val("name")}"></div>
         <div class="f full"><label for="pphone">${t("f_phone")}</label><div class="tel"><span>+965</span><input id="pphone" type="tel" inputmode="tel" maxlength="9" value="${val("phone")}"></div></div>
         <div class="f"><label for="pgov">${t("f_gov")}</label><select id="pgov"><option value="">${t("f_choose")}</option>${GOVS.map(g=>`<option value="${g[0]}" ${p.gov===g[0]?"selected":""}>${lang==="ar"?g[2]:g[1]}</option>`).join("")}</select></div>
@@ -385,29 +376,125 @@ async function renderAccount(){
     <section aria-labelledby="ordH"><h2 id="ordH">${t("orders_h")}</h2>${orders.length?`<ol class="olist">${orders.map(o=>`<li><b class="num">${esc(o.id)}</b><span class="st ${esc(o.status)}">${t("st_"+o.status)}</span><span class="meta">${df.format(new Date(o.created_at))}, <span class="num">${money(o.total_fils)}</span>${(o.items||[]).length?", "+esc(o.items.map(i=>i.qty+" × "+i.name).join(lang==="ar"?"، ":", ")):""}</span></li>`).join("")}</ol>`:`<p class="muted">${t("no_orders")}</p>`}</section>
   </div>`;
 }
+Object.assign(T.en,{acct_p_in:"Sign in with your email or username. Checkout works without an account too.",f_login:"Email or username",f_pass:"Password",f_pass_new:"New password",f_user:"Username",
+  f_user_h:"3 to 20 letters or numbers. Dots and underscores are fine.",f_pass_h:"At least 8 characters.",show_pass:"Show",hide_pass:"Hide",
+  to_signup:"Create an account",to_signin:"I already have an account",forgot:"Forgot your password?",google:"Continue with Google",or:"or",
+  su_h:"Create your Kafei account",su_p:"We email you a code once to check the address. After that you sign in with your password.",su_btn:"Create account",
+  vf_h:"Check your email",vf_p:e=>`We sent a 6-digit code to ${e}. Enter it to finish. You only do this once.`,vf_btn:"Confirm email",resend:"Send a new code",resent:"New code sent",
+  fg_h:"Reset your password",fg_p:"Enter the email on your account. We'll send a code to set a new password.",fg_btn:"Send code",
+  rs_h:"Set a new password",rs_p:e=>`Enter the code we sent to ${e} and choose a new password.`,rs_btn:"Save new password",rs_done:"Password changed. You're signed in.",
+  e_login:"That email, username or password is wrong.",e_pass:"Use at least 8 characters for the password.",e_user:"Usernames are 3 to 20 letters or numbers, and may use dots and underscores.",
+  e_user_taken:"That username is taken. Try another.",e_exists:"There's already an account with this email. Sign in, or reset your password.",
+  e_unconfirmed:"Confirm your email first. We sent you a new code.",e_signup:"We couldn't create the account. Wait a minute and try again.",
+  e_many:n=>`Too many tries. Wait ${Math.ceil(n/60)} minutes and try again.`,signing:"Signing in…",creating:"Creating account…",acct_user:"Username",
+  e_google:"Google sign-in didn't finish. Try again, or use your email and password."});
+Object.assign(T.ar,{acct_p_in:"سجّل الدخول ببريدك أو اسم المستخدم. ويمكنك الطلب دون حساب أيضًا.",f_login:"البريد أو اسم المستخدم",f_pass:"كلمة المرور",f_pass_new:"كلمة المرور الجديدة",f_user:"اسم المستخدم",
+  f_user_h:"من 3 إلى 20 حرفًا إنجليزيًا أو رقمًا، ويمكن استخدام النقطة والشرطة السفلية.",f_pass_h:"8 أحرف على الأقل.",show_pass:"إظهار",hide_pass:"إخفاء",
+  to_signup:"أنشئ حسابًا",to_signin:"لدي حساب بالفعل",forgot:"نسيت كلمة المرور؟",google:"المتابعة عبر Google",or:"أو",
+  su_h:"أنشئ حسابك في كفي",su_p:"نرسل لك رمزًا مرة واحدة للتأكد من بريدك، وبعدها تدخل بكلمة المرور.",su_btn:"إنشاء الحساب",
+  vf_h:"تحقق من بريدك",vf_p:e=>`أرسلنا رمزًا من 6 أرقام إلى ${e}. أدخله لإكمال التسجيل. هذه الخطوة مرة واحدة فقط.`,vf_btn:"تأكيد البريد",resend:"أرسل رمزًا جديدًا",resent:"أُرسل رمز جديد",
+  fg_h:"إعادة تعيين كلمة المرور",fg_p:"اكتب البريد المسجّل في حسابك، وسنرسل لك رمزًا لتعيين كلمة مرور جديدة.",fg_btn:"أرسل الرمز",
+  rs_h:"عيّن كلمة مرور جديدة",rs_p:e=>`أدخل الرمز الذي أرسلناه إلى ${e} واختر كلمة مرور جديدة.`,rs_btn:"احفظ كلمة المرور",rs_done:"تم تغيير كلمة المرور، وأنت الآن مسجّل الدخول.",
+  e_login:"البريد أو اسم المستخدم أو كلمة المرور غير صحيحة.",e_pass:"استخدم 8 أحرف على الأقل لكلمة المرور.",e_user:"اسم المستخدم من 3 إلى 20 حرفًا إنجليزيًا أو رقمًا، ويمكن أن يحتوي على نقطة أو شرطة سفلية.",
+  e_user_taken:"اسم المستخدم مأخوذ. جرّب اسمًا آخر.",e_exists:"يوجد حساب بهذا البريد. سجّل الدخول، أو أعد تعيين كلمة المرور.",
+  e_unconfirmed:"أكّد بريدك أولًا. أرسلنا لك رمزًا جديدًا.",e_signup:"تعذّر إنشاء الحساب. انتظر دقيقة وحاول مرة أخرى.",
+  e_many:n=>`محاولات كثيرة. انتظر ${Math.ceil(n/60)} دقائق وحاول مرة أخرى.`,signing:"جارٍ الدخول…",creating:"جارٍ إنشاء الحساب…",acct_user:"اسم المستخدم",
+  e_google:"لم يكتمل الدخول عبر Google. حاول مرة أخرى، أو استخدم البريد وكلمة المرور."});
+let acctLogin="", googleOn=null;
+const USER_RE=/^[A-Za-z0-9._]{3,20}$/, EMAIL_RE=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+async function checkGoogle(){ if(googleOn!==null) return googleOn;
+  try{ const r=await fetch(CONFIG.accounts.url+"/auth/v1/settings",{headers:{apikey:CONFIG.accounts.anonKey}}); const d=await r.json(); googleOn=!!(d&&d.external&&d.external.google); }catch(e){ googleOn=false; }
+  return googleOn; }
+const GLOGO=`<svg viewBox="0 0 48 48" width="20" height="20" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg>`;
+const passField=(id,lab,ac,help)=>`<div class="f"><label for="${id}">${t(lab)}</label><div class="pw"><input id="${id}" type="password" autocomplete="${ac}" required minlength="8" maxlength="200" dir="ltr"><button type="button" class="pw-eye" data-eye="${id}" aria-controls="${id}" aria-pressed="false">${t("show_pass")}</button></div>${help?`<p class="help">${t(help)}</p>`:""}</div>`;
+function authCard(head,err){
+  const page=(h,p,form)=>`<div class="wrap page-head">${head}<h1>${h}</h1><p class="lead">${p}</p>${form}</div>`;
+  const g=googleOn?`<div class="or"><span>${t("or")}</span></div><button class="btn ghost gbtn" type="button" id="acctGoogle">${GLOGO}<span>${t("google")}</span></button>`:"";
+  const emailF=`<div class="f"><label for="email">${t("f_email")}</label><input id="email" type="email" inputmode="email" autocomplete="email" required value="${esc(acctEmail)}" dir="ltr"></div>`;
+  const codeF=`<div class="f"><label for="otp">${t("f_code")}</label><input id="otp" class="code" inputmode="numeric" autocomplete="one-time-code" maxlength="12" required dir="ltr"></div>`;
+  if(acctStep==="signup") return page(t("su_h"),t("su_p"),`<form class="acct-card" id="acctSignup" novalidate>${err}${emailF}
+    <div class="f"><label for="uname">${t("f_user")}</label><input id="uname" autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="20" required dir="ltr"><p class="help">${t("f_user_h")}</p></div>
+    ${passField("pass","f_pass","new-password","f_pass_h")}<button class="btn" type="submit"><span>${t("su_btn")}</span></button>${g}
+    <button class="linkbtn" type="button" data-step="signin">${t("to_signin")}</button></form>`);
+  if(acctStep==="verify") return page(t("vf_h"),esc(t("vf_p",acctEmail)),`<form class="acct-card" id="acctVerify" novalidate>${err}${codeF}
+    <button class="btn" type="submit"><span>${t("vf_btn")}</span></button><button class="linkbtn" type="button" id="acctResend">${t("resend")}</button></form>`);
+  if(acctStep==="forgot") return page(t("fg_h"),t("fg_p"),`<form class="acct-card" id="acctForgot" novalidate>${err}${emailF}
+    <button class="btn" type="submit"><span>${t("fg_btn")}</span></button><button class="linkbtn" type="button" data-step="signin">${t("to_signin")}</button></form>`);
+  if(acctStep==="reset") return page(t("rs_h"),esc(t("rs_p",acctEmail)),`<form class="acct-card" id="acctReset" novalidate>${err}${codeF}${passField("pass","f_pass_new","new-password","f_pass_h")}
+    <button class="btn" type="submit"><span>${t("rs_btn")}</span></button><button class="linkbtn" type="button" data-step="forgot">${t("resend")}</button></form>`);
+  return page(t("acct_h_in"),t("acct_p_in"),`<form class="acct-card" id="acctSignin" novalidate>${err}
+    <div class="f"><label for="login">${t("f_login")}</label><input id="login" autocomplete="username" autocapitalize="none" spellcheck="false" required value="${esc(acctLogin)}" dir="ltr"></div>
+    ${passField("pass","f_pass","current-password")}<button class="btn" type="submit"><span>${t("sign_in")}</span></button>
+    <button class="linkbtn" type="button" data-step="forgot">${t("forgot")}</button>${g}
+    <div class="or"><span>${t("or")}</span></div><button class="btn ghost" type="button" data-step="signup"><span>${t("to_signup")}</span></button></form>`);
+}
+const busy=(btn,label)=>{ if(!btn) return ()=>{}; btn.disabled=true; const old=btn.innerHTML; btn.innerHTML=`<span class="spin" aria-hidden="true"></span><span>${label}</span>`; btn.setAttribute("aria-busy","true");
+  return ()=>{ if(btn.isConnected){ btn.disabled=false; btn.innerHTML=old; btn.removeAttribute("aria-busy"); } }; };
+const waitSecs=error=>{ const m=/(\d+)\s*seconds?/i.exec(error&&error.message||""); return m?+m[1]:60; };
+const isLimit=error=>!!error&&(error.status===429||/rate|seconds/i.test(error.message||""));
+async function signedIn(session){ if(session) await sb.auth.setSession({access_token:session.access_token,refresh_token:session.refresh_token});
+  const {data}=await sb.auth.getSession(); sbUser=data&&data.session?data.session.user:null; acctStep="signin"; if(sbUser) await loadProfile(); updateAcct(); return renderAccount(); }
 document.addEventListener("submit",async e=>{
-  const id=e.target.id; if(!["acctEmail","acctCode","acctProfile"].includes(id)) return; e.preventDefault();
-  const btn=e.target.querySelector("button[type=submit]"), busyLabel={acctEmail:t("sending"),acctCode:t("verifying"),acctProfile:t("saving")}[id];
-  if(btn){ btn.disabled=true; btn.dataset.label=btn.innerHTML; btn.innerHTML=`<span class="spin" aria-hidden="true"></span><span>${busyLabel}</span>`; btn.setAttribute("aria-busy","true"); }
+  const id=e.target.id; if(!["acctSignin","acctSignup","acctVerify","acctForgot","acctReset","acctProfile"].includes(id)) return; e.preventDefault();
+  const label={acctSignin:t("signing"),acctSignup:t("creating"),acctVerify:t("verifying"),acctForgot:t("sending"),acctReset:t("saving"),acctProfile:t("saving")}[id];
+  const done=busy(e.target.querySelector("button[type=submit]"),label), v=k=>{ const el=document.getElementById(k); return el?el.value.trim():""; };
+  const fail=m=>{ acctMsg=m; return renderAccount(); };
   try{
-    if(id==="acctEmail"){ const em=$("#email").value.trim(); acctEmail=em;
-      if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)){ acctMsg=t("e_email"); return renderAccount(); }
-      const {error}=await sb.auth.signInWithOtp({email:em,options:{shouldCreateUser:true}});
-      if(error){ const m=/(\d+)\s*seconds?/i.exec(error.message||""), busy=error.status===429||/rate|seconds/i.test(error.message||"");
-        console.warn("send code failed",error.status,error.message); acctMsg=busy?t("e_wait",m?+m[1]:60):t("e_send"); return renderAccount(); }
-      acctStep="code"; return renderAccount(); }
-    if(id==="acctCode"){ const code=$("#otp").value.replace(/\D/g,""); if(code.length<6){ acctMsg=t("e_code"); return renderAccount(); }
-      const {data,error}=await sb.auth.verifyOtp({email:acctEmail,token:code,type:"email"});
-      if(error||!data||!data.session){ acctMsg=t("e_code"); return renderAccount(); }
-      sbUser=data.session.user; acctStep="email"; await loadProfile(); updateAcct(); return renderAccount(); }
-    if(id==="acctProfile"){ const val=k=>$("#p"+k).value; const phone=val("phone").replace(/\D/g,"");
-      if(phone&&!/^[4569]\d{7}$/.test(phone)){ acctMsg=t("e_phone"); return renderAccount(); }
-      await saveProfile({name:val("name"),phone,gov:val("gov"),area:val("area"),block:val("block"),street:val("street"),avenue:val("avenue"),house:val("house")}); }
-  } finally { if(btn&&btn.isConnected){ btn.disabled=false; if(btn.dataset.label) btn.innerHTML=btn.dataset.label; btn.removeAttribute("aria-busy"); } }
+    if(id==="acctSignin"){ const login=v("login"), password=$("#pass").value; acctLogin=login;
+      if(!login||!password) return fail(t("e_login"));
+      if(login.includes("@")){
+        const {data,error}=await sb.auth.signInWithPassword({email:login,password});
+        if(!error&&data&&data.session) return signedIn();
+        if(error&&error.code==="email_not_confirmed"){ acctEmail=login; await sb.auth.resend({type:"signup",email:login}); acctStep="verify"; return fail(t("e_unconfirmed")); }
+        return fail(isLimit(error)?t("e_wait",waitSecs(error)):t("e_login")); }
+      const r=await fetch("/api/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({login,password})}); const d=await r.json().catch(()=>({}));
+      if(r.ok&&d.access_token) return signedIn(d);
+      if(d.error==="email_not_confirmed"&&d.email){ acctEmail=d.email; await sb.auth.resend({type:"signup",email:d.email}); acctStep="verify"; return fail(t("e_unconfirmed")); }
+      if(d.error==="too_many") return fail(t("e_many",d.wait||600));
+      return fail(t("e_login")); }
+    if(id==="acctSignup"){ const email=v("email"), username=v("uname"), password=$("#pass").value; acctEmail=email;
+      if(!EMAIL_RE.test(email)) return fail(t("e_email"));
+      if(!USER_RE.test(username)) return fail(t("e_user"));
+      if(password.length<8) return fail(t("e_pass"));
+      const {data:free,error:fe}=await sb.rpc("username_available",{u:username}); if(!fe&&free===false) return fail(t("e_user_taken"));
+      const {data,error}=await sb.auth.signUp({email,password,options:{data:{username}}});
+      if(error){ console.warn("sign-up failed",error.status,error.message);
+        if(/already registered|exists/i.test(error.message||"")) return fail(t("e_exists"));
+        if(/database error/i.test(error.message||"")) return fail(t("e_user_taken"));
+        if(/password/i.test(error.message||"")) return fail(t("e_pass"));
+        return fail(isLimit(error)?t("e_wait",waitSecs(error)):t("e_signup")); }
+      if(data&&data.user&&Array.isArray(data.user.identities)&&!data.user.identities.length) return fail(t("e_exists"));
+      if(data&&data.session) return signedIn();
+      acctStep="verify"; return renderAccount(); }
+    if(id==="acctVerify"){ const code=v("otp").replace(/\D/g,""); if(code.length<6) return fail(t("e_code"));
+      let {data,error}=await sb.auth.verifyOtp({email:acctEmail,token:code,type:"signup"});
+      if(error||!data||!data.session) ({data,error}=await sb.auth.verifyOtp({email:acctEmail,token:code,type:"email"}));
+      if(error||!data||!data.session) return fail(t("e_code"));
+      return signedIn(); }
+    if(id==="acctForgot"){ const email=v("email"); acctEmail=email; if(!EMAIL_RE.test(email)) return fail(t("e_email"));
+      const {error}=await sb.auth.resetPasswordForEmail(email);
+      if(error){ console.warn("reset failed",error.status,error.message); return fail(isLimit(error)?t("e_wait",waitSecs(error)):t("e_send")); }
+      acctStep="reset"; return renderAccount(); }
+    if(id==="acctReset"){ const code=v("otp").replace(/\D/g,""), password=$("#pass").value;
+      if(code.length<6) return fail(t("e_code")); if(password.length<8) return fail(t("e_pass"));
+      const {data,error}=await sb.auth.verifyOtp({email:acctEmail,token:code,type:"recovery"});
+      if(error||!data||!data.session) return fail(t("e_code"));
+      const {error:ue}=await sb.auth.updateUser({password}); if(ue){ console.warn("password update failed",ue.message); return fail(/password/i.test(ue.message||"")?t("e_pass"):t("e_save")); }
+      toast(t("rs_done")); return signedIn(); }
+    if(id==="acctProfile"){ const val=k=>$("#p"+k).value; const phone=val("phone").replace(/\D/g,""), uEl=$("#puser"), username=uEl?uEl.value.trim():undefined;
+      if(phone&&!/^[4569]\d{7}$/.test(phone)) return fail(t("e_phone"));
+      if(username&&!USER_RE.test(username)) return fail(t("e_user"));
+      if(username&&username.toLowerCase()!==String((sbProfile||{}).username||"").toLowerCase()){ const {data:free}=await sb.rpc("username_available",{u:username}); if(free===false) return fail(t("e_user_taken")); }
+      await saveProfile({name:val("name"),phone,gov:val("gov"),area:val("area"),block:val("block"),street:val("street"),avenue:val("avenue"),house:val("house"),username}); }
+  } finally { done(); }
 });
 document.addEventListener("click",async e=>{
-  if(e.target.closest("#acctOut")){ await sb.auth.signOut(); sbUser=null; sbProfile=null; updateAcct(); renderAccount(); }
-  if(e.target.closest("#acctBack")){ acctStep="email"; renderAccount(); }
+  if(e.target.closest("#acctOut")){ await sb.auth.signOut(); sbUser=null; sbProfile=null; acctStep="signin"; updateAcct(); renderAccount(); return; }
+  const st=e.target.closest("[data-step]"); if(st){ acctStep=st.dataset.step; renderAccount(); return; }
+  const eye=e.target.closest("[data-eye]"); if(eye){ const i=document.getElementById(eye.dataset.eye), show=i.type==="password"; i.type=show?"text":"password"; eye.textContent=show?t("hide_pass"):t("show_pass"); eye.setAttribute("aria-pressed",String(show)); return; }
+  if(e.target.closest("#acctResend")){ const b=e.target.closest("#acctResend"); b.disabled=true; const {error}=await sb.auth.resend({type:"signup",email:acctEmail});
+    toast(error?(isLimit(error)?t("e_wait",waitSecs(error)):t("e_send")):t("resent")); setTimeout(()=>{ if(b.isConnected) b.disabled=false; },30000); return; }
+  if(e.target.closest("#acctGoogle")){ const {error}=await sb.auth.signInWithOAuth({provider:"google",options:{redirectTo:location.origin+"/"}}); if(error){ acctMsg=t("e_google"); renderAccount(); } }
 });
 function prefillCheckout(){
   if(!sbUser||!$("#coForm")) return;
@@ -508,6 +595,7 @@ function route(){
   if(h.startsWith("shop-")){ const rest=h.slice(5), c=CATS.find(x=>rest===x.id||rest.startsWith(x.id+"-"));
     if(c) return {html:viewCategory(c,rest.length>c.id.length?rest.slice(c.id.length+1):null),nav:"shop"}; }
   if(h.startsWith("p-")&&byId[h.slice(2)]) return {html:viewProduct(byId[h.slice(2)]),nav:"shop"};
+  if(h.startsWith("brand-")){ const b=brandById(h.slice(6)); if(b) return {html:viewBrand(b),nav:"shop"}; }
   if(h==="delivery") return {html:viewDelivery(),nav:"delivery"};
   if(h==="about") return {html:viewAbout(),nav:"about"};
   if(h==="checkout") return {html:viewCheckout(),nav:""};
@@ -524,11 +612,11 @@ function swap(){
   const h1=$("#main h1"), base=lang==="ar"?"كفي Kafei: مكائن وأدوات قهوة في الكويت":"Kafei كفي: coffee machines and gear in Kuwait";
   document.title=$(".hero")||!h1?base:`${h1.textContent.trim()} · ${lang==="ar"?"كفي Kafei":"Kafei كفي"}`;
   $$("#nav a").forEach(a=>{ if(a.dataset.nav===r.nav) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
-  $("#nav").classList.remove("open"); $("#menuBtn").setAttribute("aria-expanded","false");
+  closeMenu(false);
   document.documentElement.classList.remove("frame-away");
   if(!reduce.matches){ const vid=$(".hero video"); if(vid){ const go=()=>{ if(!vid.isConnected) return; vid.src=vid.dataset.src; vid.addEventListener("playing",()=>vid.classList.add("on"),{once:true}); vid.play().catch(()=>{}); }; if(document.readyState==="complete") setTimeout(go,300); else addEventListener("load",()=>setTimeout(go,300),{once:true}); } }
   scrollToY(0,true);
-  setupPage();
+  setupPage(); requestAnimationFrame(railState);
   updateAcct(); if(r.html.includes('id="coForm"')) sbLoad().then(prefillCheckout);
   const el=r.target&&document.getElementById(r.target);
   if(el&&r.target!=="main") requestAnimationFrame(()=>scrollToY(el.getBoundingClientRect().top+scrollY-8,true));
@@ -555,6 +643,99 @@ document.addEventListener("click",e=>{
   const el=document.getElementById("stock"); if(!el) return;
   e.preventDefault(); scrollToY(el.getBoundingClientRect().top+scrollY,false);
 },true);
+/* ===== brands, slide-out menu and home carousels ===== */
+Object.assign(T.en,{menu_h:"Menu",menu_close:"Close the menu",m_shop:"Shop",m_brands:"Brands",m_more:"More",m_wa:"Message us on WhatsApp",
+  brands_h:"Shop by brand",brand_lead:n=>`Everything we stock from ${n}.`,rail_prev:"Previous",rail_next:"Next",soon_short:"Coming soon"});
+Object.assign(T.ar,{menu_h:"القائمة",menu_close:"أغلق القائمة",m_shop:"المتجر",m_brands:"الماركات",m_more:"المزيد",m_wa:"راسلنا على واتساب",
+  brands_h:"تسوّق حسب الماركة",brand_lead:n=>`كل ما نوفّره من ${n}.`,rail_prev:"السابق",rail_next:"التالي",soon_short:"قريبًا"});
+
+const brandSlug=b=>String(b||"").toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+/* brands come from the products themselves (the "Brand" box in the dashboard), most products first */
+function brands(){
+  const m=new Map();
+  for(const p of P){ const b=(p.brand||"").trim(), s=brandSlug(b); if(!s) continue; if(!m.has(s)) m.set(s,{id:s,name:b,items:[]}); m.get(s).items.push(p); }
+  return [...m.values()].sort((a,b)=>b.items.length-a.items.length||a.name.localeCompare(b.name));
+}
+const brandById=id=>brands().find(b=>b.id===id)||null;
+
+function viewBrand(b){
+  return `<div class="wrap page-head">${crumbs([["home",t("home")],["shop",t("shop_h")],["",b.name]])}<h1 data-rise>${esc(b.name)}</h1><p class="lead">${esc(t("brand_lead",b.name))}</p></div>
+  <div class="wrap"><ul class="plist">${b.items.map(prow).join("")}</ul></div>`;
+}
+
+/* ---- carousels ---- */
+function rail(id,title,cards){
+  return `<section class="rail-sec" aria-labelledby="${id}H"><div class="wrap rail-head"><h2 id="${id}H" data-rise>${title}</h2>
+    <div class="rail-btns"><button type="button" class="rail-btn" data-rail="${id}" data-dir="-1" aria-label="${t("rail_prev")}" aria-controls="${id}">${ARROW}</button><button type="button" class="rail-btn" data-rail="${id}" data-dir="1" aria-label="${t("rail_next")}" aria-controls="${id}">${ARROW}</button></div></div>
+    <ul class="rail" id="${id}" tabindex="0" aria-label="${title}">${cards}</ul></section>`;
+}
+const ARROW=`<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>`;
+function catRail(){
+  const cards=CATS.map(c=>{ const list=inCat(c), n=list.length, p=list[0], bd=BANDS[c.band]||BANDS.cream;
+    return `<li class="tile${n?"":" is-soon"}"><a href="#shop-${c.id}" style="--tb:${bd[0]};--tf:${bd[1]}">
+      <span class="tile-img" aria-hidden="true">${p?`<img src="${p.img}" alt="" ${p.fit==="contain"?'class="contain"':""} loading="lazy" decoding="async" width="400" height="400">`:`<span class="tile-mark">${esc(L(c.name)).slice(0,1)}</span>`}</span>
+      <span class="tile-txt"><b>${esc(L(c.name))}</b><span>${n?t("n_products",n):t("soon_short")}</span></span></a></li>`; }).join("");
+  return rail("catRail",t("cats_h"),cards);
+}
+function brandRail(){
+  const bs=brands(); if(!bs.length) return "";
+  const cards=bs.map(b=>{ const p=b.items[0];
+    return `<li class="tile brand"><a href="#brand-${b.id}">
+      <span class="tile-img" aria-hidden="true">${p?`<img src="${p.img}" alt="" ${p.fit==="contain"?'class="contain"':""} loading="lazy" decoding="async" width="400" height="400">`:""}</span>
+      <span class="tile-txt"><b dir="auto">${esc(b.name)}</b><span>${t("n_products",b.items.length)}</span></span></a></li>`; }).join("");
+  return rail("brandRail",t("brands_h"),cards);
+}
+function railState(){
+  $$(".rail").forEach(r=>{ const max=r.scrollWidth-r.clientWidth, x=Math.abs(r.scrollLeft);
+    $$(`[data-rail="${r.id}"]`).forEach(b=>{ b.disabled=b.dataset.dir==="-1"?x<4:x>max-4; });
+    r.closest(".rail-sec").classList.toggle("fits",max<4); });
+}
+document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-rail]"); if(!b) return;
+  const r=document.getElementById(b.dataset.rail); if(!r) return;
+  const step=Math.max(240,r.clientWidth*.8)*(+b.dataset.dir)*(document.documentElement.dir==="rtl"?-1:1);
+  r.scrollBy({left:step,behavior:reduce.matches?"auto":"smooth"});
+});
+document.addEventListener("scroll",e=>{ if(e.target.classList&&e.target.classList.contains("rail")) railState(); },true);
+addEventListener("resize",railState);
+
+/* ---- slide-out menu ---- */
+let menuFocus=null;
+function renderMenu(){
+  const bs=brands(), cur=location.hash.slice(1)||"home";
+  const link=(h,label,extra="")=>`<li><a href="#${h}" ${cur===h?'aria-current="page"':""}>${label}${extra}</a></li>`;
+  $("#menu").innerHTML=`<div class="drawer-head"><h2 id="menuTitle">${t("menu_h")}</h2><button class="x-btn" id="menuClose" type="button" aria-label="${t("menu_close")}"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <nav class="menu-body" aria-labelledby="menuTitle">
+    <h3>${t("m_shop")}</h3><ul class="menu-list">${link("shop",t("all_products"),` <span class="n num">${P.length}</span>`)}${CATS.map(c=>{const n=inCat(c).length;return link("shop-"+c.id,esc(L(c.name)),n?` <span class="n num">${n}</span>`:` <span class="n soon">${t("soon_short")}</span>`);}).join("")}</ul>
+    ${bs.length?`<h3>${t("m_brands")}</h3><ul class="menu-list">${bs.map(b=>link("brand-"+b.id,`<bdi>${esc(b.name)}</bdi>`,` <span class="n num">${b.items.length}</span>`)).join("")}</ul>`:""}
+    <h3>${t("m_more")}</h3><ul class="menu-list">${link("delivery",t("nav_delivery"))}${link("about",t("nav_about"))}${accountsOn()?link("account",sbUser?t("acct_mine"):t("acct_signin")):""}</ul>
+  </nav>
+  <div class="drawer-foot menu-foot"><a class="btn" href="${wa(t("wa_hello"))}" target="_blank" rel="noopener">${ICON.wa}<span>${t("m_wa")}</span></a><button class="btn ghost" type="button" id="menuLang">${t("lang")}</button></div>`;
+}
+function openMenu(){
+  closeDrawer(); menuFocus=document.activeElement; renderMenu();
+  const m=$("#menu"),s=$("#scrim"); m.hidden=false; s.hidden=false;
+  requestAnimationFrame(()=>{ m.classList.add("open"); s.classList.add("show"); $("#menuClose").focus(); });
+  document.documentElement.style.overflow="hidden"; $("#menuBtn").setAttribute("aria-expanded","true");
+}
+function closeMenu(back=true){
+  const m=$("#menu"),s=$("#scrim"); if(!m||m.hidden) return;
+  m.classList.remove("open"); s.classList.remove("show"); document.documentElement.style.overflow=""; $("#menuBtn").setAttribute("aria-expanded","false");
+  setTimeout(()=>{ if(!m.classList.contains("open")){ m.hidden=true; if($("#drawer").hidden) s.hidden=true; } },reduce.matches?0:460);
+  if(back&&menuFocus&&menuFocus.focus) menuFocus.focus();
+}
+document.addEventListener("click",e=>{
+  if(e.target.closest("#menuBtn")){ e.stopImmediatePropagation(); $("#menu").hidden?openMenu():closeMenu(); return; }
+  if(e.target.closest("#menuClose")||(e.target.id==="scrim"&&!$("#menu").hidden)){ closeMenu(); return; }
+  if(e.target.closest("#menuLang")){ closeMenu(false); $("#langBtn").click(); return; }
+  if(e.target.closest("#menu a")) closeMenu(false);
+},true);
+document.addEventListener("keydown",e=>{
+  const m=$("#menu"); if(!m||m.hidden) return;
+  if(e.key==="Escape"){ closeMenu(); return; }
+  if(e.key==="Tab"){ const f=$$("#menu a,#menu button").filter(x=>x.offsetParent); if(!f.length) return; const a=f[0],z=f[f.length-1];
+    if(e.shiftKey&&document.activeElement===a){ e.preventDefault(); z.focus(); } else if(!e.shiftKey&&document.activeElement===z){ e.preventDefault(); a.focus(); } }
+});
 /* ===== cart ===== */
 const sub=()=>cart.reduce((s,l)=>s+byId[l.id].price*l.qty,0);
 const count=()=>cart.reduce((s,l)=>s+l.qty,0);
@@ -668,7 +849,6 @@ document.addEventListener("click",e=>{
   if(e.target.closest("#cartBtn")){ openDrawer(); return; }
   if(e.target.closest("#drawerClose")||e.target.id==="scrim"||e.target.closest("[data-close]")){ closeDrawer(); return; }
   if(e.target.closest("#langBtn")){ lang=lang==="ar"?"en":"ar"; store.set("kafei-lang",lang); applyLang(); pendingFocus=false; render(); replay($("#main"),"lang-in"); return; }
-  if(e.target.closest("#menuBtn")){ const n=$("#nav"),o=!n.classList.contains("open"); n.classList.toggle("open",o); $("#menuBtn").setAttribute("aria-expanded",String(o)); return; }
   if(e.target.closest("#copyPhone")){ try{ navigator.clipboard.writeText(CONFIG.phoneDisplay).then(()=>toast(t("copied")),selectPhone); }catch(err){ selectPhone(); } return; }
   const fl=e.target.closest("[data-focus]"); if(fl){ e.preventDefault(); const el=document.getElementById(fl.dataset.focus); el&&el.focus(); }
 });

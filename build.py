@@ -1,7 +1,7 @@
 """Build Kafei v3: app.js (all logic), index.html (artifact page), site.html (standalone)."""
 import os, re, subprocess
 os.chdir('/home/user/kafei/v3')
-parts = ['js1.js', 'views.js', 'js2.js', 'js3.js', 'js4.js', 'js5.js']
+parts = ['js1.js', 'views.js', 'menu.js', 'js2.js', 'js3.js', 'js4.js', 'js5.js']
 js = ''.join(open('parts/' + p).read() for p in parts)
 js = js.replace('<script>\n', '', 1)
 js = re.sub(r'</script>\s*$', '', js.rstrip()) + '\n'
@@ -25,7 +25,7 @@ D = "deploy"
 os.makedirs(D + "/img", exist_ok=True); os.makedirs(D + "/api", exist_ok=True)
 shutil.copy("site.html", D + "/index.html"); shutil.copy("app.js", D + "/app.js"); shutil.copy("package.json", D + "/package.json")
 for f in os.listdir("img"): shutil.copy("img/" + f, D + "/img/" + f)
-for f in ("_lib.js", "checkout.js", "status.js", "myfatoorah-webhook.js", "order-cod.js", "admin.js", "products.js", "prices.json"): shutil.copy("api/" + f, D + "/api/" + f)
+for f in ("_lib.js", "checkout.js", "status.js", "myfatoorah-webhook.js", "order-cod.js", "admin.js", "products.js", "login.js", "prices.json"): shutil.copy("api/" + f, D + "/api/" + f)
 shutil.copy("admin.html", D + "/admin.html"); shutil.copy("admin.js", D + "/admin.js")
 shutil.copy("server.mjs", D + "/server.mjs"); shutil.copy("htaccess.txt", D + "/.htaccess")  # Apache/LiteSpeed hosts  # for Node.js hosts such as Hostinger: npm start
 open(D + "/vercel.json", "w").write('{\n  "headers": [{ "source": "/api/(.*)", "headers": [{ "key": "Cache-Control", "value": "no-store" }] }],\n  "functions": { "api/*.js": { "includeFiles": "api/prices.json" } }\n}\n')
@@ -47,7 +47,7 @@ _prods = [{"@type": "Product", "name": v["name"], "brand": {"@type": "Brand", "n
   "offers": {"@type": "Offer", "price": "%.3f" % (v["price"] / 1000), "priceCurrency": "KWD", "availability": "https://schema.org/InStock", "url": DOMAIN + "/#p-" + k}}
   for k, v in _cat.items() if not k.startswith("_") and isinstance(v, dict) and v.get("price")]
 _ld = {"@context": "https://schema.org", "@graph": [{"@type": "OnlineStore", "name": "Kafei كفي", "url": DOMAIN + "/", "logo": DOMAIN + "/img/apple-touch-icon-180.png",
-  "telephone": "+96566908822", "areaServed": "KW", "currenciesAccepted": "KWD", "paymentAccepted": "KNET, Credit Card, Apple Pay, Cash"}] + _prods}
+  "telephone": "+96566908822", "areaServed": "KW", "currenciesAccepted": "KWD", "paymentAccepted": "KNET, Credit Card, Apple Pay"}] + _prods}
 if "application/ld+json" not in idx_d:
     idx_d = idx_d.replace("</head>", '<script type="application/ld+json">' + _json.dumps(_ld, ensure_ascii=False).replace("</", "<\\/") + "</script>\n</head>", 1)
 # cache-busting: each build gives app.js / admin.js a version tag, so visitors get updates at once instead of a stale saved copy

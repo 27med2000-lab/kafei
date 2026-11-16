@@ -233,7 +233,7 @@ export async function getCatalogue() {
   return out;
 }
 // The shape the shop's pages use.
-export const shopProduct = (p, lv = {}) => ({ out: (!(Array.isArray(p.colors) && p.colors.length) && lv[p.id] === 0) || undefined, id: p.id, cat: p.cat, sub: p.sub || undefined, img: p.img, fit: p.fit, price: p.price_fils,
+export const shopProduct = (p, lv = {}) => ({ out: (!(Array.isArray(p.colors) && p.colors.length) && lv[p.id] === 0) || undefined, id: p.id, cat: p.cat, sub: p.sub || undefined, img: p.img, fit: p.fit, price: p.price_fils, brand: p.brand || undefined,
   name: { en: p.name_en, ar: p.name_ar }, kind: { en: p.kind_en || "", ar: p.kind_ar || "" }, what: { en: p.what_en || "", ar: p.what_ar || "" },
   desc: { en: p.desc_en || "", ar: p.desc_ar || "" }, facts: Array.isArray(p.facts) && p.facts.length ? p.facts : undefined,
   colors: Array.isArray(p.colors) && p.colors.length ? p.colors.map(c => ({ id: c.id, name: { en: c.name_en, ar: c.name_ar }, hex: c.hex, trim: c.trim || undefined, img: c.img || undefined, out: !!c.sold_out || lv[`${p.id}:${c.id}`] === 0 })) : undefined });

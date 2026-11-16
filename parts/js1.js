@@ -18,7 +18,7 @@ const CONFIG = {
 
 /* ===== real stock only. Set price in fils (e.g. 389000 = KWD 389.000) once known. ===== */
 const P = [
- {id:"xbloom-studio", cat:"pourover-machines", motif:"eyes", band:"espresso", img:"img/xbloom-twilight.webp", fit:"contain", price:199000,
+ {id:"xbloom-studio", brand:"xBloom", cat:"pourover-machines", motif:"eyes", band:"espresso", img:"img/xbloom-twilight.webp", fit:"contain", price:199000,
   facts:[["In one machine","في ماكينة واحدة","Grinder, brewer and scale","مطحنة وجهاز تقطير وميزان"],
    ["Colours","الألوان","Twilight, Moonlight White, Midnight Black, Offline Blue","توايلايت، أبيض مونلايت، أسود ميدنايت، أزرق أوفلاين"],
    ["Delivery","التوصيل","Free. Same day in the Capital and Hawalli when you order before 2 pm","مجاني. في نفس اليوم للعاصمة وحولي عند الطلب قبل 2 ظهرًا"]],

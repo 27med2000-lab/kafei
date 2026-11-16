@@ -29,7 +29,7 @@
       stock_h: "Stock", stock_s: "Units on the shelf. They go down by themselves with every paid or cash order, and come back if you cancel one. At 0 the shop shows it as sold out. Leave a box empty to not count that item.", out: "Sold out", th_left: "Units left", th_low: "Flag at", save: "Save", saved: "Stock saved", low: "Low", ok: "In stock", unset: "Not set",
       prods_h: "Products", prods_s: "What the shop shows. New products appear on the shop within a minute.", newp: "New product", edit: "Edit", hide: "Hide", show: "Show",
       visible: "On the shop", hidden: "Hidden", ask: "Ask for price", no_cat: "Connect Supabase and run 003_products.sql to manage products here.",
-      f_name_en: "Name in English", f_name_ar: "Name in Arabic", f_cat: "Category", f_sub: "Type", f_kind_en: "Short label in English", f_kind_ar: "Short label in Arabic",
+      f_brand: "Brand", f_brand_h: "For example xBloom or Timemore. Products with the same brand are grouped in Shop by brand.", f_name_en: "Name in English", f_name_ar: "Name in Arabic", f_cat: "Category", f_sub: "Type", f_kind_en: "Short label in English", f_kind_ar: "Short label in Arabic",
       f_what_en: "One line in English", f_what_ar: "One line in Arabic", f_desc_en: "Description in English", f_desc_ar: "Description in Arabic",
       f_price: "Price in KWD", f_price_h: "Leave empty to show Ask for price.", f_units: "Units in stock", f_units_colors: "This product has colours: set the units for each colour in the Stock panel.", f_low: "Flag low at", f_photo: "Photo", f_photo_h: "JPG, PNG or WebP. It is resized before upload.",
       f_fit: "The photo has a plain or see-through background (show the whole product)", f_vis: "Show on the shop", f_colors: "Colours", f_colors_h: "Untick a colour when it runs out. Customers can still see it, struck through, but can't order it.", c_in: "In stock", f_sort: "Order on the shop", f_sort_h: "Lower numbers come first.",
@@ -64,7 +64,7 @@
       stock_h: "المخزون", stock_s: "الكميات المتوفرة. تنقص تلقائيًا مع كل طلب مدفوع أو نقدي، وتعود إذا ألغيت الطلب. عند الصفر يظهر المنتج في المتجر كنافد. اترك الخانة فارغة إذا لا تريد عدّه.", out: "نفد", th_left: "المتبقي", th_low: "تنبيه عند", save: "احفظ", saved: "تم حفظ المخزون", low: "منخفض", ok: "متوفر", unset: "غير محدد",
       prods_h: "المنتجات", prods_s: "ما يعرضه المتجر. تظهر المنتجات الجديدة في المتجر خلال دقيقة.", newp: "منتج جديد", edit: "تعديل", hide: "إخفاء", show: "إظهار",
       visible: "في المتجر", hidden: "مخفي", ask: "اسأل عن السعر", no_cat: "اربط Supabase وشغّل 003_products.sql لإدارة المنتجات هنا.",
-      f_name_en: "الاسم بالإنجليزية", f_name_ar: "الاسم بالعربية", f_cat: "القسم", f_sub: "النوع", f_kind_en: "وصف قصير بالإنجليزية", f_kind_ar: "وصف قصير بالعربية",
+      f_brand: "الماركة", f_brand_h: "مثل xBloom أو Timemore. المنتجات بنفس الماركة تظهر معًا في «تسوّق حسب الماركة».", f_name_en: "الاسم بالإنجليزية", f_name_ar: "الاسم بالعربية", f_cat: "القسم", f_sub: "النوع", f_kind_en: "وصف قصير بالإنجليزية", f_kind_ar: "وصف قصير بالعربية",
       f_what_en: "سطر واحد بالإنجليزية", f_what_ar: "سطر واحد بالعربية", f_desc_en: "الوصف بالإنجليزية", f_desc_ar: "الوصف بالعربية",
       f_price: "السعر بالدينار", f_price_h: "اتركه فارغًا ليظهر «اسأل عن السعر».", f_units_colors: "لهذا المنتج ألوان: حدّد الكمية لكل لون في قسم المخزون.", f_units: "الكمية المتوفرة", f_low: "تنبيه عند", f_photo: "الصورة", f_photo_h: "JPG أو PNG أو WebP. يُصغَّر حجمها قبل الرفع.",
       f_fit: "خلفية الصورة سادة أو شفافة (اعرض المنتج كاملًا)", f_vis: "اعرضه في المتجر", f_colors: "الألوان", f_colors_h: "أزل العلامة عن اللون حين ينفد. يبقى ظاهرًا للعملاء مشطوبًا، لكن لا يمكن طلبه.", c_in: "متوفر", f_sort: "الترتيب في المتجر", f_sort_h: "الأرقام الأصغر تظهر أولًا.",
@@ -231,6 +231,7 @@
     return `<form class="pform" id="pform" novalidate><h3>${p.id ? esc(lang === "ar" ? p.name_ar : p.name_en) : t("newp")}</h3><div id="perr"></div>
       <div class="fgrid">
         ${field("name_en", "f_name_en", { dir: "ltr" })}${field("name_ar", "f_name_ar", { dir: "rtl" })}
+        ${field("brand", "f_brand", { dir: "ltr", max: 40, help: "f_brand_h" })}
         <div class="full fgrid"><div class="f"><label for="pf-cat">${t("f_cat")}</label><select id="pf-cat"><option value="">${t("choose")}</option>${Object.keys(ALLCATS).map(c => `<option value="${c}" ${p.cat === c ? "selected" : ""}>${esc(catName(c))}</option>`).join("")}</select></div>
         <div class="f" id="pf-subwrap" ${subs.length ? "" : "hidden"}><label for="pf-sub">${t("f_sub")}</label><select id="pf-sub"><option value="">${t("choose")}</option>${subs.map(x => `<option value="${x}" ${p.sub === x ? "selected" : ""}>${t("s_" + x)}</option>`).join("")}</select></div></div>
         ${field("kind_en", "f_kind_en", { dir: "ltr" })}${field("kind_ar", "f_kind_ar", { dir: "rtl" })}
@@ -260,7 +261,7 @@
     const btn = $("#pform button[type=submit]"); btn.disabled = true; const errBox = $("#perr");
     const base = editing === "new" ? {} : (data.catalog.find(p => p.id === editing) || {});
     const colors = Array.isArray(base.colors) ? base.colors.map((c, i) => { const box = $(`#pform [data-color="${i}"]`); return { ...c, sold_out: box ? !box.checked : !!c.sold_out }; }) : [];
-    const prod = { id: base.id, facts: base.facts, colors, img: base.img, name_en: g("name_en"), name_ar: g("name_ar"), cat: g("cat"), sub: g("sub") || null, kind_en: g("kind_en"), kind_ar: g("kind_ar"),
+    const prod = { id: base.id, facts: base.facts, colors, img: base.img, name_en: g("name_en"), name_ar: g("name_ar"), brand: g("brand"), cat: g("cat"), sub: g("sub") || null, kind_en: g("kind_en"), kind_ar: g("kind_ar"),
       what_en: g("what_en"), what_ar: g("what_ar"), desc_en: g("desc_en"), desc_ar: g("desc_ar"), price: g("price"), sort: g("sort"), units: g("units"), low_at: g("low_at"), fit: g("fit") ? "contain" : "cover", visible: g("vis") };
     try {
       if (photoData) { toast(t("uploading")); const up = await api("POST", { action: "product_photo", product_id: prod.id || prod.name_en, data_url: photoData });

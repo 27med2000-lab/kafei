@@ -9,7 +9,6 @@ document.addEventListener("click",e=>{
   if(e.target.closest("#cartBtn")){ openDrawer(); return; }
   if(e.target.closest("#drawerClose")||e.target.id==="scrim"||e.target.closest("[data-close]")){ closeDrawer(); return; }
   if(e.target.closest("#langBtn")){ lang=lang==="ar"?"en":"ar"; store.set("kafei-lang",lang); applyLang(); pendingFocus=false; render(); replay($("#main"),"lang-in"); return; }
-  if(e.target.closest("#menuBtn")){ const n=$("#nav"),o=!n.classList.contains("open"); n.classList.toggle("open",o); $("#menuBtn").setAttribute("aria-expanded",String(o)); return; }
   if(e.target.closest("#copyPhone")){ try{ navigator.clipboard.writeText(CONFIG.phoneDisplay).then(()=>toast(t("copied")),selectPhone); }catch(err){ selectPhone(); } return; }
   const fl=e.target.closest("[data-focus]"); if(fl){ e.preventDefault(); const el=document.getElementById(fl.dataset.focus); el&&el.focus(); }
 });
