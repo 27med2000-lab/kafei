@@ -346,6 +346,10 @@ function updateAcct(){ const b=$("#acctBtn"); if(!b) return; b.hidden=!accountsO
 function viewAccount(){
   if(!accountsOn()) return view404();
   setTimeout(renderAccount,0);
+  // nobody signed in on this browser: draw the sign-in form at once instead of waiting for the sign-in service to load
+  let saved=false; try{ saved=Object.keys(localStorage).some(k=>/^sb-.*-auth-token$/.test(k)); }catch(e){}
+  if(!sbUser&&!saved&&!acctMsg){ if(googleOn===null) googleOn=store.get("kafei-google",true);
+    return `<div id="acctView" data-fast="${acctStep}|${googleOn}">${authCard(crumbs([["home",t("home")],["",t("acct_signin")]]),"")}</div>`; }
   return `<div id="acctView"><div class="wrap page-head">${crumbs([["home",t("home")],["",t("acct_mine")]])}<h1>${t("loading")}</h1></div></div>`;
 }
 async function renderAccount(){ await renderAccountInner(); const h1=$("#acctView h1"); if(h1&&location.hash==="#account") document.title=`${h1.textContent.trim()} · ${lang==="ar"?"كفي Kafei":"Kafei كفي"}`; }
@@ -354,7 +358,9 @@ async function renderAccountInner(){
   const head=crumbs([["home",t("home")],["",sbUser?t("acct_h"):t("acct_signin")]]);
   const err=acctMsg?`<div class="err-summary" role="alert"><h2>${esc(acctMsg)}</h2></div>`:""; acctMsg="";
   if(!sb){ box.innerHTML=`<div class="wrap page-head">${head}<h1>${t("acct_signin")}</h1><p class="lead">${t("e_send")}</p></div>`; return; }
-  if(!sbUser){ await checkGoogle(); if($("#acctView")!==box) return; box.innerHTML=authCard(head,err); const f=box.querySelector("form input"); if(f&&acctStep!=="signin") f.focus(); return; }
+  if(!sbUser){ const fast=box.dataset.fast; delete box.dataset.fast; const was=googleOn; googleOn=null; await checkGoogle(); if($("#acctView")!==box) return;
+    if(fast&&fast===`${acctStep}|${was}`&&was===googleOn&&!err) return; // the form drawn at once is already right: keep what the visitor has typed
+    box.innerHTML=authCard(head,err); const f=box.querySelector("form input"); if(f&&acctStep!=="signin") f.focus(); return; }
   let orders=[]; try{ const {data}=await sb.from("orders").select("id,created_at,status,method,total_fils,items").order("created_at",{ascending:false}).limit(20); orders=data||[]; }catch(e){}
   const p=sbProfile||{}, val=k=>esc(p[k]||"");
   const df=new Intl.DateTimeFormat(lang==="ar"?"ar-KW":"en-GB",{day:"numeric",month:"short",year:"numeric"});
@@ -404,12 +410,12 @@ Object.assign(T.ar,{acct_p_in:"سجّل الدخول ببريدك أو اسم ا
 let acctLogin="", googleOn=null;
 const USER_RE=/^[A-Za-z0-9._]{3,20}$/, EMAIL_RE=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 async function checkGoogle(){ if(googleOn!==null) return googleOn;
-  try{ const r=await fetch(CONFIG.accounts.url+"/auth/v1/settings",{headers:{apikey:CONFIG.accounts.anonKey}}); const d=await r.json(); googleOn=!!(d&&d.external&&d.external.google); }catch(e){ googleOn=false; }
+  try{ const r=await fetch(CONFIG.accounts.url+"/auth/v1/settings",{headers:{apikey:CONFIG.accounts.anonKey}}); const d=await r.json(); googleOn=!!(d&&d.external&&d.external.google); store.set("kafei-google",googleOn); }catch(e){ googleOn=false; }
   return googleOn; }
 const GLOGO=`<svg viewBox="0 0 48 48" width="20" height="20" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg>`;
 const passField=(id,lab,ac,help)=>`<div class="f"><label for="${id}">${t(lab)}</label><div class="pw"><input id="${id}" type="password" autocomplete="${ac}" required minlength="8" maxlength="200" dir="ltr"><button type="button" class="pw-eye" data-eye="${id}" aria-controls="${id}" aria-pressed="false">${t("show_pass")}</button></div>${help?`<p class="help">${t(help)}</p>`:""}</div>`;
 function authCard(head,err){
-  const page=(h,p,form)=>`<div class="wrap page-head acct-split"><div>${head}<h1>${h}</h1><p class="lead">${p}</p>${form}</div><figure class="acct-art" aria-hidden="true"><img src="img/hero-760.webp" alt="" loading="lazy" decoding="async" width="760" height="428">${FINJAN("acct-fj")}</figure></div>`;
+  const page=(h,p,form)=>`<div class="wrap page-head acct-split"><div>${head}<h1>${h}</h1><p class="lead">${p}</p>${form}</div><figure class="acct-art" aria-hidden="true"><img src="img/hero-760.webp" alt="" loading="lazy" decoding="async" width="760" height="428"></figure></div>`;
   const g=googleOn?`<div class="or"><span>${t("or")}</span></div><button class="btn ghost gbtn" type="button" id="acctGoogle">${GLOGO}<span>${t("google")}</span></button>`:"";
   const emailF=`<div class="f"><label for="email">${t("f_email")}</label><input id="email" type="email" inputmode="email" autocomplete="email" required value="${esc(acctEmail)}" dir="ltr"></div>`;
   const codeF=`<div class="f"><label for="otp">${t("f_code")}</label><input id="otp" class="code" inputmode="numeric" autocomplete="one-time-code" maxlength="12" required dir="ltr"></div>`;
