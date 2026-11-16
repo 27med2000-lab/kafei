@@ -39,9 +39,9 @@ const lineImg=l=>{const p=byId[l.id],c=colorOf(p,l.color);return c&&c.img||p.img
 const CATS = [
  {id:"espresso-machines", motif:"tree", band:"caramel", name:{en:"Espresso machines",ar:"مكائن الإسبريسو"}},
  {id:"pourover-machines", motif:"eyes", band:"espresso", name:{en:"Pour-over machines",ar:"مكائن التقطير"}},
- {id:"beans", motif:"grain", band:"cream", name:{en:"Beans",ar:"البن"}, subs:[{id:"filter",name:{en:"Filter beans",ar:"بن للتقطير"}},{id:"espresso",name:{en:"Espresso beans",ar:"بن للإسبريسو"}}]},
- {id:"pourover-accessories", motif:"tri", band:"coffee", name:{en:"Pour-over accessories",ar:"أدوات التقطير"}},
- {id:"espresso-accessories", motif:"zig", band:"caramel", name:{en:"Espresso accessories",ar:"أدوات الإسبريسو"}},
+ {id:"beans", motif:"grain", band:"cream", name:{en:"Coffee beans",ar:"حبوب القهوة"}, subs:[{id:"filter",name:{en:"Filter beans",ar:"بن للتقطير"}},{id:"espresso",name:{en:"Espresso beans",ar:"بن للإسبريسو"}}]},
+ {id:"pourover-accessories", motif:"tri", band:"coffee", name:{en:"Pour-over tools",ar:"أدوات التقطير"}},
+ {id:"espresso-accessories", motif:"zig", band:"caramel", name:{en:"Espresso tools",ar:"أدوات الإسبريسو"}},
  {id:"cups", motif:"comb", band:"espresso", name:{en:"Cups",ar:"الأكواب"}},
  {id:"tumblers", motif:"cross", band:"coffee", name:{en:"Tumblers",ar:"الأكواب الحافظة"}},
  {id:"grinders", motif:"zig", band:"cream", name:{en:"Grinders",ar:"المطاحن"}, subs:[{id:"manual",name:{en:"Manual grinders",ar:"مطاحن يدوية"}},{id:"electric",name:{en:"Electric grinders",ar:"مطاحن كهربائية"}}]}
@@ -224,12 +224,12 @@ function prow(p){
 }
 function viewShop(){
   return `<div class="wrap page-head">${crumbs([["home",t("home")],["shop",t("shop_h")]])}<h1 data-rise>${t("shop_h")}</h1><p class="lead">${t("shop_lead")}</p>
-    <nav class="chips" aria-label="${t("cats_label")}"><a href="#shop" aria-current="page">${t("all")} <span>${P.length}</span></a>${CATS.filter(c=>inCat(c).length).map(c=>`<a href="#shop-${c.id}">${esc(L(c.name))} <span>${inCat(c).length}</span></a>`).join("")}</nav></div>
+    <nav class="chips" aria-label="${t("cats_label")}"><a href="#shop" aria-current="page">${t("all")}</a>${CATS.filter(c=>inCat(c).length).map(c=>`<a href="#shop-${c.id}">${esc(L(c.name))}</a>`).join("")}</nav></div>
   <div class="wrap"><ul class="plist">${P.map(prow).join("")}</ul></div>`;
 }
 function viewCategory(c,sb){
   const s=sb&&c.subs?c.subs.find(x=>x.id===sb):null, list=inCat(c,s&&s.id), nm=s?s.name:c.name;
-  const chips=c.subs?`<nav class="chips" aria-label="${esc(L(c.name))}"><a href="#shop-${c.id}" ${s?"":'aria-current="page"'}>${t("all")} <span>${inCat(c).length}</span></a>${c.subs.map(x=>`<a href="#shop-${c.id}-${x.id}" ${s&&s.id===x.id?'aria-current="page"':""}>${esc(L(x.name))} <span>${inCat(c,x.id).length}</span></a>`).join("")}</nav>`:"";
+  const chips=c.subs?`<nav class="chips" aria-label="${esc(L(c.name))}"><a href="#shop-${c.id}" ${s?"":'aria-current="page"'}>${t("all")}</a>${c.subs.map(x=>`<a href="#shop-${c.id}-${x.id}" ${s&&s.id===x.id?'aria-current="page"':""}>${esc(L(x.name))}</a>`).join("")}</nav>`:"";
   const tr=[["home",t("home")],["shop",t("shop_h")],["shop-"+c.id,L(c.name)]]; if(s) tr.push(["",L(s.name)]);
   const body=list.length?`<ul class="plist">${list.map(prow).join("")}</ul>`
     :`<div class="soon">${vessel(null)}<div><h2>${t("soon_h")}</h2><p>${esc(t("soon_p",L(nm)))}</p><a class="textlink" href="${wa(t("soon_wa",L(nm)))}" target="_blank" rel="noopener">${t("ask_wa")}</a></div></div>`;
@@ -393,7 +393,7 @@ function viewAccount(){
     return `<div id="acctView" data-fast="${acctStep}|${googleOn}">${authCard(crumbs([["home",t("home")],["",t("acct_signin")]]),"")}</div>`; }
   return `<div id="acctView"><div class="wrap page-head">${crumbs([["home",t("home")],["",t("acct_mine")]])}<h1>${t("loading")}</h1></div></div>`;
 }
-async function renderAccount(){ await renderAccountInner(); const h1=$("#acctView h1"); if(h1&&curKey()==="account") document.title=`${h1.textContent.trim()} · ${lang==="ar"?"كفي Kafei":"Kafei كفي"}`; }
+async function renderAccount(){ await renderAccountInner(); startLoop($("#acctView .acct-art video")); const h1=$("#acctView h1"); if(h1&&curKey()==="account") document.title=`${h1.textContent.trim()} · ${lang==="ar"?"كفي Kafei":"Kafei كفي"}`; }
 async function renderAccountInner(){
   await sbLoad(); const box=$("#acctView"); if(!box) return;
   const head=crumbs([["home",t("home")],["",sbUser?t("acct_h"):t("acct_signin")]]);
@@ -456,7 +456,7 @@ async function checkGoogle(){ if(googleOn!==null) return googleOn;
 const GLOGO=`<svg viewBox="0 0 48 48" width="20" height="20" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg>`;
 const passField=(id,lab,ac,help)=>`<div class="f"><label for="${id}">${t(lab)}</label><div class="pw"><input id="${id}" type="password" autocomplete="${ac}" required minlength="8" maxlength="200" dir="ltr"><button type="button" class="pw-eye" data-eye="${id}" aria-controls="${id}" aria-pressed="false">${t("show_pass")}</button></div>${help?`<p class="help">${t(help)}</p>`:""}</div>`;
 function authCard(head,err){
-  const page=(h,p,form)=>`<div class="wrap page-head acct-split"><div>${head}<h1>${h}</h1><p class="lead">${p}</p>${form}</div><figure class="acct-art" aria-hidden="true"><img src="img/hero-760.webp" alt="" loading="lazy" decoding="async" width="760" height="428"></figure></div>`;
+  const page=(h,p,form)=>`<div class="wrap page-head acct-split"><div>${head}<h1>${h}</h1><p class="lead">${p}</p>${form}</div><figure class="acct-art" aria-hidden="true"><img src="img/hero-760.webp" alt="" loading="lazy" decoding="async" width="760" height="428"><video muted loop playsinline preload="none" data-src="img/hero-pourover.mp4"></video></figure></div>`;
   const g=googleOn?`<div class="or"><span>${t("or")}</span></div><button class="btn ghost gbtn" type="button" id="acctGoogle">${GLOGO}<span>${t("google")}</span></button>`:"";
   const emailF=`<div class="f"><label for="email">${t("f_email")}</label><input id="email" type="email" inputmode="email" autocomplete="email" required value="${esc(acctEmail)}" dir="ltr"></div>`;
   const codeF=`<div class="f"><label for="otp">${t("f_code")}</label><input id="otp" class="code" inputmode="numeric" autocomplete="one-time-code" maxlength="12" required dir="ltr"></div>`;
@@ -659,6 +659,16 @@ function route(){
   if(h==="account") return {html:viewAccount(),nav:""};
   return {html:view404(),nav:"",nf:true};
 }
+/* the pour video (home hero, sign-in page): starts once the page has loaded, fades in when it plays,
+   and on phones that block autoplay (battery or data saver) starts on the first touch or scroll */
+function startLoop(vid){
+  if(!vid||reduce.matches||vid.dataset.started) return; vid.dataset.started="1";
+  const go=()=>{ if(!vid.isConnected||!vid.offsetParent) return; vid.muted=true; vid.defaultMuted=true; vid.playsInline=true; vid.setAttribute("playsinline",""); vid.src=vid.dataset.src;
+    vid.addEventListener("playing",()=>vid.classList.add("on"),{once:true});
+    const retry=()=>{ off(); if(vid.isConnected&&vid.paused) vid.play().catch(()=>{}); }, ev=["touchstart","pointerdown","scroll","keydown"], off=()=>ev.forEach(e=>removeEventListener(e,retry,true));
+    vid.play().catch(()=>{ ev.forEach(e=>addEventListener(e,retry,{capture:true,passive:true})); }); };
+  if(document.readyState==="complete") setTimeout(go,300); else addEventListener("load",()=>setTimeout(go,300),{once:true});
+}
 function swap(){
   teardownPage();
   const r=route();
@@ -668,11 +678,7 @@ function swap(){
   $$("#nav a").forEach(a=>{ if(a.dataset.nav===r.nav) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
   closeMenu(false);
   document.documentElement.classList.remove("frame-away");
-  if(!reduce.matches){ const vid=$(".hero video"); if(vid){ const go=()=>{ if(!vid.isConnected) return; vid.muted=true; vid.defaultMuted=true; vid.playsInline=true; vid.setAttribute("playsinline",""); vid.src=vid.dataset.src;
-      vid.addEventListener("playing",()=>vid.classList.add("on"),{once:true});
-      // phones in battery-saver or data-saver mode refuse to start a video by itself: start it on the first touch or scroll instead
-      const retry=()=>{ off(); if(vid.isConnected&&vid.paused) vid.play().catch(()=>{}); }, ev=["touchstart","pointerdown","scroll","keydown"], off=()=>ev.forEach(e=>removeEventListener(e,retry,true));
-      vid.play().catch(()=>{ ev.forEach(e=>addEventListener(e,retry,{capture:true,passive:true})); }); }; if(document.readyState==="complete") setTimeout(go,300); else addEventListener("load",()=>setTimeout(go,300),{once:true}); } }
+  startLoop($(".hero video"));
   if(!quietSwap) scrollToY(0,true);
   setupPage(); requestAnimationFrame(railState);
   updateAcct(); if(r.html.includes('id="coForm"')) sbLoad().then(prefillCheckout);
@@ -725,13 +731,25 @@ function rail(id,title,cards,n){
     <ul class="rail" id="${id}" tabindex="0" aria-label="${title}">${cards}</ul></section>`;
 }
 const ARROW=`<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>`;
-/* every category gets a card: stocked ones show their first product, the rest show their name in big type on their Sadu colour, marked coming soon */
+/* one drawn mark per category, in the same line weight as the menu and cart icons */
+const CAT_ICON={
+ "espresso-machines":'<rect x="10" y="10" width="44" height="12" rx="3"/><path d="M14 22v30h36V22"/><path d="M24 22v6h16v-6"/><path d="M22 28h20"/><path d="M27 38h10v6a5 5 0 0 1-10 0z"/><path d="M37 40h3a2 2 0 0 1 0 4h-3"/><path d="M14 52h36"/>',
+ "pourover-machines":'<rect x="14" y="8" width="20" height="46" rx="3"/><path d="M34 14h14v8H34"/><path d="M44 22v6"/><path d="M38 28h12l-3 8h-6z"/><path d="M38 40h12v10a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4z"/><path d="M10 56h44"/>',
+ "beans":'<ellipse cx="24" cy="30" rx="11" ry="15" transform="rotate(-25 24 30)"/><path d="M19 17c6 6 1 16 7 26"/><ellipse cx="42" cy="38" rx="10" ry="14" transform="rotate(30 42 38)"/><path d="M48 26c-6 5-2 14-10 24"/>',
+ "pourover-accessories":'<path d="M8 22h26l-8 14h-10z"/><path d="M34 22h3a4 4 0 0 1 0 8h-6"/><path d="M14 40h14v12a4 4 0 0 1-4 4h-6a4 4 0 0 1-4-4z"/><path d="M40 52V30a6 6 0 0 1 6-6h4l6-8"/><path d="M38 52h16V36a4 4 0 0 0-4-4h-8"/>',
+ "espresso-accessories":'<path d="M22 10h20v8a10 10 0 0 1-20 0z"/><path d="M32 28v8"/><path d="M18 36h28v8H18z"/><path d="M14 52h36"/><path d="M20 44v8M44 44v8"/>',
+ "cups":'<path d="M14 22h30v12a15 15 0 0 1-30 0z"/><path d="M44 26h4a6 6 0 0 1 0 12h-5"/><path d="M8 54h44"/><path d="M22 10c0 4 4 4 4 8M32 8c0 4 4 4 4 8"/>',
+ "tumblers":'<path d="M20 14h24"/><rect x="18" y="8" width="28" height="6" rx="2"/><path d="M20 14l3 40a4 4 0 0 0 4 4h10a4 4 0 0 0 4-4l3-40"/><path d="M22 30h20"/>',
+ "grinders":'<path d="M32 6v8"/><path d="M32 10h14a4 4 0 0 1 4 4"/><circle cx="50" cy="16" r="3"/><rect x="22" y="14" width="20" height="8" rx="2"/><path d="M22 22h20v30a4 4 0 0 1-4 4H26a4 4 0 0 1-4-4z"/><path d="M22 36h20"/>'
+};
+const catIcon=c=>`<svg class="cat-ico" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${CAT_ICON[c.id]||""}</svg>`;
+/* every category gets a card: its mark on its Sadu colour and its name once; the ones not in stock yet carry a small "coming soon" tag */
 function catRail(){
   const order=[...CATS.filter(c=>inCat(c).length),...CATS.filter(c=>!inCat(c).length)];
-  const cards=order.map(c=>{ const list=inCat(c), n=list.length, p=list[0], bd=BANDS[c.band]||BANDS.cream;
-    return `<li class="tile${n?"":" is-soon"}"><a href="#shop-${c.id}" style="--tb:${bd[0]};--tf:${bd[1]}">
-      <span class="tile-img" aria-hidden="true">${p?`<img src="${p.img}" alt="" ${p.fit==="contain"?'class="contain"':""} loading="lazy" decoding="async" width="400" height="400">`:`<span class="tile-word">${esc(L(c.name))}</span><span class="tile-flag">${t("soon_short")}</span>`}</span>
-      <span class="tile-txt"><b>${esc(L(c.name))}</b><span>${n?t("n_products",n):t("soon_ask_short")}</span></span></a></li>`; }).join("");
+  const cards=order.map(c=>{ const n=inCat(c).length, bd=BANDS[c.band]||BANDS.cream;
+    return `<li class="tile cat"><a href="#shop-${c.id}" style="--tb:${bd[0]};--tf:${bd[1]}">
+      <span class="tile-img">${catIcon(c)}${n?"":`<span class="tile-flag">${t("soon_short")}</span>`}</span>
+      <span class="tile-txt"><b>${esc(L(c.name))}</b></span></a></li>`; }).join("");
   return rail("catRail",t("cats_h"),cards);
 }
 function brandRail(){
@@ -763,8 +781,8 @@ function renderMenu(){
   const link=(h,label,extra="")=>`<li><a href="#${h}" ${cur===h?'aria-current="page"':""}>${label}${extra}</a></li>`;
   $("#menu").innerHTML=`<div class="drawer-head"><h2 id="menuTitle">${t("menu_h")}</h2><button class="x-btn" id="menuClose" type="button" aria-label="${t("menu_close")}"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
   <nav class="menu-body" aria-labelledby="menuTitle">
-    <h3>${t("m_shop")}</h3><ul class="menu-list">${link("shop",t("all_products"),` <span class="n num">${P.length}</span>`)}${CATS.map(c=>{const n=inCat(c).length;return link("shop-"+c.id,esc(L(c.name)),n?` <span class="n num">${n}</span>`:` <span class="n soon">${t("soon_short")}</span>`);}).join("")}</ul>
-    ${bs.length?`<h3>${t("m_brands")}</h3><ul class="menu-list">${bs.map(b=>link("brand-"+b.id,`<bdi>${esc(b.name)}</bdi>`,` <span class="n num">${b.items.length}</span>`)).join("")}</ul>`:""}
+    <h3>${t("m_shop")}</h3><ul class="menu-list">${link("shop",t("all_products"))}${CATS.map(c=>link("shop-"+c.id,esc(L(c.name)),inCat(c).length?"":` <span class="n soon">${t("soon_short")}</span>`)).join("")}</ul>
+    ${bs.length?`<h3>${t("m_brands")}</h3><ul class="menu-list">${bs.map(b=>link("brand-"+b.id,`<bdi>${esc(b.name)}</bdi>`)).join("")}</ul>`:""}
     <h3>${t("m_more")}</h3><ul class="menu-list">${link("delivery",t("nav_delivery"))}${link("about",t("nav_about"))}${accountsOn()?link("account",sbUser?t("acct_mine"):t("acct_signin")):""}</ul>
   </nav>
   <div class="drawer-foot menu-foot"><a class="btn" href="${wa(t("wa_hello"))}" target="_blank" rel="noopener">${ICON.wa}<span>${t("m_wa")}</span></a><button class="btn ghost" type="button" id="menuLang">${t("lang")}</button></div>`;

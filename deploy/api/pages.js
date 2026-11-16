@@ -13,8 +13,8 @@ const BRAND = "Kafei كفي";
 
 // keep in step with CATS in parts/js1.js
 const CATS = {
-  "espresso-machines": "Espresso machines", "pourover-machines": "Pour-over machines", "beans": "Beans",
-  "pourover-accessories": "Pour-over accessories", "espresso-accessories": "Espresso accessories", "cups": "Cups",
+  "espresso-machines": "Espresso machines", "pourover-machines": "Pour-over machines", "beans": "Coffee beans",
+  "pourover-accessories": "Pour-over tools", "espresso-accessories": "Espresso tools", "cups": "Cups",
   "tumblers": "Tumblers", "grinders": "Grinders"
 };
 const SUBS = { beans: { filter: "Filter beans", espresso: "Espresso beans" }, grinders: { manual: "Manual grinders", electric: "Electric grinders" } };

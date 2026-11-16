@@ -55,12 +55,12 @@ function prow(p){
 }
 function viewShop(){
   return `<div class="wrap page-head">${crumbs([["home",t("home")],["shop",t("shop_h")]])}<h1 data-rise>${t("shop_h")}</h1><p class="lead">${t("shop_lead")}</p>
-    <nav class="chips" aria-label="${t("cats_label")}"><a href="#shop" aria-current="page">${t("all")} <span>${P.length}</span></a>${CATS.filter(c=>inCat(c).length).map(c=>`<a href="#shop-${c.id}">${esc(L(c.name))} <span>${inCat(c).length}</span></a>`).join("")}</nav></div>
+    <nav class="chips" aria-label="${t("cats_label")}"><a href="#shop" aria-current="page">${t("all")}</a>${CATS.filter(c=>inCat(c).length).map(c=>`<a href="#shop-${c.id}">${esc(L(c.name))}</a>`).join("")}</nav></div>
   <div class="wrap"><ul class="plist">${P.map(prow).join("")}</ul></div>`;
 }
 function viewCategory(c,sb){
   const s=sb&&c.subs?c.subs.find(x=>x.id===sb):null, list=inCat(c,s&&s.id), nm=s?s.name:c.name;
-  const chips=c.subs?`<nav class="chips" aria-label="${esc(L(c.name))}"><a href="#shop-${c.id}" ${s?"":'aria-current="page"'}>${t("all")} <span>${inCat(c).length}</span></a>${c.subs.map(x=>`<a href="#shop-${c.id}-${x.id}" ${s&&s.id===x.id?'aria-current="page"':""}>${esc(L(x.name))} <span>${inCat(c,x.id).length}</span></a>`).join("")}</nav>`:"";
+  const chips=c.subs?`<nav class="chips" aria-label="${esc(L(c.name))}"><a href="#shop-${c.id}" ${s?"":'aria-current="page"'}>${t("all")}</a>${c.subs.map(x=>`<a href="#shop-${c.id}-${x.id}" ${s&&s.id===x.id?'aria-current="page"':""}>${esc(L(x.name))}</a>`).join("")}</nav>`:"";
   const tr=[["home",t("home")],["shop",t("shop_h")],["shop-"+c.id,L(c.name)]]; if(s) tr.push(["",L(s.name)]);
   const body=list.length?`<ul class="plist">${list.map(prow).join("")}</ul>`
     :`<div class="soon">${vessel(null)}<div><h2>${t("soon_h")}</h2><p>${esc(t("soon_p",L(nm)))}</p><a class="textlink" href="${wa(t("soon_wa",L(nm)))}" target="_blank" rel="noopener">${t("ask_wa")}</a></div></div>`;
@@ -224,7 +224,7 @@ function viewAccount(){
     return `<div id="acctView" data-fast="${acctStep}|${googleOn}">${authCard(crumbs([["home",t("home")],["",t("acct_signin")]]),"")}</div>`; }
   return `<div id="acctView"><div class="wrap page-head">${crumbs([["home",t("home")],["",t("acct_mine")]])}<h1>${t("loading")}</h1></div></div>`;
 }
-async function renderAccount(){ await renderAccountInner(); const h1=$("#acctView h1"); if(h1&&curKey()==="account") document.title=`${h1.textContent.trim()} · ${lang==="ar"?"كفي Kafei":"Kafei كفي"}`; }
+async function renderAccount(){ await renderAccountInner(); startLoop($("#acctView .acct-art video")); const h1=$("#acctView h1"); if(h1&&curKey()==="account") document.title=`${h1.textContent.trim()} · ${lang==="ar"?"كفي Kafei":"Kafei كفي"}`; }
 async function renderAccountInner(){
   await sbLoad(); const box=$("#acctView"); if(!box) return;
   const head=crumbs([["home",t("home")],["",sbUser?t("acct_h"):t("acct_signin")]]);
@@ -287,7 +287,7 @@ async function checkGoogle(){ if(googleOn!==null) return googleOn;
 const GLOGO=`<svg viewBox="0 0 48 48" width="20" height="20" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg>`;
 const passField=(id,lab,ac,help)=>`<div class="f"><label for="${id}">${t(lab)}</label><div class="pw"><input id="${id}" type="password" autocomplete="${ac}" required minlength="8" maxlength="200" dir="ltr"><button type="button" class="pw-eye" data-eye="${id}" aria-controls="${id}" aria-pressed="false">${t("show_pass")}</button></div>${help?`<p class="help">${t(help)}</p>`:""}</div>`;
 function authCard(head,err){
-  const page=(h,p,form)=>`<div class="wrap page-head acct-split"><div>${head}<h1>${h}</h1><p class="lead">${p}</p>${form}</div><figure class="acct-art" aria-hidden="true"><img src="img/hero-760.webp" alt="" loading="lazy" decoding="async" width="760" height="428"></figure></div>`;
+  const page=(h,p,form)=>`<div class="wrap page-head acct-split"><div>${head}<h1>${h}</h1><p class="lead">${p}</p>${form}</div><figure class="acct-art" aria-hidden="true"><img src="img/hero-760.webp" alt="" loading="lazy" decoding="async" width="760" height="428"><video muted loop playsinline preload="none" data-src="img/hero-pourover.mp4"></video></figure></div>`;
   const g=googleOn?`<div class="or"><span>${t("or")}</span></div><button class="btn ghost gbtn" type="button" id="acctGoogle">${GLOGO}<span>${t("google")}</span></button>`:"";
   const emailF=`<div class="f"><label for="email">${t("f_email")}</label><input id="email" type="email" inputmode="email" autocomplete="email" required value="${esc(acctEmail)}" dir="ltr"></div>`;
   const codeF=`<div class="f"><label for="otp">${t("f_code")}</label><input id="otp" class="code" inputmode="numeric" autocomplete="one-time-code" maxlength="12" required dir="ltr"></div>`;
@@ -490,6 +490,16 @@ function route(){
   if(h==="account") return {html:viewAccount(),nav:""};
   return {html:view404(),nav:"",nf:true};
 }
+/* the pour video (home hero, sign-in page): starts once the page has loaded, fades in when it plays,
+   and on phones that block autoplay (battery or data saver) starts on the first touch or scroll */
+function startLoop(vid){
+  if(!vid||reduce.matches||vid.dataset.started) return; vid.dataset.started="1";
+  const go=()=>{ if(!vid.isConnected||!vid.offsetParent) return; vid.muted=true; vid.defaultMuted=true; vid.playsInline=true; vid.setAttribute("playsinline",""); vid.src=vid.dataset.src;
+    vid.addEventListener("playing",()=>vid.classList.add("on"),{once:true});
+    const retry=()=>{ off(); if(vid.isConnected&&vid.paused) vid.play().catch(()=>{}); }, ev=["touchstart","pointerdown","scroll","keydown"], off=()=>ev.forEach(e=>removeEventListener(e,retry,true));
+    vid.play().catch(()=>{ ev.forEach(e=>addEventListener(e,retry,{capture:true,passive:true})); }); };
+  if(document.readyState==="complete") setTimeout(go,300); else addEventListener("load",()=>setTimeout(go,300),{once:true});
+}
 function swap(){
   teardownPage();
   const r=route();
@@ -499,11 +509,7 @@ function swap(){
   $$("#nav a").forEach(a=>{ if(a.dataset.nav===r.nav) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
   closeMenu(false);
   document.documentElement.classList.remove("frame-away");
-  if(!reduce.matches){ const vid=$(".hero video"); if(vid){ const go=()=>{ if(!vid.isConnected) return; vid.muted=true; vid.defaultMuted=true; vid.playsInline=true; vid.setAttribute("playsinline",""); vid.src=vid.dataset.src;
-      vid.addEventListener("playing",()=>vid.classList.add("on"),{once:true});
-      // phones in battery-saver or data-saver mode refuse to start a video by itself: start it on the first touch or scroll instead
-      const retry=()=>{ off(); if(vid.isConnected&&vid.paused) vid.play().catch(()=>{}); }, ev=["touchstart","pointerdown","scroll","keydown"], off=()=>ev.forEach(e=>removeEventListener(e,retry,true));
-      vid.play().catch(()=>{ ev.forEach(e=>addEventListener(e,retry,{capture:true,passive:true})); }); }; if(document.readyState==="complete") setTimeout(go,300); else addEventListener("load",()=>setTimeout(go,300),{once:true}); } }
+  startLoop($(".hero video"));
   if(!quietSwap) scrollToY(0,true);
   setupPage(); requestAnimationFrame(railState);
   updateAcct(); if(r.html.includes('id="coForm"')) sbLoad().then(prefillCheckout);

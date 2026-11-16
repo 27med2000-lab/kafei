@@ -551,13 +551,15 @@ html.motion .pour.staged .meter{display:flex;align-items:center;gap:6px;margin-t
 .sw.out::after{content:"";position:absolute;width:34px;height:2px;background:var(--ink);transform:rotate(-45deg);opacity:.7}
 
 /* ---- review fixes ---- */
-/* coming-soon category cards: the name set large on the category's own colour */
-.tile-word{position:absolute;inset:auto 18px 18px 18px;font:800 clamp(1.75rem,1.4rem + 1.4vw,2.5rem)/.95 var(--lat);letter-spacing:-.04em;color:var(--tf);text-wrap:balance}
-:root[lang="ar"] .tile-word{font-family:var(--txt);letter-spacing:0;line-height:1.15}
+/* category cards: the mark, centred on the category colour */
+.tile.cat .cat-ico{width:46%;height:auto;color:var(--tf);transition:transform 450ms var(--ease)}
+@media (hover:hover) and (pointer:fine){.tile.cat>a:hover .cat-ico{transform:translateY(-6px) rotate(-6deg)}}
+@media (prefers-reduced-motion:reduce){.tile.cat .cat-ico{transition:none}}
+.tile.cat .tile-txt{padding:16px 18px 18px}
+/* sign-in page: the pour keeps moving, like the home page */
+.acct-art video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:62% 50%;opacity:0;transition:opacity 600ms ease}
+.acct-art video.on{opacity:1}
 .tile-flag{position:absolute;top:16px;inset-inline-start:16px;padding:6px 12px;border-radius:999px;font-size:.8125rem;font-weight:600;color:var(--tf);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--tf) 40%,transparent)}
-.tile.is-soon .tile-img{opacity:1}
-@media (hover:hover) and (pointer:fine){.tile.is-soon>a:hover .tile-word{transform:translateY(-4px)}}
-.tile-word{transition:transform 400ms var(--ease)}
 .logo .lm{transition:transform 360ms var(--ease)}
 @media (hover:hover) and (pointer:fine){.logo:hover .lm{transform:rotate(-10deg)}}
 .page-head.slim{padding-block:clamp(20px,3vw,36px) clamp(16px,2vw,24px)}
@@ -658,7 +660,7 @@ html.motion .pour.staged .meter{display:flex;align-items:center;gap:6px;margin-t
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
-<script src="app.js?v=4cd10f57"></script>
+<script src="app.js?v=8f82b310"></script>
 
 </body>
 </html>

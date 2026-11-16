@@ -40,9 +40,9 @@ const lineImg=l=>{const p=byId[l.id],c=colorOf(p,l.color);return c&&c.img||p.img
 const CATS = [
  {id:"espresso-machines", motif:"tree", band:"caramel", name:{en:"Espresso machines",ar:"مكائن الإسبريسو"}},
  {id:"pourover-machines", motif:"eyes", band:"espresso", name:{en:"Pour-over machines",ar:"مكائن التقطير"}},
- {id:"beans", motif:"grain", band:"cream", name:{en:"Beans",ar:"البن"}, subs:[{id:"filter",name:{en:"Filter beans",ar:"بن للتقطير"}},{id:"espresso",name:{en:"Espresso beans",ar:"بن للإسبريسو"}}]},
- {id:"pourover-accessories", motif:"tri", band:"coffee", name:{en:"Pour-over accessories",ar:"أدوات التقطير"}},
- {id:"espresso-accessories", motif:"zig", band:"caramel", name:{en:"Espresso accessories",ar:"أدوات الإسبريسو"}},
+ {id:"beans", motif:"grain", band:"cream", name:{en:"Coffee beans",ar:"حبوب القهوة"}, subs:[{id:"filter",name:{en:"Filter beans",ar:"بن للتقطير"}},{id:"espresso",name:{en:"Espresso beans",ar:"بن للإسبريسو"}}]},
+ {id:"pourover-accessories", motif:"tri", band:"coffee", name:{en:"Pour-over tools",ar:"أدوات التقطير"}},
+ {id:"espresso-accessories", motif:"zig", band:"caramel", name:{en:"Espresso tools",ar:"أدوات الإسبريسو"}},
  {id:"cups", motif:"comb", band:"espresso", name:{en:"Cups",ar:"الأكواب"}},
  {id:"tumblers", motif:"cross", band:"coffee", name:{en:"Tumblers",ar:"الأكواب الحافظة"}},
  {id:"grinders", motif:"zig", band:"cream", name:{en:"Grinders",ar:"المطاحن"}, subs:[{id:"manual",name:{en:"Manual grinders",ar:"مطاحن يدوية"}},{id:"electric",name:{en:"Electric grinders",ar:"مطاحن كهربائية"}}]}

@@ -25,13 +25,25 @@ function rail(id,title,cards,n){
     <ul class="rail" id="${id}" tabindex="0" aria-label="${title}">${cards}</ul></section>`;
 }
 const ARROW=`<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>`;
-/* every category gets a card: stocked ones show their first product, the rest show their name in big type on their Sadu colour, marked coming soon */
+/* one drawn mark per category, in the same line weight as the menu and cart icons */
+const CAT_ICON={
+ "espresso-machines":'<rect x="10" y="10" width="44" height="12" rx="3"/><path d="M14 22v30h36V22"/><path d="M24 22v6h16v-6"/><path d="M22 28h20"/><path d="M27 38h10v6a5 5 0 0 1-10 0z"/><path d="M37 40h3a2 2 0 0 1 0 4h-3"/><path d="M14 52h36"/>',
+ "pourover-machines":'<rect x="14" y="8" width="20" height="46" rx="3"/><path d="M34 14h14v8H34"/><path d="M44 22v6"/><path d="M38 28h12l-3 8h-6z"/><path d="M38 40h12v10a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4z"/><path d="M10 56h44"/>',
+ "beans":'<ellipse cx="24" cy="30" rx="11" ry="15" transform="rotate(-25 24 30)"/><path d="M19 17c6 6 1 16 7 26"/><ellipse cx="42" cy="38" rx="10" ry="14" transform="rotate(30 42 38)"/><path d="M48 26c-6 5-2 14-10 24"/>',
+ "pourover-accessories":'<path d="M8 22h26l-8 14h-10z"/><path d="M34 22h3a4 4 0 0 1 0 8h-6"/><path d="M14 40h14v12a4 4 0 0 1-4 4h-6a4 4 0 0 1-4-4z"/><path d="M40 52V30a6 6 0 0 1 6-6h4l6-8"/><path d="M38 52h16V36a4 4 0 0 0-4-4h-8"/>',
+ "espresso-accessories":'<path d="M22 10h20v8a10 10 0 0 1-20 0z"/><path d="M32 28v8"/><path d="M18 36h28v8H18z"/><path d="M14 52h36"/><path d="M20 44v8M44 44v8"/>',
+ "cups":'<path d="M14 22h30v12a15 15 0 0 1-30 0z"/><path d="M44 26h4a6 6 0 0 1 0 12h-5"/><path d="M8 54h44"/><path d="M22 10c0 4 4 4 4 8M32 8c0 4 4 4 4 8"/>',
+ "tumblers":'<path d="M20 14h24"/><rect x="18" y="8" width="28" height="6" rx="2"/><path d="M20 14l3 40a4 4 0 0 0 4 4h10a4 4 0 0 0 4-4l3-40"/><path d="M22 30h20"/>',
+ "grinders":'<path d="M32 6v8"/><path d="M32 10h14a4 4 0 0 1 4 4"/><circle cx="50" cy="16" r="3"/><rect x="22" y="14" width="20" height="8" rx="2"/><path d="M22 22h20v30a4 4 0 0 1-4 4H26a4 4 0 0 1-4-4z"/><path d="M22 36h20"/>'
+};
+const catIcon=c=>`<svg class="cat-ico" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${CAT_ICON[c.id]||""}</svg>`;
+/* every category gets a card: its mark on its Sadu colour and its name once; the ones not in stock yet carry a small "coming soon" tag */
 function catRail(){
   const order=[...CATS.filter(c=>inCat(c).length),...CATS.filter(c=>!inCat(c).length)];
-  const cards=order.map(c=>{ const list=inCat(c), n=list.length, p=list[0], bd=BANDS[c.band]||BANDS.cream;
-    return `<li class="tile${n?"":" is-soon"}"><a href="#shop-${c.id}" style="--tb:${bd[0]};--tf:${bd[1]}">
-      <span class="tile-img" aria-hidden="true">${p?`<img src="${p.img}" alt="" ${p.fit==="contain"?'class="contain"':""} loading="lazy" decoding="async" width="400" height="400">`:`<span class="tile-word">${esc(L(c.name))}</span><span class="tile-flag">${t("soon_short")}</span>`}</span>
-      <span class="tile-txt"><b>${esc(L(c.name))}</b><span>${n?t("n_products",n):t("soon_ask_short")}</span></span></a></li>`; }).join("");
+  const cards=order.map(c=>{ const n=inCat(c).length, bd=BANDS[c.band]||BANDS.cream;
+    return `<li class="tile cat"><a href="#shop-${c.id}" style="--tb:${bd[0]};--tf:${bd[1]}">
+      <span class="tile-img">${catIcon(c)}${n?"":`<span class="tile-flag">${t("soon_short")}</span>`}</span>
+      <span class="tile-txt"><b>${esc(L(c.name))}</b></span></a></li>`; }).join("");
   return rail("catRail",t("cats_h"),cards);
 }
 function brandRail(){
@@ -63,8 +75,8 @@ function renderMenu(){
   const link=(h,label,extra="")=>`<li><a href="#${h}" ${cur===h?'aria-current="page"':""}>${label}${extra}</a></li>`;
   $("#menu").innerHTML=`<div class="drawer-head"><h2 id="menuTitle">${t("menu_h")}</h2><button class="x-btn" id="menuClose" type="button" aria-label="${t("menu_close")}"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
   <nav class="menu-body" aria-labelledby="menuTitle">
-    <h3>${t("m_shop")}</h3><ul class="menu-list">${link("shop",t("all_products"),` <span class="n num">${P.length}</span>`)}${CATS.map(c=>{const n=inCat(c).length;return link("shop-"+c.id,esc(L(c.name)),n?` <span class="n num">${n}</span>`:` <span class="n soon">${t("soon_short")}</span>`);}).join("")}</ul>
-    ${bs.length?`<h3>${t("m_brands")}</h3><ul class="menu-list">${bs.map(b=>link("brand-"+b.id,`<bdi>${esc(b.name)}</bdi>`,` <span class="n num">${b.items.length}</span>`)).join("")}</ul>`:""}
+    <h3>${t("m_shop")}</h3><ul class="menu-list">${link("shop",t("all_products"))}${CATS.map(c=>link("shop-"+c.id,esc(L(c.name)),inCat(c).length?"":` <span class="n soon">${t("soon_short")}</span>`)).join("")}</ul>
+    ${bs.length?`<h3>${t("m_brands")}</h3><ul class="menu-list">${bs.map(b=>link("brand-"+b.id,`<bdi>${esc(b.name)}</bdi>`)).join("")}</ul>`:""}
     <h3>${t("m_more")}</h3><ul class="menu-list">${link("delivery",t("nav_delivery"))}${link("about",t("nav_about"))}${accountsOn()?link("account",sbUser?t("acct_mine"):t("acct_signin")):""}</ul>
   </nav>
   <div class="drawer-foot menu-foot"><a class="btn" href="${wa(t("wa_hello"))}" target="_blank" rel="noopener">${ICON.wa}<span>${t("m_wa")}</span></a><button class="btn ghost" type="button" id="menuLang">${t("lang")}</button></div>`;
