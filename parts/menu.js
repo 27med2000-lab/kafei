@@ -61,7 +61,7 @@ addEventListener("resize",railState);
 /* ---- slide-out menu ---- */
 let menuFocus=null;
 function renderMenu(){
-  const bs=brands(), cur=location.hash.slice(1)||"home";
+  const bs=brands(), cur=curKey();
   const link=(h,label,extra="")=>`<li><a href="#${h}" ${cur===h?'aria-current="page"':""}>${label}${extra}</a></li>`;
   $("#menu").innerHTML=`<div class="drawer-head"><h2 id="menuTitle">${t("menu_h")}</h2><button class="x-btn" id="menuClose" type="button" aria-label="${t("menu_close")}"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
   <nav class="menu-body" aria-labelledby="menuTitle">

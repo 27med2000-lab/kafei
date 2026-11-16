@@ -23,7 +23,7 @@ function submitCheckout(e){
   if(CONFIG.payments){ startPayment(method,v,g,lines); return; }
   lastOrder={id:"KF-"+(20000+Math.floor(Math.random()*79999)),wa:wa(lines.join("\n"))};
   demoRecordOrder({id:lastOrder.id,status:"sent",method:"cod",total_fils:s+f,items:cart.map(l=>({id:l.id,color:l.color,name:cName(byId[l.id],colorOf(byId[l.id],l.color)),qty:l.qty}))});
-  cart=[]; saveCart(); location.hash="order";
+  cart=[]; saveCart(); go("order");
 }
 async function placeCod(v,g,lines,s,f){
   const btn=$("#coForm button[type=submit]"); btn.disabled=true;
@@ -37,7 +37,7 @@ async function placeCod(v,g,lines,s,f){
   id=id||"KF-"+(20000+Math.floor(Math.random()*79999));
   lastOrder={id,wa:wa([lines[0]+" ("+id+")",...lines.slice(1)].join("\n"))};
   demoRecordOrder({id,status:"sent",method:"cod",total_fils:s+f,items:cart.map(l=>({id:l.id,color:l.color,name:cName(byId[l.id],colorOf(byId[l.id],l.color)),qty:l.qty}))});
-  cart=[]; saveCart(); location.hash="order";
+  cart=[]; saveCart(); go("order");
 }
 async function startPayment(method,v,g,lines){
   const btn=$("#coForm button[type=submit]"), box=$("#errSum"), label=btn.innerHTML;

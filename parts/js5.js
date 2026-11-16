@@ -22,14 +22,13 @@ document.addEventListener("keydown",e=>{
 });
 /* colour swatches: swap the photo, the colour name and the WhatsApp question */
 document.addEventListener("change",e=>{
-  if(e.target.name!=="pcolor") return; const id=(location.hash.match(/^#p-(.+)$/)||[])[1], p=byId[id], c=colorOf(p,e.target.value); if(!c) return;
+  if(e.target.name!=="pcolor") return; const id=(curKey().match(/^p-(.+)$/)||[])[1], p=byId[id], c=colorOf(p,e.target.value); if(!c) return;
   const img=$(".pdp .vessel img"); if(img){ img.src=c.img||p.img; img.alt=cName(p,c); }
   $$(".pdp [data-detail]").forEach(d=>{ const i=+d.dataset.detail; if(c.details&&c.details[i]){ d.src=c.details[i]; d.alt=`${cName(p,c)}, ${t(i?"d_side":"d_close")}`; } });
   $("#swName").textContent=L(c.name); const a=$("#pdpAsk"); if(a) a.href=wa(t("wa_item",cName(p,c)));
 });
 document.addEventListener("focusout",e=>{ const id=e.target.id; if(RULES[id]&&e.target.closest("#coForm")&&(e.target.value||e.target.getAttribute("aria-invalid")==="true")) validate(id); });
 document.addEventListener("submit",e=>{ if(e.target.id==="coForm") submitCheckout(e); });
-window.addEventListener("hashchange",()=>{ closeDrawer(); render(); });
 applyLang();
 /* products from the owner's dashboard: replace the built-in list once they arrive; keep it if they don't.
    The first draw waits for them (up to 1.5 s) so the page, and the hero intro, are drawn once with the right products.
@@ -37,10 +36,10 @@ applyLang();
 /* (a host without the /api functions answers 404: then checkout sends every order on WhatsApp instead of showing a payment error) */
 let booted=false; const boot=()=>{ if(booted) return; booted=true; render(); };
 /* a link straight to an inner page draws at once (the pre-built home was cleared for it), unless it names a product only the server knows */
-const deepNow=()=>{ if(!document.documentElement.classList.contains("deep")) return false; const h=location.hash.slice(1); return !(h.startsWith("p-")&&!byId[h.slice(2)])&&!h.startsWith("brand-"); };
+const deepNow=()=>{ if(!document.documentElement.classList.contains("deep")) return false; const h=curKey(); return !(h.startsWith("p-")&&!byId[h.slice(2)])&&!h.startsWith("brand-"); };
 if(CONFIG.payments&&CONFIG.payments.products){ setTimeout(boot,1500); if(deepNow()) boot();
   fetch(CONFIG.payments.products).then(r=>{
-  if(r.status===404||r.status===405){ CONFIG.payments=null; if(booted&&location.hash==="#checkout") refreshInPlace(); return null; }
+  if(r.status===404||r.status===405){ CONFIG.payments=null; if(booted&&curKey()==="checkout") refreshInPlace(); return null; }
   return r.status===200?r.json():null; }).then(list=>{
   if(!Array.isArray(list)||!list.length||JSON.stringify(list)===JSON.stringify(P)) return boot();
   P.length=0; list.forEach(x=>P.push(x)); for(const k of Object.keys(byId)) delete byId[k]; P.forEach(x=>byId[x.id]=x);

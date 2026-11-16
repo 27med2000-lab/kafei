@@ -5,6 +5,7 @@ import http from "node:http";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { appPage } from "./api/pages.js";
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const port = Number(process.env.PORT || 3000);
@@ -26,6 +27,9 @@ http.createServer(async (req, res) => {
     catch (e) { console.error(u.pathname, e); if (!res.headersSent) { res.statusCode = 500; res.setHeader("Content-Type", "application/json"); } return res.end('{"error":"server"}'); }
   }
   if (req.method !== "GET" && req.method !== "HEAD") { res.statusCode = 405; return res.end("Method not allowed"); }
+  // the shop's own addresses (/shop, /p/xbloom-studio, ...) and the sitemap
+  const page = await appPage(u.pathname).catch(e => { console.error("page", u.pathname, e.message); return null; });
+  if (page) { res.statusCode = page.status; res.setHeader("Content-Type", page.type); res.setHeader("Cache-Control", "no-cache"); return res.end(req.method === "HEAD" ? undefined : page.body); }
 
   // files: only inside this folder, never hidden files or the server's own code
   let rel; try { rel = pages[u.pathname] || decodeURIComponent(u.pathname).replace(/^\/+/, ""); } catch { res.statusCode = 400; return res.end("Bad request"); }

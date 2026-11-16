@@ -101,22 +101,63 @@ function viewAbout(){
     <ul class="brands">${P.map(p=>`<li><a href="#p-${p.id}"><b>${esc(L(p.name))}</b><span>${esc(L(p.kind))}</span></a></li>`).join("")}</ul></section>
   <section class="wrap split" aria-labelledby="askH"><h2 id="askH" data-rise>${t("ask_h")}</h2><div><p>${t("ask_p")}</p><p style="margin-top:24px"><a class="btn" href="${wa(t("wa_hello"))}" target="_blank" rel="noopener">${ICON.wa}<span>${t("wa_open")}</span></a></p></div></section>`;
 }
+/* ===== addresses: every page has a real one (/shop, /shop/grinders/manual, /p/xbloom-studio, /account).
+   Inside the code a page is still named by a short key ("shop", "shop-grinders-manual", "p-xbloom-studio"); these turn one into the other.
+   Old links with #keys (kafeikw.com/#shop) are moved to the real address on arrival. */
+const ROUTE_KEY=/^(home|shop|shop-[a-z0-9-]+|p-[a-z0-9-]+|brand-[a-z0-9-]+|delivery|about|checkout|order|paid|account)$/;
+function keyToPath(k){
+  if(!k||k==="home") return "/";
+  if(k.startsWith("shop-")){ const rest=k.slice(5), c=CATS.find(x=>rest===x.id||rest.startsWith(x.id+"-")); return "/shop/"+(c?c.id+(rest.length>c.id.length?"/"+rest.slice(c.id.length+1):""):rest); }
+  if(k.startsWith("p-")) return "/p/"+k.slice(2);
+  if(k.startsWith("brand-")) return "/brand/"+k.slice(6);
+  return "/"+k;
+}
+function pathToKey(p){
+  let s; try{ s=p.split("/").filter(Boolean).map(decodeURIComponent); }catch(e){ return "?"; }
+  if(!s.length) return "home";
+  if(s[0]==="shop") return s.length>1?"shop-"+s.slice(1).join("-"):"shop";
+  if((s[0]==="p"||s[0]==="brand")&&s.length===2) return s[0]+"-"+s[1];
+  return s.length===1?s[0]:"?";
+}
+const curKey=()=>pathToKey(location.pathname);
+(function(){ const h=location.hash.slice(1); if(location.pathname==="/"&&ROUTE_KEY.test(h)&&h!=="home") history.replaceState(null,"",keyToPath(h)); })();
+function go(k,replace){ const u=keyToPath(k); if(replace) history.replaceState(null,"",u); else history.pushState(null,"",u); closeDrawer(); render(); }
+/* every #key link becomes its real address as soon as it is drawn, so it can be opened in a new tab, shared and found by search engines */
+function realLinks(n){ if(!n||n.nodeType!==1) return; const list=n.matches('a[href^="#"]')?[n]:[]; list.push(...n.querySelectorAll('a[href^="#"]'));
+  for(const a of list){ const k=a.getAttribute("href").slice(1); if(ROUTE_KEY.test(k)) a.setAttribute("href",keyToPath(k)); } }
+new MutationObserver(ms=>{ for(const m of ms) m.addedNodes.forEach(realLinks); }).observe(document.documentElement,{childList:true,subtree:true});
+realLinks(document.body);
+/* clicks on the shop's own pages switch in place; #anchors scroll within the page */
+document.addEventListener("click",e=>{
+  if(e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey) return;
+  const a=e.target.closest("a[href]"); if(!a||a.target||a.hasAttribute("download")) return;
+  const raw=a.getAttribute("href");
+  if(raw.startsWith("#")){ const k=raw.slice(1); if(ROUTE_KEY.test(k)){ e.preventDefault(); go(k); return; }
+    const el=k&&document.getElementById(k); if(!el) return; e.preventDefault(); scrollToY(el.getBoundingClientRect().top+scrollY-(k==="main"?0:8),false); if(k==="main") el.focus({preventScroll:true}); return; }
+  let u; try{ u=new URL(a.href); }catch(err){ return; }
+  if(u.origin!==location.origin) return;
+  const k=pathToKey(u.pathname); if(!ROUTE_KEY.test(k)) return;
+  e.preventDefault();
+  if(u.pathname===location.pathname&&u.hash){ const el=document.getElementById(u.hash.slice(1)); if(el) scrollToY(el.getBoundingClientRect().top+scrollY-8,false); return; }
+  history.pushState(null,"",u.pathname+u.search+u.hash); closeDrawer(); render();
+},true);
+addEventListener("popstate",()=>{ closeDrawer(); render(); });
 /* sign-in links in emails come back as kafeikw.com/#access_token=...&refresh_token=... (or #error_description=... when expired).
    Keep the tokens for Supabase, take them out of the address bar, and show the account page. */
 let authReturn=null;
 (function(){ const h=location.hash.slice(1); if(!/(^|&)(access_token|error_description|error_code)=/.test(h)) return;
-  authReturn=Object.fromEntries(new URLSearchParams(h)); history.replaceState(null,"",location.pathname+location.search+"#account"); })();
+  authReturn=Object.fromEntries(new URLSearchParams(h)); history.replaceState(null,"","/account"+location.search); })();
 /* return from MyFatoorah: confirm with the server, never with the redirect alone */
 let payReturn=null;
 (function(){ const q=new URLSearchParams(location.search.slice(1).replace(/\?/g,"&")); if(!q.get("pay")) return;
   payReturn={kind:q.get("pay"),order:q.get("order")||"",track:q.get("paymentId")||q.get("paymentid")||q.get("PaymentId")||"",state:"checking"};
-  history.replaceState(null,"",location.pathname+"#paid"); })();
+  history.replaceState(null,"","/paid"); })();
 function viewPaid(){
   const p=payReturn, pend=store.get("kafei-pending",null);
   if(!p) return view404();
   if(p.state==="checking"){
     if(!(p.kind==="return"&&p.track&&CONFIG.payments)){ p.state=p.kind==="return"?"unknown":"unpaid"; }
-    else { fetch(CONFIG.payments.status+"?payment_id="+encodeURIComponent(p.track)).then(r=>r.json()).then(d=>{ p.state=d.paid?"paid":(d.final===false?"unknown":"unpaid"); p.method=d.method; },()=>{ p.state="unknown"; }).then(()=>{ if(location.hash==="#paid") swap(); });
+    else { fetch(CONFIG.payments.status+"?payment_id="+encodeURIComponent(p.track)).then(r=>r.json()).then(d=>{ p.state=d.paid?"paid":(d.final===false?"unknown":"unpaid"); p.method=d.method; },()=>{ p.state="unknown"; }).then(()=>{ if(curKey()==="paid") swap(); });
       return `<div class="wrap page-head"><h1>${t("checking")}</h1></div>`; }
   }
   if(p.state==="paid"){
@@ -162,7 +203,7 @@ function sbLoad(){
         if(a.access_token&&a.refresh_token){ const {error}=await sb.auth.setSession({access_token:a.access_token,refresh_token:a.refresh_token}); if(error) setTimeout(()=>toast(t("e_link")),400); }
         else setTimeout(()=>toast(t("e_link")),400); }
       const {data}=await sb.auth.getSession(); sbUser=data&&data.session?data.session.user:null; if(sbUser) await loadProfile();
-      sb.auth.onAuthStateChange((_e,s)=>{ const was=!!sbUser; sbUser=s?s.user:null; if(!sbUser) sbProfile=null; updateAcct(); if(was!==!!sbUser&&location.hash==="#account") renderAccount(); });
+      sb.auth.onAuthStateChange((_e,s)=>{ const was=!!sbUser; sbUser=s?s.user:null; if(!sbUser) sbProfile=null; updateAcct(); if(was!==!!sbUser&&curKey()==="account") renderAccount(); });
       updateAcct(); return sb; })
     .catch(e=>{ console.warn("accounts unavailable",e); sbReady=null; return null; });
   return sbReady;
@@ -173,7 +214,7 @@ async function saveProfile(p,quiet){ if(!sb||!sbUser) return false;
   const row={id:sbUser.id,updated_at:new Date().toISOString()}; for(const k of ["name","phone","gov","area","block","street","avenue","house","notes"]) row[k]=(p[k]||"").trim()||null;
   if(p.username!==undefined) row.username=(p.username||"").trim()||null;
   const {error}=await sb.from("profiles").upsert(row); if(!error){ sbProfile={...(sbProfile||{}),...row}; if(!quiet) toast(t("saved")); return true; } if(!quiet) toast(error.code==="23505"?t("e_user_taken"):t("e_save")); return false; }
-function updateAcct(){ const b=$("#acctBtn"); if(!b) return; b.hidden=!accountsOn(); b.classList.toggle("in",!!sbUser); b.setAttribute("aria-label",sbUser?t("acct_mine"):t("acct_signin")); if(location.hash==="#account") b.setAttribute("aria-current","page"); else b.removeAttribute("aria-current"); }
+function updateAcct(){ const b=$("#acctBtn"); if(!b) return; b.hidden=!accountsOn(); b.classList.toggle("in",!!sbUser); b.setAttribute("aria-label",sbUser?t("acct_mine"):t("acct_signin")); if(curKey()==="account") b.setAttribute("aria-current","page"); else b.removeAttribute("aria-current"); }
 function viewAccount(){
   if(!accountsOn()) return view404();
   setTimeout(renderAccount,0);
@@ -183,7 +224,7 @@ function viewAccount(){
     return `<div id="acctView" data-fast="${acctStep}|${googleOn}">${authCard(crumbs([["home",t("home")],["",t("acct_signin")]]),"")}</div>`; }
   return `<div id="acctView"><div class="wrap page-head">${crumbs([["home",t("home")],["",t("acct_mine")]])}<h1>${t("loading")}</h1></div></div>`;
 }
-async function renderAccount(){ await renderAccountInner(); const h1=$("#acctView h1"); if(h1&&location.hash==="#account") document.title=`${h1.textContent.trim()} · ${lang==="ar"?"كفي Kafei":"Kafei كفي"}`; }
+async function renderAccount(){ await renderAccountInner(); const h1=$("#acctView h1"); if(h1&&curKey()==="account") document.title=`${h1.textContent.trim()} · ${lang==="ar"?"كفي Kafei":"Kafei كفي"}`; }
 async function renderAccountInner(){
   await sbLoad(); const box=$("#acctView"); if(!box) return;
   const head=crumbs([["home",t("home")],["",sbUser?t("acct_h"):t("acct_signin")]]);
@@ -434,8 +475,8 @@ function curtain(dir){ return new Promise(res=>{ const c=$("#curtain"), f=$("#cu
 let firstRender=true, rendering=false, queued=false, quietSwap=false;
 const ROUTES=["home","shop","delivery","about","checkout","order"];
 function route(){
-  const h=(location.hash||"#home").slice(1)||"home";
-  if(h==="home") return {html:viewHome(),nav:""};
+  const h=curKey(), anchor=location.hash.slice(1);
+  if(h==="home") return {html:viewHome(),nav:"",target:anchor==="stock"?"stock":null};
   if(h==="shop") return {html:viewShop(),nav:"shop"};
   if(h.startsWith("shop-")){ const rest=h.slice(5), c=CATS.find(x=>rest===x.id||rest.startsWith(x.id+"-"));
     if(c) return {html:viewCategory(c,rest.length>c.id.length?rest.slice(c.id.length+1):null),nav:"shop"}; }
@@ -447,7 +488,6 @@ function route(){
   if(h==="order") return {html:viewOrder(),nav:"shop"};
   if(h==="paid") return {html:viewPaid(),nav:""};
   if(h==="account") return {html:viewAccount(),nav:""};
-  if(h==="main"||h==="stock") return {html:viewHome(),nav:"",target:h};
   return {html:view404(),nav:"",nf:true};
 }
 function swap(){
@@ -488,9 +528,4 @@ function applyLang(){
   $$("[data-t]").forEach(e=>e.textContent=t(e.dataset.t)); $("#skip").textContent=t("skip");
   renderFooter(); updateCount();
 }
-/* in-page anchors scroll smoothly instead of re-rendering */
-document.addEventListener("click",e=>{
-  const a=e.target.closest('a[href="#stock"]'); if(!a) return;
-  const el=document.getElementById("stock"); if(!el) return;
-  e.preventDefault(); scrollToY(el.getBoundingClientRect().top+scrollY,false);
-},true);
+
