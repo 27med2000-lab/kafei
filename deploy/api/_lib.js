@@ -15,7 +15,8 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 export const CATALOGUE = JSON.parse(fs.readFileSync(process.env.PRICES_FILE || path.join(here, "prices.json"), "utf8"));
 export const FREE_OVER = CATALOGUE._delivery.freeOverFils;
 export const FEE = CATALOGUE._delivery.feeFils;
-export const MF_BASE = (process.env.MYFATOORAH_BASE || "https://apitest.myfatoorah.com").replace(/\/+$/, "");
+const MF_ENV = (process.env.MYFATOORAH_BASE || "").trim();
+export const MF_BASE = (/^https:\/\//.test(MF_ENV) ? MF_ENV : "https://apitest.myfatoorah.com").replace(/\/+$/, "");
 // The shop's payment choices and MyFatoorah's codes for them
 export const METHODS = { knet: "kn", card: "vm", apple: "ap" };
 
