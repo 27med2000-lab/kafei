@@ -705,9 +705,9 @@ function applyLang(){
 }
 
 /* ===== brands, slide-out menu and home carousels ===== */
-Object.assign(T.en,{menu_h:"Menu",menu_close:"Close the menu",m_shop:"Shop",m_brands:"Brands",m_more:"More",m_wa:"Message us on WhatsApp",
+Object.assign(T.en,{menu_h:"Menu",menu_close:"Close the menu",m_shop:"Shop",m_cats:"Categories",m_brands:"Brands",m_more:"More",m_wa:"Message us on WhatsApp",
   brands_h:"Shop by brand",brand_lead:n=>`Everything we stock from ${n}.`,soon_h2:"Coming soon",soon_ask_short:"Arriving soon. Ask us on WhatsApp",soon_ask:"Ask us what's arriving",rail_prev:"Previous",rail_next:"Next",soon_short:"Coming soon"});
-Object.assign(T.ar,{menu_h:"القائمة",menu_close:"أغلق القائمة",m_shop:"المتجر",m_brands:"الماركات",m_more:"المزيد",m_wa:"راسلنا على واتساب",
+Object.assign(T.ar,{menu_h:"القائمة",menu_close:"أغلق القائمة",m_shop:"المتجر",m_cats:"الأقسام",m_brands:"الماركات",m_more:"المزيد",m_wa:"راسلنا على واتساب",
   brands_h:"تسوّق حسب الماركة",brand_lead:n=>`كل ما نوفّره من ${n}.`,soon_h2:"قريبًا",soon_ask_short:"يصل قريبًا. اسألنا على واتساب",soon_ask:"اسألنا عمّا سيصل",rail_prev:"السابق",rail_next:"التالي",soon_short:"قريبًا"});
 
 const brandSlug=b=>String(b||"").toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
@@ -772,11 +772,14 @@ addEventListener("resize",railState);
 /* ---- slide-out menu ---- */
 let menuFocus=null;
 function renderMenu(){
+  const catsOpen=curKey().startsWith("shop-");
   const bs=brands(), cur=curKey();
   const link=(h,label,extra="")=>`<li><a href="#${h}" ${cur===h?'aria-current="page"':""}>${label}${extra}</a></li>`;
   $("#menu").innerHTML=`<div class="drawer-head"><h2 id="menuTitle">${t("menu_h")}</h2><button class="x-btn" id="menuClose" type="button" aria-label="${t("menu_close")}"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
   <nav class="menu-body" aria-labelledby="menuTitle">
-    <h3>${t("m_shop")}</h3><ul class="menu-list">${link("shop",t("all_products"))}${CATS.map(c=>link("shop-"+c.id,esc(L(c.name)),inCat(c).length?"":` <span class="n soon">${t("soon_short")}</span>`)).join("")}</ul>
+    <h3>${t("m_shop")}</h3><ul class="menu-list">${link("shop",t("all_products"))}
+      <li class="menu-group${catsOpen?" open":""}"><button type="button" class="menu-drop" id="menuDrop" aria-expanded="${catsOpen}" aria-controls="menuCats">${t("m_cats")}<svg class="chev" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="menu-sub" id="menuCats"><ul ${catsOpen?"":"inert"}>${CATS.map(c=>`<li><a href="#shop-${c.id}" ${cur.startsWith("shop-"+c.id)?'aria-current="page"':""}>${catIcon(c)}<span>${esc(L(c.name))}</span>${inCat(c).length?"":`<span class="n n-soon">${t("soon_short")}</span>`}</a></li>`).join("")}</ul></div></li></ul>
     ${bs.length?`<h3>${t("m_brands")}</h3><ul class="menu-list">${bs.map(b=>link("brand-"+b.id,`<bdi>${esc(b.name)}</bdi>`)).join("")}</ul>`:""}
     <h3>${t("m_more")}</h3><ul class="menu-list">${link("delivery",t("nav_delivery"))}${link("about",t("nav_about"))}${accountsOn()?link("account",sbUser?t("acct_mine"):t("acct_signin")):""}</ul>
   </nav>
@@ -800,6 +803,13 @@ document.addEventListener("click",e=>{
   if(e.target.closest("#menuLang")){ closeMenu(false); $("#langBtn").click(); return; }
   if(e.target.closest("#menu a")) closeMenu(false);
 },true);
+/* the categories fold open and shut inside the menu */
+document.addEventListener("click",e=>{
+  const d=e.target.closest("#menuDrop"); if(!d) return;
+  const g=d.closest(".menu-group"), open=!g.classList.contains("open");
+  g.classList.toggle("open",open); d.setAttribute("aria-expanded",String(open));
+  const ul=g.querySelector(".menu-sub ul"); if(open) ul.removeAttribute("inert"); else ul.setAttribute("inert","");
+});
 document.addEventListener("keydown",e=>{
   const m=$("#menu"); if(!m||m.hidden) return;
   if(e.key==="Escape"){ closeMenu(); return; }

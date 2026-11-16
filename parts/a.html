@@ -153,7 +153,7 @@ html.frame-away .hdr{translate:0 -110%}
 :root[lang="ar"] .menu-list a{font-family:var(--txt)}
 .menu-list a[aria-current="page"]{color:var(--coffee,var(--ink));box-shadow:inset 0 -2px 0 var(--crema)}
 .menu-list .n{font:500 var(--t-small)/1 var(--txt);color:var(--muted)}
-.menu-list .n.soon{font-style:normal;opacity:.8}
+.menu-list .n.n-soon{font-style:normal;opacity:.8}
 @media (hover:hover) and (pointer:fine){.menu-list a:hover{box-shadow:inset 0 -2px 0 var(--crema)}}
 .menu-foot{grid-template-columns:minmax(0,1fr) auto}
 /* carousels on the home page */
@@ -540,6 +540,23 @@ html.motion .pour.staged .meter{display:flex;align-items:center;gap:6px;margin-t
 .sw.out::after{content:"";position:absolute;width:34px;height:2px;background:var(--ink);transform:rotate(-45deg);opacity:.7}
 
 /* ---- review fixes ---- */
+/* menu: categories fold under one heading */
+.menu-drop{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:48px;padding:6px 0;border:0;background:none;cursor:pointer;font:700 1.1875rem/1.2 var(--lat);letter-spacing:-.02em;color:var(--ink);box-shadow:inset 0 -1px 0 var(--dust);text-align:start}
+:root[lang="ar"] .menu-drop{font-family:var(--txt);letter-spacing:0}
+.menu-drop .chev{transition:transform 320ms var(--ease);flex:none}
+.menu-group.open .menu-drop .chev{transform:rotate(180deg)}
+@media (hover:hover) and (pointer:fine){.menu-drop:hover{box-shadow:inset 0 -2px 0 var(--crema)}}
+.menu-sub{display:grid;grid-template-rows:0fr;transition:grid-template-rows 380ms var(--ease)}
+.menu-group.open .menu-sub{grid-template-rows:1fr}
+.menu-sub>ul{list-style:none;margin:0;padding:0;overflow:hidden;min-height:0}
+.menu-group.open .menu-sub>ul{padding:6px 0 10px}
+.menu-list .menu-sub a{display:flex;align-items:center;justify-content:flex-start;gap:12px;min-height:44px;padding:4px 8px;border-radius:8px;text-decoration:none;color:var(--ink);font:500 1rem/1.3 var(--txt);letter-spacing:0;box-shadow:none}
+.menu-list .menu-sub a .n{margin-inline-start:auto;align-self:center;font-size:.8125rem}
+.menu-sub a .cat-ico{width:24px;height:24px;flex:none;color:var(--roast)}
+.menu-sub a .cat-ico *{vector-effect:non-scaling-stroke;stroke-width:1.6px}
+.menu-list .menu-sub a[aria-current="page"]{background:var(--sand);font-weight:700;box-shadow:none}
+@media (hover:hover) and (pointer:fine){.menu-list .menu-sub a:hover{background:var(--sand);box-shadow:none}}
+@media (prefers-reduced-motion:reduce){.menu-sub,.menu-drop .chev{transition:none}}
 /* category cards: the mark, centred on the category colour */
 .tile.cat .tile-img{container-type:inline-size}
 .tile.cat .cat-ico{width:46%;height:auto;color:var(--tf);overflow:visible;transition:transform 450ms var(--ease)}
