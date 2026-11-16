@@ -36,7 +36,9 @@ applyLang();
    If they come later, the page is redrawn in place without replaying anything. */
 /* (a host without the /api functions answers 404: then checkout sends every order on WhatsApp instead of showing a payment error) */
 let booted=false; const boot=()=>{ if(booted) return; booted=true; render(); };
-if(CONFIG.payments&&CONFIG.payments.products){ setTimeout(boot,1500);
+/* a link straight to an inner page draws at once (the pre-built home was cleared for it), unless it names a product only the server knows */
+const deepNow=()=>{ if(!document.documentElement.classList.contains("deep")) return false; const h=location.hash.slice(1); return !(h.startsWith("p-")&&!byId[h.slice(2)])&&!h.startsWith("brand-"); };
+if(CONFIG.payments&&CONFIG.payments.products){ setTimeout(boot,1500); if(deepNow()) boot();
   fetch(CONFIG.payments.products).then(r=>{
   if(r.status===404||r.status===405){ CONFIG.payments=null; if(booted&&location.hash==="#checkout") refreshInPlace(); return null; }
   return r.status===200?r.json():null; }).then(list=>{

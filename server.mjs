@@ -9,7 +9,7 @@ import { fileURLToPath } from "node:url";
 const root = path.dirname(fileURLToPath(import.meta.url));
 const port = Number(process.env.PORT || 3000);
 const types = { ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".json": "application/json", ".webp": "image/webp",
-  ".png": "image/png", ".jpg": "image/jpeg", ".svg": "image/svg+xml", ".mp4": "video/mp4", ".txt": "text/plain; charset=utf-8", ".xml": "application/xml" };
+  ".png": "image/png", ".jpg": "image/jpeg", ".svg": "image/svg+xml", ".mp4": "video/mp4", ".txt": "text/plain; charset=utf-8", ".xml": "application/xml", ".woff2": "font/woff2", ".css": "text/css; charset=utf-8" };
 const routes = { "/api/checkout": "checkout.js", "/api/status": "status.js", "/api/myfatoorah-webhook": "myfatoorah-webhook.js",
   "/api/admin": "admin.js", "/api/products": "products.js", "/api/login": "login.js" };
 const pages = { "/": "index.html", "/admin": "admin.html", "/privacy": "privacy.html" };
@@ -31,11 +31,14 @@ http.createServer(async (req, res) => {
   let rel; try { rel = pages[u.pathname] || decodeURIComponent(u.pathname).replace(/^\/+/, ""); } catch { res.statusCode = 400; return res.end("Bad request"); }
   const file = path.resolve(root, rel);
   const blocked = !file.startsWith(root + path.sep) || /(^|[\\/])\./.test(rel) || /^(api|node_modules)[\\/]/.test(rel) || /^(server\.mjs|package(-lock)?\.json)$/.test(rel);
-  if (blocked) { res.statusCode = 404; return res.end("Not found"); }
+  const notFound = () => { res.statusCode = 404; res.setHeader("Cache-Control", "no-cache");
+    fs.readFile(path.join(root, "404.html"), (e, html) => { if (e) { res.setHeader("Content-Type", "text/plain"); return res.end("Not found"); }
+      res.setHeader("Content-Type", "text/html; charset=utf-8"); res.end(req.method === "HEAD" ? undefined : html); }); };
+  if (blocked) return notFound();
   fs.stat(file, (err, st) => {
-    if (err || !st.isFile()) { res.statusCode = 404; res.setHeader("Content-Type", "text/plain"); return res.end("Not found"); }
+    if (err || !st.isFile()) return notFound();
     res.setHeader("Content-Type", types[path.extname(file)] || "application/octet-stream");
-    res.setHeader("Cache-Control", /\.html$/.test(rel) ? "no-cache" : /^img[\\/]/.test(rel) || u.searchParams.has("v") ? "public, max-age=604800" : "public, max-age=300");
+    res.setHeader("Cache-Control", /\.html$/.test(rel) ? "no-cache" : /^(img|fonts)[\\/]/.test(rel) || u.searchParams.has("v") ? "public, max-age=604800" : "public, max-age=300");
     res.setHeader("Content-Length", st.size);
     if (req.method === "HEAD") return res.end();
     fs.createReadStream(file).pipe(res);

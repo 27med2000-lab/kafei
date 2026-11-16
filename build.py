@@ -25,8 +25,11 @@ D = "deploy"
 os.makedirs(D + "/img", exist_ok=True); os.makedirs(D + "/api", exist_ok=True)
 shutil.copy("site.html", D + "/index.html"); shutil.copy("app.js", D + "/app.js"); shutil.copy("package.json", D + "/package.json")
 for f in os.listdir("img"): shutil.copy("img/" + f, D + "/img/" + f)
+os.makedirs(D + "/fonts", exist_ok=True)
+for f in os.listdir("fonts"):
+    if f.endswith(".woff2"): shutil.copy("fonts/" + f, D + "/fonts/" + f)
 for f in ("_lib.js", "checkout.js", "status.js", "myfatoorah-webhook.js", "order-cod.js", "admin.js", "products.js", "login.js", "prices.json"): shutil.copy("api/" + f, D + "/api/" + f)
-shutil.copy("admin.html", D + "/admin.html"); shutil.copy("privacy.html", D + "/privacy.html"); shutil.copy("admin.js", D + "/admin.js")
+shutil.copy("admin.html", D + "/admin.html"); shutil.copy("privacy.html", D + "/privacy.html"); shutil.copy("404.html", D + "/404.html"); shutil.copy("admin.js", D + "/admin.js")
 shutil.copy("server.mjs", D + "/server.mjs"); shutil.copy("htaccess.txt", D + "/.htaccess")  # Apache/LiteSpeed hosts  # for Node.js hosts such as Hostinger: npm start
 open(D + "/vercel.json", "w").write('{\n  "headers": [{ "source": "/api/(.*)", "headers": [{ "key": "Cache-Control", "value": "no-store" }] }],\n  "functions": { "api/*.js": { "includeFiles": "api/prices.json" } }\n}\n')
 print("deploy folder ready:", D)

@@ -51,7 +51,7 @@ function viewHome(){
     <a class="textlink" href="#delivery">${t("deliv_more")}</a></div></section>`;
 }
 function prow(p){
-  return `<li class="prow">${vessel(p)}<div><h2><a href="#p-${p.id}">${esc(L(p.name))}</a></h2>${arName(p.name)}<p class="kind">${esc(L(p.kind))}</p></div>${askLink(p,"textlink")}</li>`;
+  return `<li class="prow">${vessel(p)}<div><h2><a href="#p-${p.id}">${esc(L(p.name))}</a></h2>${arName(p.name)}<p class="kind">${esc(L(p.kind))}</p></div><div class="acts-r">${askLink(p,"textlink")}</div></li>`;
 }
 function viewShop(){
   return `<div class="wrap page-head">${crumbs([["home",t("home")],["shop",t("shop_h")]])}<h1 data-rise>${t("shop_h")}</h1><p class="lead">${t("shop_lead")}</p>
@@ -83,10 +83,10 @@ function viewProduct(p){
   const facts=p.facts?`<dl class="facts">${p.facts.map(f=>`<dt>${lang==="ar"?f[1]:f[0]}</dt><dd>${lang==="ar"?f[3]:f[2]}</dd>`).join("")}</dl>`:"";
   const acts=p.price==null||allOut?`<div class="acts sticky">${askLink(allOut?{...p,out:true}:{...p,price:null},"btn",sel,"pdpAsk")}</div>`
     :`<div class="acts sticky"><div class="stepper" role="group" aria-label="${t("qty")}"><button type="button" data-pq="-1" aria-label="${t("dec")}">−</button><output id="pq">1</output><button type="button" data-pq="1" aria-label="${t("inc")}">+</button></div><button class="btn" type="button" id="pdpAdd" data-pid="${p.id}"><span>${t("add")}</span></button></div>`;
-  return `<div class="wrap page-head">${crumbs([["home",t("home")],["shop-"+c.id,L(c.name)],["",L(p.name)]])}</div>
+  return `<div class="wrap page-head slim">${crumbs([["home",t("home")],["shop-"+c.id,L(c.name)],["",L(p.name)]])}</div>
   <div class="wrap pdp"><div class="stage-col">${vessel(shown,true,'data-pourin')}${detailTiles(p,sel)}</div>
-    <div class="copy"><h1>${esc(L(p.name))}</h1>${arName(p.name)}<p class="kind">${esc(L(p.kind))}</p><p class="what">${esc(L(p.what))}</p><p class="desc">${esc(L(p.desc))}</p>${facts}
-    ${swatches(p,sel)}${allOut?`<p class="desc">${t(hasC?"all_sold":"one_sold")}</p>`:p.price==null?`<p class="desc">${t("price_soon")}</p>`:`<p class="price num">${money(p.price)}</p>`}${acts}<p><a class="textlink" href="#shop-${c.id}">${t("back")} ${esc(L(c.name))}</a></p></div></div>`;
+    <div class="copy"><h1>${esc(L(p.name))}</h1>${arName(p.name)}<p class="kind">${esc(L(p.kind))}</p><p class="what">${esc(L(p.what))}</p>
+    ${swatches(p,sel)}${allOut?`<p class="desc">${t(hasC?"all_sold":"one_sold")}</p>`:p.price==null?`<p class="desc">${t("price_soon")}</p>`:`<p class="price num">${money(p.price)}</p>`}${acts}<p class="desc">${esc(L(p.desc))}</p>${facts}<p><a class="textlink" href="#shop-${c.id}">${t("back")} ${esc(L(c.name))}</a></p></div></div>`;
 }
 function viewDelivery(){
   return `<div class="wrap page-head">${crumbs([["home",t("home")],["",t("deliv_page_h")]])}<h1 data-rise>${t("deliv_page_h")}</h1><p class="lead">${t("deliv_big")}</p></div>
@@ -179,7 +179,8 @@ function viewAccount(){
   setTimeout(renderAccount,0);
   return `<div id="acctView"><div class="wrap page-head">${crumbs([["home",t("home")],["",t("acct_mine")]])}<h1>${t("loading")}</h1></div></div>`;
 }
-async function renderAccount(){
+async function renderAccount(){ await renderAccountInner(); const h1=$("#acctView h1"); if(h1&&location.hash==="#account") document.title=`${h1.textContent.trim()} · ${lang==="ar"?"كفي Kafei":"Kafei كفي"}`; }
+async function renderAccountInner(){
   await sbLoad(); const box=$("#acctView"); if(!box) return;
   const head=crumbs([["home",t("home")],["",sbUser?t("acct_h"):t("acct_signin")]]);
   const err=acctMsg?`<div class="err-summary" role="alert"><h2>${esc(acctMsg)}</h2></div>`:""; acctMsg="";
@@ -239,7 +240,7 @@ async function checkGoogle(){ if(googleOn!==null) return googleOn;
 const GLOGO=`<svg viewBox="0 0 48 48" width="20" height="20" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg>`;
 const passField=(id,lab,ac,help)=>`<div class="f"><label for="${id}">${t(lab)}</label><div class="pw"><input id="${id}" type="password" autocomplete="${ac}" required minlength="8" maxlength="200" dir="ltr"><button type="button" class="pw-eye" data-eye="${id}" aria-controls="${id}" aria-pressed="false">${t("show_pass")}</button></div>${help?`<p class="help">${t(help)}</p>`:""}</div>`;
 function authCard(head,err){
-  const page=(h,p,form)=>`<div class="wrap page-head">${head}<h1>${h}</h1><p class="lead">${p}</p>${form}</div>`;
+  const page=(h,p,form)=>`<div class="wrap page-head acct-split"><div>${head}<h1>${h}</h1><p class="lead">${p}</p>${form}</div><figure class="acct-art" aria-hidden="true"><img src="img/hero-760.webp" alt="" loading="lazy" decoding="async" width="760" height="428">${FINJAN("acct-fj")}</figure></div>`;
   const g=googleOn?`<div class="or"><span>${t("or")}</span></div><button class="btn ghost gbtn" type="button" id="acctGoogle">${GLOGO}<span>${t("google")}</span></button>`:"";
   const emailF=`<div class="f"><label for="email">${t("f_email")}</label><input id="email" type="email" inputmode="email" autocomplete="email" required value="${esc(acctEmail)}" dir="ltr"></div>`;
   const codeF=`<div class="f"><label for="otp">${t("f_code")}</label><input id="otp" class="code" inputmode="numeric" autocomplete="one-time-code" maxlength="12" required dir="ltr"></div>`;
@@ -446,7 +447,7 @@ function route(){
 function swap(){
   teardownPage();
   const r=route();
-  $("#main").innerHTML=r.html;
+  $("#main").innerHTML=r.html; if(!firstRender) $("#main").style.minHeight="";
   const h1=$("#main h1"), base=lang==="ar"?"كفي Kafei: مكائن وأدوات قهوة في الكويت":"Kafei كفي: coffee machines and gear in Kuwait";
   document.title=$(".hero")||!h1?base:`${h1.textContent.trim()} · ${lang==="ar"?"كفي Kafei":"Kafei كفي"}`;
   $$("#nav a").forEach(a=>{ if(a.dataset.nav===r.nav) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
