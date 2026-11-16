@@ -368,7 +368,7 @@ function setupPage(){
     // On a slow phone the safety timer in the page head may already have shown the text: then it stays put, no replay.
     // Otherwise the text is held hidden until the display font has arrived (at most 1.2 s), so letters don't swap shape mid-rise.
     const root=document.documentElement, held=root.classList.contains("intro");
-    if($(".hero")&&(held||!firstIntro)){
+    if($(".hero")&&(held||(!firstIntro&&!quietSwap))){
       G.set(".hero .ch, .hero .ar span",{y:0,yPercent:110}); G.set(".hero [data-intro]",{y:26,opacity:0});
       clearTimeout(window.__introSafe); root.classList.remove("intro");
       const tok=heroTok={}, play=()=>{ if(heroTok!==tok||!pageCtx||!$(".hero")) return; pageCtx.add(()=>{ const tl=G.timeline({defaults:{ease:"expo.out"}});
@@ -424,7 +424,7 @@ function curtain(dir){ return new Promise(res=>{ const c=$("#curtain"), f=$("#cu
   else G.to(f,{yPercent:105,duration:.6,ease:"power2.out",onComplete:()=>{ c.style.visibility="hidden"; res(); }}); }); }
 
 /* ===== router ===== */
-let firstRender=true, rendering=false, queued=false;
+let firstRender=true, rendering=false, queued=false, quietSwap=false;
 const ROUTES=["home","shop","delivery","about","checkout","order"];
 function route(){
   const h=(location.hash||"#home").slice(1)||"home";
@@ -453,14 +453,16 @@ function swap(){
   closeMenu(false);
   document.documentElement.classList.remove("frame-away");
   if(!reduce.matches){ const vid=$(".hero video"); if(vid){ const go=()=>{ if(!vid.isConnected) return; vid.src=vid.dataset.src; vid.addEventListener("playing",()=>vid.classList.add("on"),{once:true}); vid.play().catch(()=>{}); }; if(document.readyState==="complete") setTimeout(go,300); else addEventListener("load",()=>setTimeout(go,300),{once:true}); } }
-  scrollToY(0,true);
+  if(!quietSwap) scrollToY(0,true);
   setupPage(); requestAnimationFrame(railState);
   updateAcct(); if(r.html.includes('id="coForm"')) sbLoad().then(prefillCheckout);
   const el=r.target&&document.getElementById(r.target);
   if(el&&r.target!=="main") requestAnimationFrame(()=>scrollToY(el.getBoundingClientRect().top+scrollY-8,true));
-  if(!firstRender&&pendingFocus!==false) $("#main").focus({preventScroll:true});
-  pendingFocus=true;
+  if(!firstRender&&!quietSwap&&pendingFocus!==false) $("#main").focus({preventScroll:true});
+  pendingFocus=true; quietSwap=false;
 }
+/* redraw the page in place after fresh data (products from the server): no curtain, no scroll jump, no replayed intro */
+function refreshInPlace(){ if(rendering){ queued=true; return; } quietSwap=true; swap(); }
 async function render(){
   if(rendering){ queued=true; return; }
   if(firstRender||!motionOn()){ swap(); firstRender=false; return; }

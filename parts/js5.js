@@ -30,17 +30,21 @@ document.addEventListener("change",e=>{
 document.addEventListener("focusout",e=>{ const id=e.target.id; if(RULES[id]&&e.target.closest("#coForm")&&(e.target.value||e.target.getAttribute("aria-invalid")==="true")) validate(id); });
 document.addEventListener("submit",e=>{ if(e.target.id==="coForm") submitCheckout(e); });
 window.addEventListener("hashchange",()=>{ closeDrawer(); render(); });
-applyLang(); render();
-/* products from the owner's dashboard: replace the built-in list once they arrive; keep it if they don't */
+applyLang();
+/* products from the owner's dashboard: replace the built-in list once they arrive; keep it if they don't.
+   The first draw waits for them (up to 1.5 s) so the page, and the hero intro, are drawn once with the right products.
+   If they come later, the page is redrawn in place without replaying anything. */
 /* (a host without the /api functions answers 404: then checkout sends every order on WhatsApp instead of showing a payment error) */
-if(CONFIG.payments&&CONFIG.payments.products) fetch(CONFIG.payments.products).then(r=>{
-  if(r.status===404||r.status===405){ CONFIG.payments=null; if(location.hash==="#checkout") render(); return null; }
+let booted=false; const boot=()=>{ if(booted) return; booted=true; render(); };
+if(CONFIG.payments&&CONFIG.payments.products){ setTimeout(boot,1500);
+  fetch(CONFIG.payments.products).then(r=>{
+  if(r.status===404||r.status===405){ CONFIG.payments=null; if(booted&&location.hash==="#checkout") refreshInPlace(); return null; }
   return r.status===200?r.json():null; }).then(list=>{
-  if(!Array.isArray(list)||!list.length) return;
+  if(!Array.isArray(list)||!list.length||JSON.stringify(list)===JSON.stringify(P)) return boot();
   P.length=0; list.forEach(x=>P.push(x)); for(const k of Object.keys(byId)) delete byId[k]; P.forEach(x=>byId[x.id]=x);
   const have=new Set(cart.map(lineKey)); cart=cart.filter(okLine);
   for(const l of cartSaved) if(!have.has(lineKey(l))&&okLine(l)) cart.push(l);
-  updateCount(); render();
-}).catch(()=>{});
+  updateCount(); if(booted) refreshInPlace(); else boot();
+}).catch(boot); } else boot();
 })();
 </script>

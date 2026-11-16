@@ -537,7 +537,7 @@ function setupPage(){
     // On a slow phone the safety timer in the page head may already have shown the text: then it stays put, no replay.
     // Otherwise the text is held hidden until the display font has arrived (at most 1.2 s), so letters don't swap shape mid-rise.
     const root=document.documentElement, held=root.classList.contains("intro");
-    if($(".hero")&&(held||!firstIntro)){
+    if($(".hero")&&(held||(!firstIntro&&!quietSwap))){
       G.set(".hero .ch, .hero .ar span",{y:0,yPercent:110}); G.set(".hero [data-intro]",{y:26,opacity:0});
       clearTimeout(window.__introSafe); root.classList.remove("intro");
       const tok=heroTok={}, play=()=>{ if(heroTok!==tok||!pageCtx||!$(".hero")) return; pageCtx.add(()=>{ const tl=G.timeline({defaults:{ease:"expo.out"}});
@@ -593,7 +593,7 @@ function curtain(dir){ return new Promise(res=>{ const c=$("#curtain"), f=$("#cu
   else G.to(f,{yPercent:105,duration:.6,ease:"power2.out",onComplete:()=>{ c.style.visibility="hidden"; res(); }}); }); }
 
 /* ===== router ===== */
-let firstRender=true, rendering=false, queued=false;
+let firstRender=true, rendering=false, queued=false, quietSwap=false;
 const ROUTES=["home","shop","delivery","about","checkout","order"];
 function route(){
   const h=(location.hash||"#home").slice(1)||"home";
@@ -622,14 +622,16 @@ function swap(){
   closeMenu(false);
   document.documentElement.classList.remove("frame-away");
   if(!reduce.matches){ const vid=$(".hero video"); if(vid){ const go=()=>{ if(!vid.isConnected) return; vid.src=vid.dataset.src; vid.addEventListener("playing",()=>vid.classList.add("on"),{once:true}); vid.play().catch(()=>{}); }; if(document.readyState==="complete") setTimeout(go,300); else addEventListener("load",()=>setTimeout(go,300),{once:true}); } }
-  scrollToY(0,true);
+  if(!quietSwap) scrollToY(0,true);
   setupPage(); requestAnimationFrame(railState);
   updateAcct(); if(r.html.includes('id="coForm"')) sbLoad().then(prefillCheckout);
   const el=r.target&&document.getElementById(r.target);
   if(el&&r.target!=="main") requestAnimationFrame(()=>scrollToY(el.getBoundingClientRect().top+scrollY-8,true));
-  if(!firstRender&&pendingFocus!==false) $("#main").focus({preventScroll:true});
-  pendingFocus=true;
+  if(!firstRender&&!quietSwap&&pendingFocus!==false) $("#main").focus({preventScroll:true});
+  pendingFocus=true; quietSwap=false;
 }
+/* redraw the page in place after fresh data (products from the server): no curtain, no scroll jump, no replayed intro */
+function refreshInPlace(){ if(rendering){ queued=true; return; } quietSwap=true; swap(); }
 async function render(){
   if(rendering){ queued=true; return; }
   if(firstRender||!motionOn()){ swap(); firstRender=false; return; }
@@ -877,17 +879,21 @@ document.addEventListener("change",e=>{
 document.addEventListener("focusout",e=>{ const id=e.target.id; if(RULES[id]&&e.target.closest("#coForm")&&(e.target.value||e.target.getAttribute("aria-invalid")==="true")) validate(id); });
 document.addEventListener("submit",e=>{ if(e.target.id==="coForm") submitCheckout(e); });
 window.addEventListener("hashchange",()=>{ closeDrawer(); render(); });
-applyLang(); render();
-/* products from the owner's dashboard: replace the built-in list once they arrive; keep it if they don't */
+applyLang();
+/* products from the owner's dashboard: replace the built-in list once they arrive; keep it if they don't.
+   The first draw waits for them (up to 1.5 s) so the page, and the hero intro, are drawn once with the right products.
+   If they come later, the page is redrawn in place without replaying anything. */
 /* (a host without the /api functions answers 404: then checkout sends every order on WhatsApp instead of showing a payment error) */
-if(CONFIG.payments&&CONFIG.payments.products) fetch(CONFIG.payments.products).then(r=>{
-  if(r.status===404||r.status===405){ CONFIG.payments=null; if(location.hash==="#checkout") render(); return null; }
+let booted=false; const boot=()=>{ if(booted) return; booted=true; render(); };
+if(CONFIG.payments&&CONFIG.payments.products){ setTimeout(boot,1500);
+  fetch(CONFIG.payments.products).then(r=>{
+  if(r.status===404||r.status===405){ CONFIG.payments=null; if(booted&&location.hash==="#checkout") refreshInPlace(); return null; }
   return r.status===200?r.json():null; }).then(list=>{
-  if(!Array.isArray(list)||!list.length) return;
+  if(!Array.isArray(list)||!list.length||JSON.stringify(list)===JSON.stringify(P)) return boot();
   P.length=0; list.forEach(x=>P.push(x)); for(const k of Object.keys(byId)) delete byId[k]; P.forEach(x=>byId[x.id]=x);
   const have=new Set(cart.map(lineKey)); cart=cart.filter(okLine);
   for(const l of cartSaved) if(!have.has(lineKey(l))&&okLine(l)) cart.push(l);
-  updateCount(); render();
-}).catch(()=>{});
+  updateCount(); if(booted) refreshInPlace(); else boot();
+}).catch(boot); } else boot();
 })();
 
