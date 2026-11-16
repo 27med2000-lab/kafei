@@ -23,7 +23,7 @@
       st_paid: "Paid", st_cod: "Cash orders", st_pending: "Waiting for payment", st_failed: "Not paid",
       gov_h: "Where orders go", gov_s: n => `${n} in the same-day zone`, same: "same day",
       capital: "Capital", hawalli: "Hawalli", farwaniya: "Farwaniya", mubarak: "Mubarak Al-Kabeer", ahmadi: "Ahmadi", jahra: "Jahra",
-      del_h: "To deliver", del_s: (a, b) => `${a} to deliver, ${b} delivered in this period`, mark: "Mark delivered", marked: "Marked delivered",
+      del_h: "To deliver", del_s: (a, b) => `${a} to deliver, ${b} delivered in this period`, mark: "Mark delivered", marked: "Marked delivered", cxl: "Cancel order", cxl_q: "Cancel this order? Its items go back into stock. Refund the customer in MyFatoorah yourself if they paid by card.", cxld: "Order cancelled",
       th_order: "Order", th_date: "Placed", th_items: "Items", th_area: "Area", th_pay: "Payment", th_total: "Total",
       prod_h: "Sales by product", prod_s: "Units ordered and money collected in this period", th_product: "Product", th_units: "Units", th_rev: "Collected",
       stock_h: "Stock", stock_s: "Units on the shelf. They go down by themselves with every paid or cash order, and come back if you cancel one. At 0 the shop shows it as sold out. Leave a box empty to not count that item.", out: "Sold out", th_left: "Units left", th_low: "Flag at", save: "Save", saved: "Stock saved", low: "Low", ok: "In stock", unset: "Not set",
@@ -58,7 +58,7 @@
       st_paid: "مدفوع", st_cod: "طلبات نقدية", st_pending: "بانتظار الدفع", st_failed: "لم يُدفع",
       gov_h: "وجهة الطلبات", gov_s: n => `${n} في منطقة التوصيل في نفس اليوم`, same: "نفس اليوم",
       capital: "العاصمة", hawalli: "حولي", farwaniya: "الفروانية", mubarak: "مبارك الكبير", ahmadi: "الأحمدي", jahra: "الجهراء",
-      del_h: "بانتظار التوصيل", del_s: (a, b) => `${a} للتوصيل، ${b} سُلّمت في هذه الفترة`, mark: "تم التسليم", marked: "سُجّل التسليم",
+      del_h: "بانتظار التوصيل", del_s: (a, b) => `${a} للتوصيل، ${b} سُلّمت في هذه الفترة`, mark: "تم التسليم", marked: "سُجّل التسليم", cxl: "إلغاء الطلب", cxl_q: "إلغاء هذا الطلب؟ ستعود منتجاته إلى المخزون. إذا دفع العميل بالبطاقة فأرجع المبلغ بنفسك من MyFatoorah.", cxld: "أُلغي الطلب",
       th_order: "الطلب", th_date: "التاريخ", th_items: "المنتجات", th_area: "المنطقة", th_pay: "الدفع", th_total: "الإجمالي",
       prod_h: "المبيعات حسب المنتج", prod_s: "الكميات المطلوبة والمبالغ المحصّلة في هذه الفترة", th_product: "المنتج", th_units: "الكمية", th_rev: "المحصّل",
       stock_h: "المخزون", stock_s: "الكميات المتوفرة. تنقص تلقائيًا مع كل طلب مدفوع أو نقدي، وتعود إذا ألغيت الطلب. عند الصفر يظهر المنتج في المتجر كنافد. اترك الخانة فارغة إذا لا تريد عدّه.", out: "نفد", th_left: "المتبقي", th_low: "تنبيه عند", save: "احفظ", saved: "تم حفظ المخزون", low: "منخفض", ok: "متوفر", unset: "غير محدد",
@@ -182,7 +182,7 @@
     const gov = placed ? hbars(Object.keys(s.gov).map(k => ({ k: t(k), v: s.gov[k], tag: (k === "capital" || k === "hawalli") ? t("same") : "" }))) : empty("e_none_orders");
     const open = s.open.length ? `<div class="tscroll"><table class="cards"><thead><tr><th>${t("th_order")}</th><th>${t("th_date")}</th><th>${t("th_items")}</th><th>${t("th_area")}</th><th>${t("th_pay")}</th><th class="r">${t("th_total")}</th><th></th></tr></thead><tbody>${s.open.map(o => `<tr>
       <td class="num">${esc(o.id)}</td><td>${df(o.created_at)}</td><td>${esc(o.items.map(i => i.qty + " × " + pname(i)).join(lang === "ar" ? "، " : ", "))}</td><td>${o.gov ? t(o.gov) : "—"}</td>
-      <td>${t(o.method) || "—"}</td><td class="r num">${kwd(o.total_fils)}</td><td class="r"><button class="btn small" type="button" data-deliver="${esc(o.id)}">${t("mark")}</button></td></tr>`).join("")}</tbody></table></div>` : empty("e_none_open");
+      <td>${t(o.method) || "—"}</td><td class="r num">${kwd(o.total_fils)}</td><td class="r"><button class="btn small" type="button" data-deliver="${esc(o.id)}">${t("mark")}</button> <button class="btn small ghost" type="button" data-cancel="${esc(o.id)}">${t("cxl")}</button></td></tr>`).join("")}</tbody></table></div>` : empty("e_none_open");
     const pmax = Math.max(1, ...s.products.map(p => p.units));
     const prod = `<div class="tscroll"><table><thead><tr><th>${t("th_product")}</th><th class="r">${t("th_units")}</th><th class="r">${t("th_rev")}</th></tr></thead><tbody>${s.products.map(p => `<tr><td>${esc(pname(p))}</td><td class="r num">${nf(p.units)}${p.units ? `<span class="inbar" style="width:${Math.max(2, p.units / pmax * 60)}px" aria-hidden="true"></span>` : ""}</td><td class="r num">${kwd(p.revenue_fils)}</td></tr>`).join("")}</tbody></table></div>`;
     const anyStock = s.stock.some(r => r.units !== null);
@@ -310,6 +310,8 @@
     if (el.id === "back") { step = "email"; return render(); }
     if (el.id === "retry") return load();
     if (el.dataset.days) { days = +el.dataset.days; store.set("kafei-admin-days", days); return load(); }
+    if (el.dataset.cancel) { if (!confirm(t("cxl_q"))) return; el.disabled = true; const r = await api("POST", { action: "delivery", order_id: el.dataset.cancel, delivery_status: "cancelled" });
+      if (r.status === 200) { toast(t("cxld")); return load(); } el.disabled = false; return toast(t("e_save")); }
     if (el.dataset.deliver) { el.disabled = true; const r = await api("POST", { action: "delivery", order_id: el.dataset.deliver, delivery_status: "delivered" });
       if (r.status === 200) { toast(t("marked")); return load(); } el.disabled = false; return toast(t("e_save")); }
     if (el.id === "newp") { editing = "new"; photoData = null; render(); return $("#pform").scrollIntoView({ block: "start" }); }
