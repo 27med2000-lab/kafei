@@ -22,7 +22,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap">
-<script>document.documentElement.classList.add("js");if(!matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.classList.add("motion");if(/^#?(home)?$/.test(location.hash))document.documentElement.classList.add("intro");}</script>
+<script>document.documentElement.classList.add("js");if(!matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.classList.add("motion");if(/^#?(home)?$/.test(location.hash)){document.documentElement.classList.add("intro");window.__introSafe=setTimeout(function(){document.documentElement.classList.remove("intro")},8000);}}</script>
 <style>
 /* Kafei v3. Concept: the page pours its stock one cup at a time, the way a Gulf host pours until you
    shake your finjan to say enough (كفي). Motion verb: fill from below and settle. */
@@ -202,10 +202,9 @@ html.frame-away .hdr{translate:0 -110%}
 .hero h1 .w{display:block;overflow:hidden;padding-bottom:.06em}
 .hero h1 .ch{display:inline-block}
 /* first load with motion: the hero text waits in its start position until the intro plays.
-   If the animation code never arrives, it shows anyway after 3 seconds. */
-html.intro .hero .ch,html.intro .hero h1 .ar span{transform:translateY(110%);animation:intro-safe 0s 3s forwards}
-html.intro .hero [data-intro]{opacity:0;transform:translateY(26px);animation:intro-safe 0s 3s forwards}
-@keyframes intro-safe{to{transform:none;opacity:1}}
+   If the animation code never arrives, a timer in the page head shows it anyway after 8 seconds. */
+html.intro .hero .ch,html.intro .hero h1 .ar span{transform:translateY(110%)}
+html.intro .hero [data-intro]{opacity:0;transform:translateY(26px)}
 .hero h1 .ar{display:block;overflow:hidden;padding-bottom:.32em;margin-bottom:-.32em;font-family:var(--txt);font-weight:700;letter-spacing:0;color:#644A31;font-size:.52em;line-height:1.25;margin-top:.05em}
 .hero h1 .ar span{display:inline-block}
 .hero .lead{margin-top:22px;font-size:var(--t-lead);line-height:1.5;max-width:26ch}
@@ -590,7 +589,7 @@ html.motion .pour.staged .meter{display:flex;align-items:center;gap:6px;margin-t
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
-<script src="app.js?v=4e0a8727"></script>
+<script src="app.js?v=dad784f6"></script>
 
 </body>
 </html>

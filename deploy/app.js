@@ -517,12 +517,12 @@ function renderFooter(){
 /* ===== motion: one clock (gsap.ticker drives Lenis, ScrollTrigger and the idle ripple) ===== */
 const G=window.gsap, ST=window.ScrollTrigger;
 const motionOn=()=>!!(G&&ST&&!reduce.matches);
-let lenis=null, pageCtx=null, idleEls=[];
+let lenis=null, pageCtx=null, idleEls=[], firstIntro=true, heroTok=null;
 if(motionOn()){
   G.registerPlugin(ST);
   if(window.Lenis){ lenis=new Lenis({lerp:.12,wheelMultiplier:1}); lenis.on("scroll",ST.update);
     G.ticker.add(t=>lenis.raf(t*1000)); G.ticker.lagSmoothing(0);
-    let last=0; lenis.on("scroll",({scroll})=>{ if(Math.abs(scroll-last)<4) return; document.documentElement.classList.toggle("frame-away",scroll>200&&scroll>last&&!document.querySelector("#nav.open")); last=scroll; }); }
+    let last=0; lenis.on("scroll",({scroll})=>{ if(Math.abs(scroll-last)<4) return; document.documentElement.classList.toggle("frame-away",scroll>200&&scroll>last&&!document.querySelector("#menu.open")); last=scroll; }); }
   G.ticker.add(time=>{ for(const e of idleEls){ e.style.transform=`translateX(${-((time*14)%50)}%)`; } });
 } else document.documentElement.classList.remove("motion","intro");
 function scrollToY(y,instant){ if(lenis) lenis.scrollTo(y,{immediate:!!instant,duration:1.1}); else scrollTo({top:y,behavior:instant||reduce.matches?"auto":"smooth"}); }
@@ -534,14 +534,21 @@ function setupPage(){
   pageCtx=G.context(()=>{
     // hero intro: the name fills up from below. The stylesheet already holds the text in its start position
     // on first load (html.intro), so the pre-built page never shows it, hides it, then replays it.
-    if($(".hero")){ const tl=G.timeline({defaults:{ease:"expo.out"}});
+    // On a slow phone the safety timer in the page head may already have shown the text: then it stays put, no replay.
+    // Otherwise the text is held hidden until the display font has arrived (at most 1.2 s), so letters don't swap shape mid-rise.
+    const root=document.documentElement, held=root.classList.contains("intro");
+    if($(".hero")&&(held||!firstIntro)){
       G.set(".hero .ch, .hero .ar span",{y:0,yPercent:110}); G.set(".hero [data-intro]",{y:26,opacity:0});
-      document.documentElement.classList.remove("intro");
-      tl.to(".hero .ch",{yPercent:0,duration:1.1,stagger:.05})
-        .to(".hero .ar span",{yPercent:0,duration:1},"-=.85")
-        .to(".hero [data-intro]",{y:0,opacity:1,duration:.9,stagger:.08},"-=.75");
-      // once per visit, the finjan in the logo gives the shake that names the shop: enough
-      if(!introShaken){ introShaken=true; tl.to(".logo .lm",{keyframes:{rotation:[0,-14,10,-7,4,0]},duration:.85,ease:"power1.inOut",transformOrigin:"50% 78%"},"-=.5"); } }
+      clearTimeout(window.__introSafe); root.classList.remove("intro");
+      const tok=heroTok={}, play=()=>{ if(heroTok!==tok||!pageCtx||!$(".hero")) return; pageCtx.add(()=>{ const tl=G.timeline({defaults:{ease:"expo.out"}});
+        tl.to(".hero .ch",{yPercent:0,duration:1.1,stagger:.05})
+          .to(".hero .ar span",{yPercent:0,duration:1},"-=.85")
+          .to(".hero [data-intro]",{y:0,opacity:1,duration:.9,stagger:.08},"-=.75");
+        // once per visit, the finjan in the logo gives the shake that names the shop: enough
+        if(!introShaken){ introShaken=true; tl.to(".logo .lm",{keyframes:{rotation:[0,-14,10,-7,4,0]},duration:.85,ease:"power1.inOut",transformOrigin:"50% 78%"},"-=.5"); } }); };
+      const fonts=document.fonts&&document.fonts.status!=="loaded"?Promise.race([document.fonts.ready,new Promise(r=>setTimeout(r,1200))]):null;
+      if(fonts) fonts.then(()=>requestAnimationFrame(play)); else requestAnimationFrame(play); }
+    if($(".hero")) firstIntro=false;
     // headings rise into place once
     $$("[data-rise]").forEach(h=>G.from(h,{clipPath:"inset(0 0 100% 0)",y:24,duration:1,ease:"expo.out",scrollTrigger:{trigger:h,start:"top 88%",once:true}}));
     // product page: the photo pours into its vessel
@@ -578,7 +585,7 @@ function setupPour(){
   apply(0);
   btns.forEach((b,i)=>b.addEventListener("click",()=>scrollToY(st.start+(st.end-st.start)*(i/(n-1))+2)));
 }
-function teardownPage(){ if(pageCtx){ pageCtx.revert(); pageCtx=null; } idleEls=[]; }
+function teardownPage(){ heroTok=null; if(pageCtx){ pageCtx.revert(); pageCtx=null; } idleEls=[]; }
 
 /* curtain: a pour in, a drain out */
 function curtain(dir){ return new Promise(res=>{ const c=$("#curtain"), f=$("#curtain .fill");
