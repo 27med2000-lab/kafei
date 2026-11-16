@@ -510,7 +510,7 @@ function renderFooter(){
   $("#footer").innerHTML=`<div class="wrap"><div class="name"><p class="word" lang="ar">كفي</p>${FINJAN("finjan")}<p class="custom">${t("lead")}</p></div>
   <p class="brand">${t("brand")}</p>
   <nav aria-labelledby="fShop"><h2 id="fShop">${t("f_shop")}</h2><ul><li><a href="#shop">${t("all_products")}</a></li>${CATS.filter(c=>inCat(c).length).map(c=>`<li><a href="#shop-${c.id}">${esc(L(c.name))}</a></li>`).join("")}</ul></nav>
-  <nav aria-labelledby="fHelp"><h2 id="fHelp">${t("f_help")}</h2><ul><li><a href="#delivery">${t("nav_delivery")}</a></li><li><a href="#about">${t("nav_about")}</a></li><li><a href="${wa(t("wa_hello"))}" target="_blank" rel="noopener">${t("ask_wa_short")} <bdi dir="ltr" class="num">${CONFIG.phoneDisplay}</bdi></a></li></ul></nav>
+  <nav aria-labelledby="fHelp"><h2 id="fHelp">${t("f_help")}</h2><ul><li><a href="#delivery">${t("nav_delivery")}</a></li><li><a href="#about">${t("nav_about")}</a></li><li><a href="/privacy">${lang==="ar"?"سياسة الخصوصية":"Privacy policy"}</a></li><li><a href="${wa(t("wa_hello"))}" target="_blank" rel="noopener">${t("ask_wa_short")} <bdi dir="ltr" class="num">${CONFIG.phoneDisplay}</bdi></a></li></ul></nav>
   <p class="imprint">${t("f_imprint")}</p></div>`;
 }
 
