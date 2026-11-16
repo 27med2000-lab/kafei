@@ -621,7 +621,11 @@ function swap(){
   $$("#nav a").forEach(a=>{ if(a.dataset.nav===r.nav) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
   closeMenu(false);
   document.documentElement.classList.remove("frame-away");
-  if(!reduce.matches){ const vid=$(".hero video"); if(vid){ const go=()=>{ if(!vid.isConnected) return; vid.src=vid.dataset.src; vid.addEventListener("playing",()=>vid.classList.add("on"),{once:true}); vid.play().catch(()=>{}); }; if(document.readyState==="complete") setTimeout(go,300); else addEventListener("load",()=>setTimeout(go,300),{once:true}); } }
+  if(!reduce.matches){ const vid=$(".hero video"); if(vid){ const go=()=>{ if(!vid.isConnected) return; vid.muted=true; vid.defaultMuted=true; vid.playsInline=true; vid.setAttribute("playsinline",""); vid.src=vid.dataset.src;
+      vid.addEventListener("playing",()=>vid.classList.add("on"),{once:true});
+      // phones in battery-saver or data-saver mode refuse to start a video by itself: start it on the first touch or scroll instead
+      const retry=()=>{ off(); if(vid.isConnected&&vid.paused) vid.play().catch(()=>{}); }, ev=["touchstart","pointerdown","scroll","keydown"], off=()=>ev.forEach(e=>removeEventListener(e,retry,true));
+      vid.play().catch(()=>{ ev.forEach(e=>addEventListener(e,retry,{capture:true,passive:true})); }); }; if(document.readyState==="complete") setTimeout(go,300); else addEventListener("load",()=>setTimeout(go,300),{once:true}); } }
   if(!quietSwap) scrollToY(0,true);
   setupPage(); requestAnimationFrame(railState);
   updateAcct(); if(r.html.includes('id="coForm"')) sbLoad().then(prefillCheckout);
