@@ -378,7 +378,7 @@ function setupPage(){
           .to(".hero [data-intro]",{y:0,opacity:1,duration:.9,stagger:.08},"-=.75");
         // once per visit, the finjan in the logo gives the shake that names the shop: enough
         if(!introShaken){ introShaken=true; tl.to(".logo .lm",{keyframes:{rotation:[0,-14,10,-7,4,0]},duration:.85,ease:"power1.inOut",transformOrigin:"50% 78%"},"-=.5"); } }); };
-      const fonts=document.fonts&&document.fonts.status!=="loaded"?Promise.race([document.fonts.ready,new Promise(r=>setTimeout(r,1200))]):null;
+      const fonts=document.fonts&&document.fonts.status!=="loaded"?Promise.race([document.fonts.ready,new Promise(r=>setTimeout(r,700))]):null;
       if(fonts) fonts.then(()=>requestAnimationFrame(play)); else requestAnimationFrame(play); }
     if($(".hero")) firstIntro=false;
     // headings rise into place once

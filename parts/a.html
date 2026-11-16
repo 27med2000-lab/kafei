@@ -539,6 +539,8 @@ html.motion .pour.staged .meter{display:flex;align-items:center;gap:6px;margin-t
 .sw.out::after{content:"";position:absolute;width:34px;height:2px;background:var(--ink);transform:rotate(-45deg);opacity:.7}
 
 /* ---- review fixes ---- */
+.logo .lm{transition:transform 360ms var(--ease)}
+@media (hover:hover) and (pointer:fine){.logo:hover .lm{transform:rotate(-10deg)}}
 .page-head.slim{padding-block:clamp(20px,3vw,36px) clamp(16px,2vw,24px)}
 .pdp .copy{padding-top:clamp(0px,2vw,24px)}
 .pdp .price{margin-top:4px}

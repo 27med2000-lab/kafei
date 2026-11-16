@@ -16,7 +16,7 @@
 @font-face{font-family: 'IBM Plex Sans Arabic'; font-style: normal; font-weight: 700; font-display: swap; src: url(/fonts/ibm-latin-700.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}.nf{display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(24px,5vw,72px);align-items:center;max-width:1100px;min-height:calc(100vh - 72px);padding-top:24px;padding-bottom:48px}
 .nf .big{width:clamp(160px,26vw,340px);height:auto;transform-origin:50% 78%;animation:shake 900ms 400ms ease-in-out both}
 @keyframes shake{0%,100%{transform:rotate(0)}20%{transform:rotate(-14deg)}45%{transform:rotate(10deg)}65%{transform:rotate(-7deg)}82%{transform:rotate(4deg)}}
-.nf .code{font:800 1rem/1 "Bricolage Grotesque",sans-serif;color:var(--crema);letter-spacing:.02em;margin:0 0 10px}
+.nf .code{font:800 1rem/1 "Bricolage Grotesque",sans-serif;color:var(--roast);letter-spacing:.02em;margin:0 0 10px}
 .nf .lead{font-size:1.1875rem;color:var(--muted);max-width:36ch;margin:14px 0 28px}
 .nf .acts{display:flex;flex-wrap:wrap;gap:12px;margin:0 0 28px}
 .btn{display:inline-flex;align-items:center;min-height:52px;padding:0 26px;border-radius:999px;background:var(--ink);color:var(--ground);font-weight:700;text-decoration:none;transition:background-color 200ms,transform 160ms}
@@ -42,6 +42,10 @@ ul{padding-inline-start:22px}
 hr{border:0;height:1px;background:color-mix(in srgb,var(--ink) 16%,var(--ground));margin:64px 0}
 [dir="rtl"] h1,[dir="rtl"] h2{font-family:"IBM Plex Sans Arabic",system-ui,sans-serif;letter-spacing:0}
 @view-transition{navigation:auto}
+.bar .lg svg{transition:transform 360ms cubic-bezier(.2,.8,.2,1)}
+.bar .lg:hover svg{transform:rotate(-10deg)}
+main a:not(.btn){text-decoration:none;background:linear-gradient(var(--crema),var(--crema)) 0 100%/100% 1px no-repeat;transition:background-size 300ms cubic-bezier(.2,.8,.2,1)}
+main a:not(.btn):hover{background-size:100% 100%;color:var(--ink)}
 .bar{position:sticky;top:0;z-index:5;background:var(--ground);box-shadow:0 1px 0 color-mix(in srgb,var(--ink) 16%,var(--ground))}
 .bar .in{max-width:1400px;margin:0 auto;padding:0 20px;min-height:72px;display:flex;align-items:center;gap:22px}
 .bar .lg{display:flex;align-items:center;gap:8px;text-decoration:none;font:800 1.25rem/1 "Bricolage Grotesque",sans-serif;letter-spacing:-.04em;color:var(--ink)}
