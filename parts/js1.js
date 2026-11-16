@@ -38,14 +38,14 @@ const firstColor=p=>p&&p.colors&&p.colors.length?(p.colors.find(x=>!x.out)||null
 const lineKey=l=>l.id+(l.color?":"+l.color:"");
 const lineImg=l=>{const p=byId[l.id],c=colorOf(p,l.color);return c&&c.img||p.img;};
 const CATS = [
- {id:"espresso-machines", motif:"tree", band:"caramel", name:{en:"Espresso machines",ar:"مكائن الإسبريسو"}},
- {id:"pourover-machines", motif:"eyes", band:"espresso", name:{en:"Pour-over machines",ar:"مكائن التقطير"}},
- {id:"beans", motif:"grain", band:"cream", name:{en:"Coffee beans",ar:"حبوب القهوة"}, subs:[{id:"filter",name:{en:"Filter beans",ar:"بن للتقطير"}},{id:"espresso",name:{en:"Espresso beans",ar:"بن للإسبريسو"}}]},
- {id:"pourover-accessories", motif:"tri", band:"coffee", name:{en:"Pour-over tools",ar:"أدوات التقطير"}},
- {id:"espresso-accessories", motif:"zig", band:"caramel", name:{en:"Espresso tools",ar:"أدوات الإسبريسو"}},
- {id:"cups", motif:"comb", band:"espresso", name:{en:"Cups",ar:"الأكواب"}},
- {id:"tumblers", motif:"cross", band:"coffee", name:{en:"Tumblers",ar:"الأكواب الحافظة"}},
- {id:"grinders", motif:"zig", band:"cream", name:{en:"Grinders",ar:"المطاحن"}, subs:[{id:"manual",name:{en:"Manual grinders",ar:"مطاحن يدوية"}},{id:"electric",name:{en:"Electric grinders",ar:"مطاحن كهربائية"}}]}
+ {id:"espresso-machines", short:{en:"Espresso",ar:"إسبريسو"}, motif:"tree", band:"caramel", name:{en:"Espresso machines",ar:"مكائن الإسبريسو"}},
+ {id:"pourover-machines", short:{en:"Pour-over",ar:"تقطير"}, motif:"eyes", band:"espresso", name:{en:"Pour-over machines",ar:"مكائن التقطير"}},
+ {id:"beans", short:{en:"Beans",ar:"بن"}, motif:"grain", band:"cream", name:{en:"Coffee beans",ar:"حبوب القهوة"}, subs:[{id:"filter",name:{en:"Filter beans",ar:"بن للتقطير"}},{id:"espresso",name:{en:"Espresso beans",ar:"بن للإسبريسو"}}]},
+ {id:"pourover-accessories", short:{en:"Brewing tools",ar:"أدوات التحضير"}, motif:"tri", band:"coffee", name:{en:"Pour-over tools",ar:"أدوات التقطير"}},
+ {id:"espresso-accessories", short:{en:"Barista tools",ar:"أدوات الباريستا"}, motif:"zig", band:"caramel", name:{en:"Espresso tools",ar:"أدوات الإسبريسو"}},
+ {id:"cups", short:{en:"Cups",ar:"أكواب"}, motif:"comb", band:"espresso", name:{en:"Cups",ar:"الأكواب"}},
+ {id:"tumblers", short:{en:"Tumblers",ar:"أكواب حافظة"}, motif:"cross", band:"coffee", name:{en:"Tumblers",ar:"الأكواب الحافظة"}},
+ {id:"grinders", short:{en:"Grinders",ar:"مطاحن"}, motif:"zig", band:"cream", name:{en:"Grinders",ar:"المطاحن"}, subs:[{id:"manual",name:{en:"Manual grinders",ar:"مطاحن يدوية"}},{id:"electric",name:{en:"Electric grinders",ar:"مطاحن كهربائية"}}]}
 ];
 const catById = Object.fromEntries(CATS.map(c=>[c.id,c]));
 const BANDS = {espresso:["#1D1209","#F1E7D9"],caramel:["#B9824B","#1D1209"],coffee:["#644A31","#F1E7D9"],cream:["#E4DACD","#1D1209"]};

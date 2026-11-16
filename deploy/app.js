@@ -37,14 +37,14 @@ const firstColor=p=>p&&p.colors&&p.colors.length?(p.colors.find(x=>!x.out)||null
 const lineKey=l=>l.id+(l.color?":"+l.color:"");
 const lineImg=l=>{const p=byId[l.id],c=colorOf(p,l.color);return c&&c.img||p.img;};
 const CATS = [
- {id:"espresso-machines", motif:"tree", band:"caramel", name:{en:"Espresso machines",ar:"مكائن الإسبريسو"}},
- {id:"pourover-machines", motif:"eyes", band:"espresso", name:{en:"Pour-over machines",ar:"مكائن التقطير"}},
- {id:"beans", motif:"grain", band:"cream", name:{en:"Coffee beans",ar:"حبوب القهوة"}, subs:[{id:"filter",name:{en:"Filter beans",ar:"بن للتقطير"}},{id:"espresso",name:{en:"Espresso beans",ar:"بن للإسبريسو"}}]},
- {id:"pourover-accessories", motif:"tri", band:"coffee", name:{en:"Pour-over tools",ar:"أدوات التقطير"}},
- {id:"espresso-accessories", motif:"zig", band:"caramel", name:{en:"Espresso tools",ar:"أدوات الإسبريسو"}},
- {id:"cups", motif:"comb", band:"espresso", name:{en:"Cups",ar:"الأكواب"}},
- {id:"tumblers", motif:"cross", band:"coffee", name:{en:"Tumblers",ar:"الأكواب الحافظة"}},
- {id:"grinders", motif:"zig", band:"cream", name:{en:"Grinders",ar:"المطاحن"}, subs:[{id:"manual",name:{en:"Manual grinders",ar:"مطاحن يدوية"}},{id:"electric",name:{en:"Electric grinders",ar:"مطاحن كهربائية"}}]}
+ {id:"espresso-machines", short:{en:"Espresso",ar:"إسبريسو"}, motif:"tree", band:"caramel", name:{en:"Espresso machines",ar:"مكائن الإسبريسو"}},
+ {id:"pourover-machines", short:{en:"Pour-over",ar:"تقطير"}, motif:"eyes", band:"espresso", name:{en:"Pour-over machines",ar:"مكائن التقطير"}},
+ {id:"beans", short:{en:"Beans",ar:"بن"}, motif:"grain", band:"cream", name:{en:"Coffee beans",ar:"حبوب القهوة"}, subs:[{id:"filter",name:{en:"Filter beans",ar:"بن للتقطير"}},{id:"espresso",name:{en:"Espresso beans",ar:"بن للإسبريسو"}}]},
+ {id:"pourover-accessories", short:{en:"Brewing tools",ar:"أدوات التحضير"}, motif:"tri", band:"coffee", name:{en:"Pour-over tools",ar:"أدوات التقطير"}},
+ {id:"espresso-accessories", short:{en:"Barista tools",ar:"أدوات الباريستا"}, motif:"zig", band:"caramel", name:{en:"Espresso tools",ar:"أدوات الإسبريسو"}},
+ {id:"cups", short:{en:"Cups",ar:"أكواب"}, motif:"comb", band:"espresso", name:{en:"Cups",ar:"الأكواب"}},
+ {id:"tumblers", short:{en:"Tumblers",ar:"أكواب حافظة"}, motif:"cross", band:"coffee", name:{en:"Tumblers",ar:"الأكواب الحافظة"}},
+ {id:"grinders", short:{en:"Grinders",ar:"مطاحن"}, motif:"zig", band:"cream", name:{en:"Grinders",ar:"المطاحن"}, subs:[{id:"manual",name:{en:"Manual grinders",ar:"مطاحن يدوية"}},{id:"electric",name:{en:"Electric grinders",ar:"مطاحن كهربائية"}}]}
 ];
 const catById = Object.fromEntries(CATS.map(c=>[c.id,c]));
 const BANDS = {espresso:["#1D1209","#F1E7D9"],caramel:["#B9824B","#1D1209"],coffee:["#644A31","#F1E7D9"],cream:["#E4DACD","#1D1209"]};
@@ -731,25 +731,25 @@ function rail(id,title,cards,n){
     <ul class="rail" id="${id}" tabindex="0" aria-label="${title}">${cards}</ul></section>`;
 }
 const ARROW=`<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>`;
-/* one drawn mark per category, in the same line weight as the menu and cart icons */
+/* one fine-line drawing per category, of the gear itself */
 const CAT_ICON={
- "espresso-machines":'<rect x="10" y="10" width="44" height="12" rx="3"/><path d="M14 22v30h36V22"/><path d="M24 22v6h16v-6"/><path d="M22 28h20"/><path d="M27 38h10v6a5 5 0 0 1-10 0z"/><path d="M37 40h3a2 2 0 0 1 0 4h-3"/><path d="M14 52h36"/>',
- "pourover-machines":'<rect x="14" y="8" width="20" height="46" rx="3"/><path d="M34 14h14v8H34"/><path d="M44 22v6"/><path d="M38 28h12l-3 8h-6z"/><path d="M38 40h12v10a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4z"/><path d="M10 56h44"/>',
- "beans":'<ellipse cx="24" cy="30" rx="11" ry="15" transform="rotate(-25 24 30)"/><path d="M19 17c6 6 1 16 7 26"/><ellipse cx="42" cy="38" rx="10" ry="14" transform="rotate(30 42 38)"/><path d="M48 26c-6 5-2 14-10 24"/>',
- "pourover-accessories":'<path d="M8 22h26l-8 14h-10z"/><path d="M34 22h3a4 4 0 0 1 0 8h-6"/><path d="M14 40h14v12a4 4 0 0 1-4 4h-6a4 4 0 0 1-4-4z"/><path d="M40 52V30a6 6 0 0 1 6-6h4l6-8"/><path d="M38 52h16V36a4 4 0 0 0-4-4h-8"/>',
- "espresso-accessories":'<path d="M22 10h20v8a10 10 0 0 1-20 0z"/><path d="M32 28v8"/><path d="M18 36h28v8H18z"/><path d="M14 52h36"/><path d="M20 44v8M44 44v8"/>',
- "cups":'<path d="M14 22h30v12a15 15 0 0 1-30 0z"/><path d="M44 26h4a6 6 0 0 1 0 12h-5"/><path d="M8 54h44"/><path d="M22 10c0 4 4 4 4 8M32 8c0 4 4 4 4 8"/>',
- "tumblers":'<path d="M20 14h24"/><rect x="18" y="8" width="28" height="6" rx="2"/><path d="M20 14l3 40a4 4 0 0 0 4 4h10a4 4 0 0 0 4-4l3-40"/><path d="M22 30h20"/>',
- "grinders":'<path d="M32 6v8"/><path d="M32 10h14a4 4 0 0 1 4 4"/><circle cx="50" cy="16" r="3"/><rect x="22" y="14" width="20" height="8" rx="2"/><path d="M22 22h20v30a4 4 0 0 1-4 4H26a4 4 0 0 1-4-4z"/><path d="M22 36h20"/>'
+ "espresso-machines":"<rect x=\"14\" y=\"14\" width=\"68\" height=\"18\" rx=\"3\"/><circle cx=\"27\" cy=\"23\" r=\"4.5\"/><path d=\"M27 23l2.6-2.2\"/><circle cx=\"62\" cy=\"23\" r=\"1.6\"/><circle cx=\"70\" cy=\"23\" r=\"1.6\"/><path d=\"M18 32v44M78 32v44\"/><path d=\"M40 32v5h16v-5\"/><path d=\"M37 37h22v3a6 6 0 0 1-6 6H43a6 6 0 0 1-6-6z\"/><path d=\"M59 40l17 3\"/><path d=\"M45 46v3M51 46v3\"/><path d=\"M48 52v4\" stroke-dasharray=\"1.2 2.4\"/><path d=\"M41 59h14v8a5 5 0 0 1-5 5h-4a5 5 0 0 1-5-5z\"/><path d=\"M55 61h1.5a3 3 0 0 1 0 6H55\"/><path d=\"M24 32v20a4 4 0 0 0 4 4\"/><rect x=\"14\" y=\"76\" width=\"68\" height=\"6\" rx=\"2\"/>",
+ "pourover-machines":"<rect x=\"18\" y=\"12\" width=\"26\" height=\"70\" rx=\"4\"/><path d=\"M22 20h18\"/><rect x=\"24\" y=\"44\" width=\"14\" height=\"8\" rx=\"1.5\"/><path d=\"M44 16h28a4 4 0 0 1 4 4v5a3 3 0 0 1-3 3H44\"/><path d=\"M63 28v3\"/><path d=\"M51 34h24\"/><path d=\"M53 34h20l-6 12h-8z\"/><path d=\"M63 49v3\" stroke-dasharray=\"1.2 2.4\"/><path d=\"M55 55h16l2 4v13a6 6 0 0 1-6 6h-8a6 6 0 0 1-6-6V59z\"/><path d=\"M73 61h2a3 3 0 0 1 3 3v3a3 3 0 0 1-3 3h-2\"/><path d=\"M53.5 67h19\"/><path d=\"M12 84h72\"/>",
+ "beans":"<g transform=\"translate(36 44) rotate(-28)\"><ellipse rx=\"14\" ry=\"20\"/><path d=\"M0-19c7 9-7 20 0 38\"/></g><g transform=\"translate(63 56) rotate(24)\"><ellipse rx=\"12\" ry=\"17\"/><path d=\"M0-16c6 8-6 17 0 32\"/></g>",
+ "pourover-accessories":"<path d=\"M10 30h36\"/><path d=\"M12 30h32l-11 18H23z\"/><path d=\"M22 34l4 9M34 34l-4 9\"/><path d=\"M44 33h2.5a3 3 0 0 1 0 6H42\"/><path d=\"M18 52h20l1 4v18a5 5 0 0 1-5 5H22a5 5 0 0 1-5-5V56z\"/><path d=\"M17 66h22\"/><path d=\"M56 46h22l4 30a4 4 0 0 1-4 4H56a4 4 0 0 1-4-4z\"/><path d=\"M58 46c0-5 4-8 9-8s9 3 9 8\"/><path d=\"M67 38v-3\"/><path d=\"M80 52c7 1 8 20 1 22\"/><path d=\"M53 70c-8-2-8-24-17-30l-3-1\"/>",
+ "espresso-accessories":"<path d=\"M26 46a7 7 0 0 1 14 0v3c0 7-2 11-2 17H28c0-6-2-10-2-17z\"/><path d=\"M25 66h16v6H25z\"/><rect x=\"20\" y=\"72\" width=\"26\" height=\"10\" rx=\"2\"/><path d=\"M49 38h36\"/><path d=\"M52 38h30v7a9 9 0 0 1-9 9H61a9 9 0 0 1-9-9z\"/><path d=\"M64 54v4M70 54v4\"/><path d=\"M77 51l8 25a3 3 0 0 1-5 2.4L72 54\"/><path d=\"M12 84h72\"/>",
+ "cups":"<path d=\"M38 36c-3-4 3-6 0-12M48 34c-3-4 3-6 0-12M58 36c-3-4 3-6 0-12\"/><path d=\"M26 44h40v10a20 20 0 0 1-40 0z\"/><path d=\"M66 48h4a7 7 0 0 1 0 14h-6\"/><path d=\"M14 76h68\"/><path d=\"M20 76c2 4 6 6 12 6h32c6 0 10-2 12-6\"/>",
+ "tumblers":"<rect x=\"28\" y=\"10\" width=\"40\" height=\"10\" rx=\"3\"/><path d=\"M42 15h12\"/><path d=\"M30 20l4 60a4 4 0 0 0 4 4h20a4 4 0 0 0 4-4l4-60\"/><path d=\"M31.4 40h33.2M32.5 58h31\"/>",
+ "grinders":"<path d=\"M48 22V12h22\"/><circle cx=\"48\" cy=\"12\" r=\"2.5\"/><rect x=\"68\" y=\"4\" width=\"7\" height=\"14\" rx=\"3.5\"/><rect x=\"34\" y=\"22\" width=\"28\" height=\"8\" rx=\"2\"/><rect x=\"34\" y=\"30\" width=\"28\" height=\"34\" rx=\"2\"/><path d=\"M42 36v22M48 36v22M54 36v22\"/><path d=\"M35 64h26v14a4 4 0 0 1-4 4H39a4 4 0 0 1-4-4z\"/><path d=\"M35 70h26\"/>"
 };
-const catIcon=c=>`<svg class="cat-ico" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${CAT_ICON[c.id]||""}</svg>`;
+const catIcon=c=>`<svg class="cat-ico" viewBox="0 0 96 96" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${CAT_ICON[c.id]||""}</svg>`;
 /* every category gets a card: its mark on its Sadu colour and its name once; the ones not in stock yet carry a small "coming soon" tag */
 function catRail(){
   const order=[...CATS.filter(c=>inCat(c).length),...CATS.filter(c=>!inCat(c).length)];
   const cards=order.map(c=>{ const n=inCat(c).length, bd=BANDS[c.band]||BANDS.cream;
     return `<li class="tile cat"><a href="#shop-${c.id}" style="--tb:${bd[0]};--tf:${bd[1]}">
       <span class="tile-img">${catIcon(c)}${n?"":`<span class="tile-flag">${t("soon_short")}</span>`}</span>
-      <span class="tile-txt"><b>${esc(L(c.name))}</b></span></a></li>`; }).join("");
+      <span class="tile-txt"><b>${esc(L(c.short||c.name))}</b></span></a></li>`; }).join("");
   return rail("catRail",t("cats_h"),cards);
 }
 function brandRail(){
