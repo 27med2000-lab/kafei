@@ -700,9 +700,9 @@ function applyLang(){
 
 /* ===== brands, slide-out menu and home carousels ===== */
 Object.assign(T.en,{menu_h:"Menu",menu_close:"Close the menu",m_shop:"Shop",m_brands:"Brands",m_more:"More",m_wa:"Message us on WhatsApp",
-  brands_h:"Shop by brand",brand_lead:n=>`Everything we stock from ${n}.`,soon_h2:"Coming soon",soon_ask:"Ask us what's arriving",rail_prev:"Previous",rail_next:"Next",soon_short:"Coming soon"});
+  brands_h:"Shop by brand",brand_lead:n=>`Everything we stock from ${n}.`,soon_h2:"Coming soon",soon_ask_short:"Arriving soon. Ask us on WhatsApp",soon_ask:"Ask us what's arriving",rail_prev:"Previous",rail_next:"Next",soon_short:"Coming soon"});
 Object.assign(T.ar,{menu_h:"القائمة",menu_close:"أغلق القائمة",m_shop:"المتجر",m_brands:"الماركات",m_more:"المزيد",m_wa:"راسلنا على واتساب",
-  brands_h:"تسوّق حسب الماركة",brand_lead:n=>`كل ما نوفّره من ${n}.`,soon_h2:"قريبًا",soon_ask:"اسألنا عمّا سيصل",rail_prev:"السابق",rail_next:"التالي",soon_short:"قريبًا"});
+  brands_h:"تسوّق حسب الماركة",brand_lead:n=>`كل ما نوفّره من ${n}.`,soon_h2:"قريبًا",soon_ask_short:"يصل قريبًا. اسألنا على واتساب",soon_ask:"اسألنا عمّا سيصل",rail_prev:"السابق",rail_next:"التالي",soon_short:"قريبًا"});
 
 const brandSlug=b=>String(b||"").toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
 /* brands come from the products themselves (the "Brand" box in the dashboard), most products first */
@@ -722,27 +722,25 @@ function viewBrand(b){
 function rail(id,title,cards,n){
   return `<section class="rail-sec" aria-labelledby="${id}H"><div class="wrap rail-head"><h2 id="${id}H" data-rise>${title}</h2>
     <div class="rail-btns"><button type="button" class="rail-btn" data-rail="${id}" data-dir="-1" aria-label="${t("rail_prev")}" aria-controls="${id}">${ARROW}</button><button type="button" class="rail-btn" data-rail="${id}" data-dir="1" aria-label="${t("rail_next")}" aria-controls="${id}">${ARROW}</button></div></div>
-    <ul class="rail${n<=4?" few":""}" id="${id}" style="--n:${n}" tabindex="0" aria-label="${title}">${cards}</ul></section>`;
+    <ul class="rail" id="${id}" tabindex="0" aria-label="${title}">${cards}</ul></section>`;
 }
 const ARROW=`<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>`;
-/* categories with products get a photo tile; the empty ones share a single "coming soon" tile instead of a row of blanks */
+/* every category gets a card: stocked ones show their first product, the rest show their name in big type on their Sadu colour, marked coming soon */
 function catRail(){
-  const have=CATS.filter(c=>inCat(c).length), soon=CATS.filter(c=>!inCat(c).length);
-  const cards=have.map(c=>{ const list=inCat(c), p=list[0], bd=BANDS[c.band]||BANDS.cream;
-    return `<li class="tile"><a href="#shop-${c.id}" style="--tb:${bd[0]};--tf:${bd[1]}">
-      <span class="tile-img" aria-hidden="true"><img src="${p.img}" alt="" ${p.fit==="contain"?'class="contain"':""} loading="lazy" decoding="async" width="400" height="400"></span>
-      <span class="tile-txt"><b>${esc(L(c.name))}</b><span>${t("n_products",list.length)}</span></span></a></li>`; }).join("")
-    +(soon.length?`<li class="tile tile-soon"><div><h3>${t("soon_h2")}</h3><ul>${soon.map(c=>`<li><a href="#shop-${c.id}">${esc(L(c.name))}</a></li>`).join("")}</ul>
-      <a class="textlink" href="${wa(t("wa_hello_soon"))}" target="_blank" rel="noopener">${t("soon_ask")}</a></div></li>`:"");
-  return rail("catRail",t("cats_h"),cards,have.length+(soon.length?1:0));
+  const order=[...CATS.filter(c=>inCat(c).length),...CATS.filter(c=>!inCat(c).length)];
+  const cards=order.map(c=>{ const list=inCat(c), n=list.length, p=list[0], bd=BANDS[c.band]||BANDS.cream;
+    return `<li class="tile${n?"":" is-soon"}"><a href="#shop-${c.id}" style="--tb:${bd[0]};--tf:${bd[1]}">
+      <span class="tile-img" aria-hidden="true">${p?`<img src="${p.img}" alt="" ${p.fit==="contain"?'class="contain"':""} loading="lazy" decoding="async" width="400" height="400">`:`<span class="tile-word">${esc(L(c.name))}</span><span class="tile-flag">${t("soon_short")}</span>`}</span>
+      <span class="tile-txt"><b>${esc(L(c.name))}</b><span>${n?t("n_products",n):t("soon_ask_short")}</span></span></a></li>`; }).join("");
+  return rail("catRail",t("cats_h"),cards);
 }
 function brandRail(){
-  const bs=brands(); if(bs.length<2) return ""; // one brand is not a choice: the row appears once there are two
+  const bs=brands(); if(!bs.length) return "";
   const cards=bs.map(b=>{ const p=b.items[0];
     return `<li class="tile brand"><a href="#brand-${b.id}">
       <span class="tile-img" aria-hidden="true">${p?`<img src="${p.img}" alt="" ${p.fit==="contain"?'class="contain"':""} loading="lazy" decoding="async" width="400" height="400">`:""}</span>
       <span class="tile-txt"><b dir="auto">${esc(b.name)}</b><span>${t("n_products",b.items.length)}</span></span></a></li>`; }).join("");
-  return rail("brandRail",t("brands_h"),cards,bs.length);
+  return rail("brandRail",t("brands_h"),cards);
 }
 function railState(){
   $$(".rail").forEach(r=>{ const max=r.scrollWidth-r.clientWidth, x=Math.abs(r.scrollLeft);
