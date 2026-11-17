@@ -754,7 +754,9 @@ const catIcon=c=>{ const i=CAT_ICON[c.id]; return i?`<svg class="cat-ico" viewBo
 function catRail(){
   const order=[...CATS.filter(c=>inCat(c).length),...CATS.filter(c=>!inCat(c).length)];
   const cards=order.map(c=>{ const n=inCat(c).length, bd=BANDS[c.band]||BANDS.cream;
-    return `<li class="tile cat"><a href="#shop-${c.id}" style="--tb:${bd[0]};--tf:${bd[1]}">
+    // the light "cream" cards sit a step darker here, so the picture area stands apart from the name strip below it
+    const tb=c.band==="cream"?"#CDBDA8":bd[0];
+    return `<li class="tile cat"><a href="#shop-${c.id}" style="--tb:${tb};--tf:${bd[1]}">
       <span class="tile-img">${catIcon(c)}${n?"":`<span class="tile-flag">${t("soon_short")}</span>`}</span>
       <span class="tile-txt"><b>${esc(L(c.short||c.name))}</b></span></a></li>`; }).join("");
   return rail("catRail",t("cats_h"),cards);
