@@ -219,19 +219,34 @@ function viewHome(){
     <ul><li>${ICON.truck}<span><b>${t("deliv_h")}</b> ${t("deliv_sub")}</span></li><li>${ICON.tag}<span>${t("d2")}</span></li><li>${ICON.card}<span>${t("d3")}</span></li></ul>
     <a class="textlink" href="#delivery">${t("deliv_more")}</a></div></section>`;
 }
+/* product lists: the visitor picks a grid of cards or rows; the choice is remembered on this browser */
+const VIEW_GRID='<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.2"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.2"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.2"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.2"/></svg>';
+const VIEW_ROWS='<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><rect x="4" y="4.5" width="5" height="5" rx="1"/><rect x="4" y="14.5" width="5" height="5" rx="1"/><path d="M12 6h8M12 8.5h5M12 16h8M12 18.5h5"/></svg>';
+const listView=()=>store.get("kafei-view","rows")==="grid"?"grid":"rows";
+function plist(items){
+  const v=listView();
+  return `<div class="view-bar" role="group" aria-label="${t("view_h")}"><button type="button" class="view-btn" data-view="grid" aria-pressed="${v==="grid"}" aria-label="${t("view_grid")}" title="${t("view_grid")}">${VIEW_GRID}</button><button type="button" class="view-btn" data-view="rows" aria-pressed="${v==="rows"}" aria-label="${t("view_rows")}" title="${t("view_rows")}">${VIEW_ROWS}</button></div>
+  <ul class="plist${v==="grid"?" grid":""}">${items.map(prow).join("")}</ul>`;
+}
+document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-view]"); if(!b) return;
+  const v=b.dataset.view; store.set("kafei-view",v);
+  $$(".plist").forEach(l=>l.classList.toggle("grid",v==="grid"));
+  $$("[data-view]").forEach(x=>x.setAttribute("aria-pressed",String(x.dataset.view===v)));
+});
 function prow(p){
   return `<li class="prow">${vessel(p)}<div><h2><a href="#p-${p.id}">${esc(L(p.name))}</a></h2>${arName(p.name)}<p class="kind">${esc(L(p.kind))}</p></div><div class="acts-r">${askLink(p,"textlink")}</div></li>`;
 }
 function viewShop(){
   return `<div class="wrap page-head">${crumbs([["home",t("home")],["shop",t("shop_h")]])}<h1 data-rise>${t("shop_h")}</h1><p class="lead">${t("shop_lead")}</p>
     <nav class="chips" aria-label="${t("cats_label")}"><a href="#shop" aria-current="page">${t("all")}</a>${CATS.filter(c=>inCat(c).length).map(c=>`<a href="#shop-${c.id}">${esc(L(c.name))}</a>`).join("")}</nav></div>
-  <div class="wrap"><ul class="plist">${P.map(prow).join("")}</ul></div>`;
+  <div class="wrap">${plist(P)}</div>`;
 }
 function viewCategory(c,sb){
   const s=sb&&c.subs?c.subs.find(x=>x.id===sb):null, list=inCat(c,s&&s.id), nm=s?s.name:c.name;
   const chips=c.subs?`<nav class="chips" aria-label="${esc(L(c.name))}"><a href="#shop-${c.id}" ${s?"":'aria-current="page"'}>${t("all")}</a>${c.subs.map(x=>`<a href="#shop-${c.id}-${x.id}" ${s&&s.id===x.id?'aria-current="page"':""}>${esc(L(x.name))}</a>`).join("")}</nav>`:"";
   const tr=[["home",t("home")],["shop",t("shop_h")],["shop-"+c.id,L(c.name)]]; if(s) tr.push(["",L(s.name)]);
-  const body=list.length?`<ul class="plist">${list.map(prow).join("")}</ul>`
+  const body=list.length?plist(list)
     :`<div class="soon">${vessel(null)}<div><h2>${t("soon_h")}</h2><p>${esc(t("soon_p",L(nm)))}</p><a class="textlink" href="${wa(t("soon_wa",L(nm)))}" target="_blank" rel="noopener">${t("ask_wa")}</a></div></div>`;
   return `<div class="wrap page-head">${crumbs(tr)}<h1 data-rise>${esc(L(nm))}</h1>${arName(nm)}${chips}</div>
   <div class="wrap">${body}</div>
@@ -705,9 +720,9 @@ function applyLang(){
 }
 
 /* ===== brands, slide-out menu and home carousels ===== */
-Object.assign(T.en,{menu_h:"Menu",menu_close:"Close the menu",m_shop:"Shop",m_cats:"Categories",m_brands:"Brands",m_more:"More",m_wa:"Message us on WhatsApp",
+Object.assign(T.en,{menu_h:"Menu",menu_close:"Close the menu",m_shop:"Shop",m_cats:"Categories",view_h:"Show products as",view_grid:"Grid",view_rows:"Rows",m_brands:"Brands",m_more:"More",m_wa:"Message us on WhatsApp",
   brands_h:"Shop by brand",brand_lead:n=>`Everything we stock from ${n}.`,soon_h2:"Coming soon",soon_ask_short:"Arriving soon. Ask us on WhatsApp",soon_ask:"Ask us what's arriving",rail_prev:"Previous",rail_next:"Next",soon_short:"Coming soon"});
-Object.assign(T.ar,{menu_h:"القائمة",menu_close:"أغلق القائمة",m_shop:"المتجر",m_cats:"الأقسام",m_brands:"الماركات",m_more:"المزيد",m_wa:"راسلنا على واتساب",
+Object.assign(T.ar,{menu_h:"القائمة",menu_close:"أغلق القائمة",m_shop:"المتجر",m_cats:"الأقسام",view_h:"طريقة العرض",view_grid:"شبكة",view_rows:"صفوف",m_brands:"الماركات",m_more:"المزيد",m_wa:"راسلنا على واتساب",
   brands_h:"تسوّق حسب الماركة",brand_lead:n=>`كل ما نوفّره من ${n}.`,soon_h2:"قريبًا",soon_ask_short:"يصل قريبًا. اسألنا على واتساب",soon_ask:"اسألنا عمّا سيصل",rail_prev:"السابق",rail_next:"التالي",soon_short:"قريبًا"});
 
 const brandSlug=b=>String(b||"").toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
@@ -721,7 +736,7 @@ const brandById=id=>brands().find(b=>b.id===id)||null;
 
 function viewBrand(b){
   return `<div class="wrap page-head">${crumbs([["home",t("home")],["shop",t("shop_h")],["",b.name]])}<h1 data-rise>${esc(b.name)}</h1><p class="lead">${esc(t("brand_lead",b.name))}</p></div>
-  <div class="wrap"><ul class="plist">${b.items.map(prow).join("")}</ul></div>`;
+  <div class="wrap">${plist(b.items)}</div>`;
 }
 
 /* ---- carousels ---- */

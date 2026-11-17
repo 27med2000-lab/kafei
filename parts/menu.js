@@ -1,7 +1,7 @@
 /* ===== brands, slide-out menu and home carousels ===== */
-Object.assign(T.en,{menu_h:"Menu",menu_close:"Close the menu",m_shop:"Shop",m_cats:"Categories",m_brands:"Brands",m_more:"More",m_wa:"Message us on WhatsApp",
+Object.assign(T.en,{menu_h:"Menu",menu_close:"Close the menu",m_shop:"Shop",m_cats:"Categories",view_h:"Show products as",view_grid:"Grid",view_rows:"Rows",m_brands:"Brands",m_more:"More",m_wa:"Message us on WhatsApp",
   brands_h:"Shop by brand",brand_lead:n=>`Everything we stock from ${n}.`,soon_h2:"Coming soon",soon_ask_short:"Arriving soon. Ask us on WhatsApp",soon_ask:"Ask us what's arriving",rail_prev:"Previous",rail_next:"Next",soon_short:"Coming soon"});
-Object.assign(T.ar,{menu_h:"القائمة",menu_close:"أغلق القائمة",m_shop:"المتجر",m_cats:"الأقسام",m_brands:"الماركات",m_more:"المزيد",m_wa:"راسلنا على واتساب",
+Object.assign(T.ar,{menu_h:"القائمة",menu_close:"أغلق القائمة",m_shop:"المتجر",m_cats:"الأقسام",view_h:"طريقة العرض",view_grid:"شبكة",view_rows:"صفوف",m_brands:"الماركات",m_more:"المزيد",m_wa:"راسلنا على واتساب",
   brands_h:"تسوّق حسب الماركة",brand_lead:n=>`كل ما نوفّره من ${n}.`,soon_h2:"قريبًا",soon_ask_short:"يصل قريبًا. اسألنا على واتساب",soon_ask:"اسألنا عمّا سيصل",rail_prev:"السابق",rail_next:"التالي",soon_short:"قريبًا"});
 
 const brandSlug=b=>String(b||"").toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
@@ -15,7 +15,7 @@ const brandById=id=>brands().find(b=>b.id===id)||null;
 
 function viewBrand(b){
   return `<div class="wrap page-head">${crumbs([["home",t("home")],["shop",t("shop_h")],["",b.name]])}<h1 data-rise>${esc(b.name)}</h1><p class="lead">${esc(t("brand_lead",b.name))}</p></div>
-  <div class="wrap"><ul class="plist">${b.items.map(prow).join("")}</ul></div>`;
+  <div class="wrap">${plist(b.items)}</div>`;
 }
 
 /* ---- carousels ---- */
