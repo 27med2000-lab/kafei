@@ -146,6 +146,11 @@ export default async function handler(req, res) {
         const r = await supa("POST", "/rest/v1/stock", { product_id: b.product_id, units, low_at: low, updated_at: new Date().toISOString() }, { Prefer: "resolution=merge-duplicates,return=minimal" });
         return r.ok ? json(res, 200, { saved: true }) : json(res, 502, { error: "save", message: "Stock was not saved. Try again." });
       }
+      if (b?.action === "test_alert") {   // a sample alert so the owner can check WhatsApp and email are set up
+        const { orderAlert } = await import("./alerts.js");
+        const r = await orderAlert({ id: "TEST", method: "knet", total_fils: 9000, phone: "00000000", address: "Test only: no delivery needed", items: [{ name: "Test alert from the Kafei dashboard", qty: 1 }] });
+        return json(res, 200, r);
+      }
       if (b?.action === "code_save") return saveCode(res, b.code || {});
       if (b?.action === "code_delete") {
         const c = String(b.code || "").toUpperCase();

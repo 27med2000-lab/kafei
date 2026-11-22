@@ -38,6 +38,12 @@ await check("the email speaks SMTP correctly (login, sender, recipient, Arabic-s
   assert.ok(got.includes("MAIL FROM:<info@kafeikw.com>")); assert.ok(got.includes("RCPT TO:<info@kafeikw.com>"));
   const b64 = body.split("\r\n\r\n")[1].replace(/\r\n|\./g, ""); assert.match(Buffer.from(b64, "base64").toString("utf8"), /KFTEST1\nكفي/); });
 
+await check("the dashboard's test button reports each channel", async () => {
+  globalThis.fetch = async (url, o) => String(url).includes("callmebot.com") ? new Response("Message queued") : realFetch(url, o);
+  process.env.ADMIN_EMAILS = "owner@kafei.test"; const { Readable } = await import("node:stream"); const admin = (await import("../api/admin.js")).default;
+  const r = await new Promise(ok => { const req = Readable.from([JSON.stringify({ action: "test_alert" })]); req.method = "POST"; req.url = "/api/admin"; req.headers = { authorization: "Bearer admin-token" };
+    admin(req, { statusCode: 0, setHeader() {}, end(b) { ok({ status: this.statusCode, body: JSON.parse(b) }); } }); });
+  assert.equal(r.status, 200); assert.equal(r.body.whatsapp, "sent"); assert.equal(r.body.email, "off"); });
 srv.close();
 for (const [s, n] of results) console.log(s, n);
 if (results.some(r => r[0] === "FAIL")) process.exit(1);

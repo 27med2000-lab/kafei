@@ -18,6 +18,7 @@
       updated: t => `Figures from the shop's orders, updated ${t}.`,
       orders: "Orders", revenue: "Money collected", revenue_s: "Paid online, and cash on delivered orders", collect: "Cash to collect", collect_s: "Cash orders not yet delivered",
       profit: "Profit", profit_s: "Money collected minus product cost", profit_part: "Some products have no cost price yet, so they are left out", stockval: "Stock value", stockval_s: "What the stock on the shelf cost you", th_profit: "Profit", th_cost: "Cost", th_margin: "Margin", f_cost: "Cost price in KWD", f_cost_h: "What you paid per unit. Only you see this; it is never shown in the shop.", margin_line: (g, pc) => `Profit per unit: ${g} (${pc}% margin)`, margin_loss: g => `Below cost: you lose ${g} per unit`,
+testa: "Send test alert", testa_s: "Sends a sample order alert to your WhatsApp and email.", testa_res: (w, e) => `WhatsApp: ${w}. Email: ${e}.`, ch_sent: "sent", ch_off: "not set up", ch_failed: "failed, check the settings",
       codes_h: "Discount codes", codes_s: "Customers type these at checkout. The discount comes off the items, not delivery.", codes_none: "Run 11_discount_codes.sql in Supabase to start using codes.", codes_empty: "No codes yet.", newc: "New code", c_code: "Code", c_kind: "Type", c_pct: "Percent off", c_fixed: "KWD off", c_value: "Amount", c_value_h: "For percent, a whole number like 10. For KWD, an amount like 2.000.", c_min: "Minimum order in KWD (optional)", c_ends: "Last day (optional)", c_once: "Once per customer (by phone number)", c_active: "Active: customers can use it now", c_uses: "Used", c_given: "Given away", c_rule: "Discount", c_limits: "Limits", c_once_s: "once each", c_min_s: m => `min ${m}`, c_ends_s: d => `until ${d}`, c_off: "paused", savec: "Save code", savedc: "Code saved", delc: "Delete", delc_q: c => `Delete the code ${c}? Orders that used it keep their discount.`, deletedc: "Code deleted", pausec: "Pause", resumec: "Turn on", discounts: "Discounts given",
       avg: "Average order", active: "Customers", active_s: n => `${n} returning`,
       daily_h: "Money collected per day", daily_s: n => `Last ${n} days, in KWD`, weekly_h: "Orders per week", weekly_s: "Last 12 weeks, weeks start on Sunday",
@@ -55,6 +56,7 @@
       updated: t => `أرقام من طلبات المتجر، آخر تحديث ${t}.`,
       orders: "الطلبات", revenue: "المبالغ المحصّلة", revenue_s: "المدفوع إلكترونيًا ونقد الطلبات المسلّمة", collect: "نقد للتحصيل", collect_s: "طلبات نقدية لم تُسلّم بعد",
       profit: "الربح", profit_s: "المبالغ المحصّلة ناقص تكلفة المنتجات", profit_part: "بعض المنتجات بلا سعر تكلفة بعد، لذلك لم تُحتسب", stockval: "قيمة المخزون", stockval_s: "تكلفة البضاعة الموجودة لديك", th_profit: "الربح", th_cost: "التكلفة", th_margin: "الهامش", f_cost: "سعر التكلفة بالدينار", f_cost_h: "ما دفعته للوحدة الواحدة. يظهر لك فقط ولا يظهر في المتجر أبدًا.", margin_line: (g, pc) => `الربح للوحدة: ${g} (هامش ${pc}%)`, margin_loss: g => `أقل من التكلفة: تخسر ${g} للوحدة`,
+testa: "إرسال تنبيه تجريبي", testa_s: "يرسل تنبيه طلب تجريبي إلى واتساب والبريد.", testa_res: (w, e) => `واتساب: ${w}. البريد: ${e}.`, ch_sent: "تم الإرسال", ch_off: "غير مُعدّ", ch_failed: "فشل، راجع الإعدادات",
       codes_h: "أكواد الخصم", codes_s: "يكتبها العملاء عند الدفع. الخصم على المنتجات وليس على التوصيل.", codes_none: "شغّل الملف 11_discount_codes.sql في Supabase لتبدأ باستخدام الأكواد.", codes_empty: "لا توجد أكواد بعد.", newc: "كود جديد", c_code: "الكود", c_kind: "النوع", c_pct: "نسبة خصم", c_fixed: "خصم بالدينار", c_value: "القيمة", c_value_h: "للنسبة رقم صحيح مثل 10، وللدينار مبلغ مثل 2.000.", c_min: "أقل قيمة للطلب بالدينار (اختياري)", c_ends: "آخر يوم (اختياري)", c_once: "مرة واحدة لكل عميل (حسب رقم الهاتف)", c_active: "مفعّل: يقدر العملاء يستخدمونه الآن", c_uses: "مرات الاستخدام", c_given: "قيمة الخصومات", c_rule: "الخصم", c_limits: "الشروط", c_once_s: "مرة لكل عميل", c_min_s: m => `حد أدنى ${m}`, c_ends_s: d => `حتى ${d}`, c_off: "موقوف", savec: "حفظ الكود", savedc: "تم حفظ الكود", delc: "حذف", delc_q: c => `حذف الكود ${c}؟ الطلبات التي استخدمته تبقى بخصمها.`, deletedc: "تم حذف الكود", pausec: "إيقاف", resumec: "تفعيل", discounts: "الخصومات الممنوحة",
       avg: "متوسط الطلب", active: "العملاء", active_s: n => `${n} عائدون`,
       daily_h: "المحصّل يوميًا", daily_s: n => `آخر ${n} يومًا، بالدينار`, weekly_h: "الطلبات أسبوعيًا", weekly_s: "آخر 12 أسبوعًا، يبدأ الأسبوع يوم الأحد",
@@ -89,7 +91,7 @@
   const kwdShort = f => (f / 1000).toFixed(f % 1000 ? 3 : 0);
   const nf = n => new Intl.NumberFormat(lang === "ar" ? "ar-KW" : "en-GB").format(n);
   const df = (d, o) => new Intl.DateTimeFormat(lang === "ar" ? "ar-KW" : "en-GB", o || { day: "numeric", month: "short" }).format(new Date(d));
-  const toast = m => { const e = $("#toast"); e.textContent = m; e.classList.add("show"); clearTimeout(toast.h); toast.h = setTimeout(() => e.classList.remove("show"), 2600); };
+  const toast = (m, ms = 2600) => { const e = $("#toast"); e.textContent = m; e.classList.add("show"); clearTimeout(toast.h); toast.h = setTimeout(() => e.classList.remove("show"), ms); };
   const ICON = {
     good: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3 3 7-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
     warn: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2l6.5 11.5h-13z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M8 6.5v3.2M8 11.6v.1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
@@ -206,7 +208,7 @@
         <section class="panel" aria-labelledby="h2"><div class="panel-head"><h2 id="h2">${t("weekly_h")}</h2><p class="sub">${t("weekly_s")}</p></div>${weekly}</section>
         <section class="panel" aria-labelledby="h3"><div class="panel-head"><h2 id="h3">${t("pay_h")}</h2><p class="sub">${t("pay_s")}</p></div>${pay}${states}</section>
         <section class="panel" aria-labelledby="h4"><div class="panel-head"><h2 id="h4">${t("gov_h")}</h2><p class="sub">${t("gov_s", nf(s.same_day))}</p></div>${gov}</section>
-        <section class="panel wide" aria-labelledby="h5"><div class="panel-head"><h2 id="h5">${t("del_h")}</h2><p class="sub">${t("del_s", nf(s.open.length), nf(s.delivery.delivered || 0))}</p></div>${open}</section>
+        <section class="panel wide" aria-labelledby="h5"><div class="panel-head"><h2 id="h5">${t("del_h")}</h2><p class="sub">${t("del_s", nf(s.open.length), nf(s.delivery.delivered || 0))}</p><button class="btn ghost small" type="button" id="testa" title="${t("testa_s")}">${t("testa")}</button></div>${open}</section>
         <section class="panel" aria-labelledby="h6"><div class="panel-head"><h2 id="h6">${t("prod_h")}</h2><p class="sub">${t("prod_s")}</p></div>${prod}</section>
         <section class="panel" aria-labelledby="h8"><div class="panel-head"><h2 id="h8">${t("cust_h")}</h2><p class="sub">${t("cust_s")}</p></div>${cust}</section>
         <section class="panel wide" aria-labelledby="h9" id="prods"><div class="panel-head"><h2 id="h9">${t("prods_h")}</h2>${s.catalog ? `<button class="btn small" type="button" id="newp">${t("newp")}</button>` : ""}</div><p class="sub" style="margin:-6px 0 12px">${t("prods_s")}</p>${viewProducts(s)}</section>
@@ -371,6 +373,10 @@
     if (el.id === "newp") { editing = "new"; photoData = null; render(); return $("#pform").scrollIntoView({ block: "start" }); }
     if (el.dataset.editp) { editing = el.dataset.editp; photoData = null; render(); return $("#pform").scrollIntoView({ block: "start" }); }
     if (el.id === "pcancel") { editing = null; photoData = null; return render(); }
+    if (el.id === "testa") { el.disabled = true; toast(t("testa_s"));
+      const r = await api("POST", { action: "test_alert" }).catch(() => ({ status: 0, d: {} })); el.disabled = false;
+      if (r.status !== 200) return toast(t("e_save"));
+      const w = x => t(x === "sent" ? "ch_sent" : x === "off" ? "ch_off" : "ch_failed"); return toast(t("testa_res", w(r.d.whatsapp), w(r.d.email)), 9000); }
     if (el.id === "newc") { editingCode = "new"; render(); return $("#cform").scrollIntoView({ block: "start" }); }
     if (el.dataset.editc) { editingCode = el.dataset.editc; render(); return $("#cform").scrollIntoView({ block: "start" }); }
     if (el.id === "ccancel") { editingCode = null; return render(); }
