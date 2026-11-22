@@ -17,7 +17,7 @@ const CONFIG = {
 
 /* ===== real stock only. Set price in fils (e.g. 389000 = KWD 389.000) once known. ===== */
 const P = [
- {id:"xbloom-studio", cat:"pourover-machines", motif:"eyes", band:"espresso", img:"img/xbloom-twilight.webp", fit:"contain", price:199000,
+ {id:"xbloom-studio", brand:"xBloom", cat:"pourover-machines", motif:"eyes", band:"espresso", img:"img/xbloom-twilight.webp", fit:"contain", price:199000,
   facts:[["In one machine","في ماكينة واحدة","Grinder, brewer and scale","مطحنة وجهاز تقطير وميزان"],
    ["Colours","الألوان","Twilight, Moonlight White, Midnight Black, Offline Blue","توايلايت، أبيض مونلايت، أسود ميدنايت، أزرق أوفلاين"],
    ["Delivery","التوصيل","Free. Same day in the Capital and Hawalli when you order before 2 pm","مجاني. في نفس اليوم للعاصمة وحولي عند الطلب قبل 2 ظهرًا"]],
@@ -37,14 +37,14 @@ const firstColor=p=>p&&p.colors&&p.colors.length?(p.colors.find(x=>!x.out)||null
 const lineKey=l=>l.id+(l.color?":"+l.color:"");
 const lineImg=l=>{const p=byId[l.id],c=colorOf(p,l.color);return c&&c.img||p.img;};
 const CATS = [
- {id:"espresso-machines", motif:"tree", band:"caramel", name:{en:"Espresso machines",ar:"مكائن الإسبريسو"}},
- {id:"pourover-machines", motif:"eyes", band:"espresso", name:{en:"Pour-over machines",ar:"مكائن التقطير"}},
- {id:"beans", motif:"grain", band:"cream", name:{en:"Beans",ar:"البن"}, subs:[{id:"filter",name:{en:"Filter beans",ar:"بن للتقطير"}},{id:"espresso",name:{en:"Espresso beans",ar:"بن للإسبريسو"}}]},
- {id:"pourover-accessories", motif:"tri", band:"coffee", name:{en:"Pour-over accessories",ar:"أدوات التقطير"}},
- {id:"espresso-accessories", motif:"zig", band:"caramel", name:{en:"Espresso accessories",ar:"أدوات الإسبريسو"}},
- {id:"cups", motif:"comb", band:"espresso", name:{en:"Cups",ar:"الأكواب"}},
- {id:"tumblers", motif:"cross", band:"coffee", name:{en:"Tumblers",ar:"الأكواب الحافظة"}},
- {id:"grinders", motif:"zig", band:"cream", name:{en:"Grinders",ar:"المطاحن"}, subs:[{id:"manual",name:{en:"Manual grinders",ar:"مطاحن يدوية"}},{id:"electric",name:{en:"Electric grinders",ar:"مطاحن كهربائية"}}]}
+ {id:"espresso-machines", short:{en:"Espresso",ar:"إسبريسو"}, motif:"tree", band:"caramel", name:{en:"Espresso machines",ar:"مكائن الإسبريسو"}},
+ {id:"pourover-machines", short:{en:"Pour-over",ar:"تقطير"}, motif:"eyes", band:"espresso", name:{en:"Pour-over machines",ar:"مكائن التقطير"}},
+ {id:"beans", short:{en:"Beans",ar:"بن"}, motif:"grain", band:"cream", name:{en:"Coffee beans",ar:"حبوب القهوة"}, subs:[{id:"filter",name:{en:"Filter beans",ar:"بن للتقطير"}},{id:"espresso",name:{en:"Espresso beans",ar:"بن للإسبريسو"}}]},
+ {id:"pourover-accessories", short:{en:"Brewing tools",ar:"أدوات التحضير"}, motif:"tri", band:"coffee", name:{en:"Pour-over tools",ar:"أدوات التقطير"}},
+ {id:"espresso-accessories", short:{en:"Barista tools",ar:"أدوات الباريستا"}, motif:"zig", band:"caramel", name:{en:"Espresso tools",ar:"أدوات الإسبريسو"}},
+ {id:"cups", short:{en:"Cups",ar:"أكواب"}, motif:"comb", band:"espresso", name:{en:"Cups",ar:"الأكواب"}},
+ {id:"tumblers", short:{en:"Tumblers",ar:"أكواب حافظة"}, motif:"cross", band:"coffee", name:{en:"Tumblers",ar:"الأكواب الحافظة"}},
+ {id:"grinders", short:{en:"Grinders",ar:"مطاحن"}, motif:"zig", band:"cream", name:{en:"Grinders",ar:"المطاحن"}, subs:[{id:"manual",name:{en:"Manual grinders",ar:"مطاحن يدوية"}},{id:"electric",name:{en:"Electric grinders",ar:"مطاحن كهربائية"}}]}
 ];
 const catById = Object.fromEntries(CATS.map(c=>[c.id,c]));
 const BANDS = {espresso:["#1D1209","#F1E7D9"],caramel:["#B9824B","#1D1209"],coffee:["#644A31","#F1E7D9"],cream:["#E4DACD","#1D1209"]};
@@ -60,8 +60,8 @@ en:{menu:"Menu",skip:"Skip to content",nav_home:"Home",nav_shop:"Shop",nav_deliv
   film_esp:"An espresso shot through a bottomless portafilter", film_po:"Coffee blooming in a pour-over filter", film_po2:"Pouring water from a kettle into a dripper",
   shop_esp:"Espresso machines", shop_po:"Pour-over machines",
   deliv_more:"Delivery details", deliv_page_h:"Delivery",
-  fx_same:"Same day", fx_fee:"Delivery fee", fx_pay:"Payment", fx_fee_v:"Free over KWD 15. Under that, KWD 1.500.", fx_pay_v:"KNET, card, Apple Pay or cash on delivery.", fx_same_v:"Order before 2 pm and it reaches the Capital and Hawalli the same day.",
-  how_h:"How ordering works", st1:"Choose a product and tap Ask for price, or add it to your cart.", st2:"We reply on WhatsApp with the price and the delivery time.", st3:"Pay by KNET, card, Apple Pay or cash on delivery.",
+  fx_same:"Same day", fx_fee:"Delivery fee", fx_pay:"Payment", fx_fee_v:"Free over KWD 15. Under that, KWD 1.500.", fx_pay_v:"KNET, card or Apple Pay.", fx_same_v:"Order before 2 pm and it reaches the Capital and Hawalli the same day.",
+  how_h:"How ordering works", st1:"Choose a product and tap Ask for price, or add it to your cart.", st2:"We reply on WhatsApp with the price and the delivery time.", st3:"Pay by KNET, card or Apple Pay.",
   far_h:"Outside the Capital and Hawalli?", far_p:"Message us and we'll tell you the delivery day for your area.", far_wa:"Hello Kafei, when can you deliver to my area?",
   about_h:"About us", about_lead:"Kafei sells a short list of coffee machines and beans in Kuwait, in Arabic and English.",
   name_h:"The name", name_p1:"كفي means enough. Say it with a shadda, كفّي, and it means my palm.", name_p2:"We liked both: a cup that is exactly enough, held in your hand.",
@@ -71,13 +71,13 @@ en:{menu:"Menu",skip:"Skip to content",nav_home:"Home",nav_shop:"Shop",nav_deliv
   lead:"A short list of coffee gear, chosen and delivered in Kuwait.",
   t1:"Same day in the Capital and Hawalli when you order before 2 pm",
   t2:"Free delivery over KWD 15, otherwise KWD 1.500",
-  t3:"KNET, card, Apple Pay or cash on delivery",
+  t3:"KNET, card or Apple Pay",
   see_all:"See all four", loom_label:"Kafei's four products",
   ask_price:"Ask for price", details:"Details", color_h:"Colour", choose_color:"Choose a colour", view_colors:"View colours", d_close:"close-up of the brewing head", d_side:"side view", details_h:"Closer look", sold_out:"sold out", all_sold:"Every colour is sold out right now. Ask us when the next ones arrive.", one_sold:"Sold out right now. Ask us when the next ones arrive.", out_ask:"Sold out. Ask us", wa_back:n=>`Hello Kafei, when will the ${n} be back in stock?`, add:"Add to cart", added:n=>`Added ${n} to your cart`,
   price_soon:"Price on request. Message us and we'll reply with today's price and delivery time.",
   wa_item:(n)=>`Hello Kafei, what is the price of the ${n}, and when can you deliver it?`,
   deliv_big:"Order before 2 pm and it reaches the Capital and Hawalli the same day.",
-  d2:"Free over KWD 15. Under that, KWD 1.500", d3:"Pay with KNET, card, Apple Pay or cash",
+  d2:"Free over KWD 15. Under that, KWD 1.500", d3:"Pay with KNET, card or Apple Pay",
   ask_h:"Ask us first", ask_p:"Not sure which machine suits your counter or your coffee? Send us a message and we'll help you choose.",
   wa_open:"Message on WhatsApp", copy:"Copy number", copied:"Number copied", copy_fail:"Select the number to copy it",
   shop_h:"Shop", home:"Home",
@@ -105,8 +105,8 @@ ar:{menu:"القائمة",skip:"انتقل إلى المحتوى",nav_home:"ال
   film_esp:"شوت إسبريسو من حامل فلتر مفتوح", film_po:"قهوة تتفتح في فلتر التقطير", film_po2:"صب الماء من الغلاية في القمع",
   shop_esp:"مكائن الإسبريسو", shop_po:"مكائن التقطير",
   deliv_more:"تفاصيل التوصيل", deliv_page_h:"التوصيل",
-  fx_same:"في نفس اليوم", fx_fee:"رسوم التوصيل", fx_pay:"الدفع", fx_fee_v:"مجاني فوق 15 د.ك، وأقل من ذلك 1.500 د.ك.", fx_pay_v:"كي نت، بطاقة، Apple Pay أو نقدًا عند الاستلام.", fx_same_v:"اطلب قبل الساعة 2 ظهرًا ويصلك في العاصمة وحولي في اليوم نفسه.",
-  how_h:"كيف تطلب", st1:"اختر المنتج واضغط «اسأل عن السعر»، أو أضفه إلى السلة.", st2:"نرد عليك عبر واتساب بالسعر وموعد التوصيل.", st3:"ادفع بالكي نت أو البطاقة أو Apple Pay أو نقدًا عند الاستلام.",
+  fx_same:"في نفس اليوم", fx_fee:"رسوم التوصيل", fx_pay:"الدفع", fx_fee_v:"مجاني فوق 15 د.ك، وأقل من ذلك 1.500 د.ك.", fx_pay_v:"كي نت، بطاقة أو Apple Pay.", fx_same_v:"اطلب قبل الساعة 2 ظهرًا ويصلك في العاصمة وحولي في اليوم نفسه.",
+  how_h:"كيف تطلب", st1:"اختر المنتج واضغط «اسأل عن السعر»، أو أضفه إلى السلة.", st2:"نرد عليك عبر واتساب بالسعر وموعد التوصيل.", st3:"ادفع بالكي نت أو البطاقة أو Apple Pay.",
   far_h:"خارج العاصمة وحولي؟", far_p:"راسلنا ونخبرك بيوم التوصيل لمنطقتك.", far_wa:"مرحبًا كفي، متى يمكن التوصيل لمنطقتي؟",
   about_h:"من نحن", about_lead:"كفي متجر يبيع قائمة قصيرة من مكائن القهوة والبن في الكويت، بالعربية والإنجليزية.",
   name_h:"الاسم", name_p1:"كفي تعني: يكفي. وبالشدّة، كفّي، تعني راحة يدي.", name_p2:"أحببنا المعنيين: كوب يكفي تمامًا، تحمله في يدك.",
@@ -116,13 +116,13 @@ ar:{menu:"القائمة",skip:"انتقل إلى المحتوى",nav_home:"ال
   lead:"قائمة قصيرة من أدوات القهوة، نختارها ونوصّلها في الكويت.",
   t1:"في نفس اليوم للعاصمة وحولي للطلبات قبل الساعة 2 ظهرًا",
   t2:"توصيل مجاني فوق 15 د.ك، وإلا 1.500 د.ك",
-  t3:"كي نت، بطاقة، Apple Pay أو الدفع عند الاستلام",
+  t3:"كي نت، بطاقة أو Apple Pay",
   see_all:"اعرض المنتجات الأربعة", loom_label:"منتجات كفي الأربعة",
   ask_price:"اسأل عن السعر", details:"التفاصيل", color_h:"اللون", choose_color:"اختر لونًا", view_colors:"عرض الألوان", d_close:"لقطة قريبة لرأس التحضير", d_side:"منظر جانبي", details_h:"نظرة أقرب", sold_out:"نفد", all_sold:"نفدت كل الألوان حاليًا. اسألنا عن موعد وصول الدفعة القادمة.", one_sold:"نفد حاليًا. اسألنا عن موعد وصول الدفعة القادمة.", out_ask:"نفد. اسألنا", wa_back:n=>`مرحبًا كفي، متى يتوفر ${n} من جديد؟`, add:"أضف إلى السلة", added:n=>`أُضيف ${n} إلى سلتك`,
   price_soon:"السعر عند الطلب. راسلنا ونرد عليك بسعر اليوم وموعد التوصيل.",
   wa_item:(n)=>`مرحبًا كفي، كم سعر ${n}، ومتى يمكن توصيله؟`,
   deliv_big:"اطلب قبل الساعة 2 ظهرًا ويصلك في العاصمة وحولي في اليوم نفسه.",
-  d2:"مجاني فوق 15 د.ك، وأقل من ذلك 1.500 د.ك", d3:"ادفع بالكي نت أو البطاقة أو Apple Pay أو نقدًا",
+  d2:"مجاني فوق 15 د.ك، وأقل من ذلك 1.500 د.ك", d3:"ادفع بالكي نت أو البطاقة أو Apple Pay",
   ask_h:"اسألنا أولًا", ask_p:"محتار أي ماكينة تناسب مطبخك أو قهوتك؟ راسلنا ونساعدك في الاختيار.",
   wa_open:"راسلنا عبر واتساب", copy:"انسخ الرقم", copied:"تم نسخ الرقم", copy_fail:"حدّد الرقم لنسخه",
   shop_h:"المتجر", home:"الرئيسية",
@@ -173,12 +173,12 @@ Object.assign(T.en,{hero_cta:"See what's in stock",pour_p:"What we have on the c
   deliv_h:"Same day in the Capital and Hawalli",deliv_sub:"Order before 2 pm.",back:"Back to",
   custom:"In the Gulf, you shake your finjan when you've had enough. That little shake is our name.",
   brand:"Not sure which one suits your counter? Ask us on WhatsApp before you buy.",
-  nf_h:"Nothing poured here",nf_p:"This page doesn't exist. The shop is one tap away.",nf_btn:"Go to the shop",acct_signin:"Sign in",sending:"Sending code…",verifying:"Checking the code…",saving:"Saving…",e_link:"That sign-in link has expired or was already used. Enter your email for a new code.",e_wait:n=>`We just sent you a code. Check your email (and spam folder), or wait ${n} seconds to ask for a new one.`,acct_mine:"Your account",acct_h_in:"Sign in to Kafei",acct_p_in:"We email you a sign-in code. No password needed, and checkout works without an account.",f_email:"Email",send_code:"Send code",code_sent:e=>`We sent a code to ${e}. Use the newest email: each new code replaces the last one.`,f_code:"Code from the email",sign_in:"Sign in",other_email:"Use another email",acct_h:"Your account",saved_h:"Saved details",saved_p:"Checkout fills these in for you.",save:"Save details",saved:"Details saved",orders_h:"Your orders",no_orders:"No orders yet. Orders you pay online appear here.",sign_out:"Sign out",e_email:"Enter an email address, for example name@gmail.com.",e_code:"That code didn't work. Use the code from the newest email, or request a new one.",e_send:"We couldn't send the code. Wait a minute and try again.",e_save:"Your details weren't saved. Check the phone number and try again.",save_addr:"Save these details to my account",st_pending:"Waiting for payment",st_paid:"Paid",st_failed:"Not paid",st_sent:"Sent on WhatsApp",demo_code:"Demo: no email is sent. Your code is",loading:"Loading",paying:"Opening the secure payment page",pay_fail:"The payment page could not open. Try again, or choose cash on delivery.",cod_instead:"Pay cash on delivery instead",demo_live:"KNET, card and Apple Pay open MyFatoorah's secure page. Cash on delivery sends your order to us on WhatsApp.",checking:"Checking your payment",paid_h:id=>`Paid. Order ${id} is ours to deliver`,paid_p:"We have your payment. Send the order on WhatsApp so we can confirm the delivery time.",paid_send:"Send order on WhatsApp",unpaid_h:"Payment not completed",unpaid_p:"Nothing was charged, and your cart is still here. Try again, or pay cash on delivery.",back_co:"Back to checkout",check_fail:"We couldn't confirm the payment yet. Message us on WhatsApp with your order number and we'll check.",soon_line:"Not in stock yet:",wa_hello_soon:"Hello Kafei, I'm looking for something you don't list yet.",ask_wa_short:"WhatsApp"});
+  nf_h:"Nothing poured here",nf_p:"This page doesn't exist. The shop is one tap away.",nf_btn:"Go to the shop",acct_signin:"Sign in",sending:"Sending code…",verifying:"Checking the code…",saving:"Saving…",e_link:"That sign-in didn't finish. Try again, or sign in with your email and password.",e_wait:n=>`We just sent you a code. Check your email (and spam folder), or wait ${n} seconds to ask for a new one.`,acct_mine:"Your account",acct_h_in:"Sign in to Kafei",acct_p_in:"We email you a sign-in code. No password needed, and checkout works without an account.",f_email:"Email",send_code:"Send code",code_sent:e=>`We sent a code to ${e}. Use the newest email: each new code replaces the last one.`,f_code:"Code from the email",sign_in:"Sign in",other_email:"Use another email",acct_h:"Your account",saved_h:"Saved details",saved_p:"Checkout fills these in for you.",save:"Save details",saved:"Details saved",orders_h:"Your orders",no_orders:"No orders yet. Orders you pay online appear here.",sign_out:"Sign out",e_email:"Enter an email address, for example name@gmail.com.",e_code:"That code didn't work. Use the code from the newest email, or request a new one.",e_send:"We couldn't send the code. Wait a minute and try again.",e_save:"Your details weren't saved. Check the phone number and try again.",save_addr:"Save these details to my account",st_pending:"Waiting for payment",st_paid:"Paid",st_failed:"Not paid",st_sent:"Sent on WhatsApp",demo_code:"Demo: no email is sent. Your code is",loading:"Loading",paying:"Opening the secure payment page",pay_fail:"The payment page could not open. Try again, or choose another payment method.",cod_instead:"Pay cash on delivery instead",demo_live:"KNET, card and Apple Pay open MyFatoorah's secure page.",checking:"Checking your payment",paid_h:id=>`Paid. Order ${id} is ours to deliver`,paid_p:"We have your payment. Send the order on WhatsApp so we can confirm the delivery time.",paid_send:"Send order on WhatsApp",unpaid_h:"Payment not completed",unpaid_p:"Nothing was charged, and your cart is still here. Try again, or choose another payment method.",back_co:"Back to checkout",check_fail:"We couldn't confirm the payment yet. Message us on WhatsApp with your order number and we'll check.",soon_line:"Not in stock yet:",wa_hello_soon:"Hello Kafei, I'm looking for something you don't list yet.",ask_wa_short:"WhatsApp"});
 Object.assign(T.ar,{hero_cta:"شاهد المتوفر",pour_p:"ما لدينا اليوم، نصبّه لك واحدًا تلو الآخر.",meter:"المنتجات المتوفرة",
   deliv_h:"في نفس اليوم للعاصمة وحولي",deliv_sub:"اطلب قبل الساعة 2 ظهرًا.",back:"العودة إلى",
   custom:"في الخليج، تهزّ فنجالك حين تكتفي. ومن هذه الهزّة جاء اسمنا.",
   brand:"محتار أيها يناسب مطبخك؟ اسألنا عبر واتساب قبل الشراء.",
-  nf_h:"لم نصبّ شيئًا هنا",nf_p:"هذه الصفحة غير موجودة. المتجر على بعد نقرة.",nf_btn:"اذهب إلى المتجر",acct_signin:"تسجيل الدخول",sending:"جارٍ إرسال الرمز…",verifying:"جارٍ التحقق من الرمز…",saving:"جارٍ الحفظ…",e_link:"انتهت صلاحية رابط الدخول أو استُخدم من قبل. أدخل بريدك لنرسل لك رمزًا جديدًا.",e_wait:n=>`أرسلنا لك رمزًا للتو. تحقق من بريدك (ومجلد الرسائل غير المرغوب فيها)، أو انتظر ${n} ثانية لطلب رمز جديد.`,acct_mine:"حسابك",acct_h_in:"سجّل الدخول إلى كفي",acct_p_in:"نرسل لك رمز دخول بالبريد. لا حاجة لكلمة مرور، ويمكنك الطلب دون حساب.",f_email:"البريد الإلكتروني",send_code:"أرسل الرمز",code_sent:e=>`أرسلنا رمزًا إلى ${e}. استخدم أحدث رسالة: كل رمز جديد يلغي الرمز السابق.`,f_code:"الرمز من البريد",sign_in:"دخول",other_email:"استخدم بريدًا آخر",acct_h:"حسابك",saved_h:"بياناتك المحفوظة",saved_p:"نملؤها لك عند إتمام الطلب.",save:"احفظ البيانات",saved:"تم حفظ البيانات",orders_h:"طلباتك",no_orders:"لا توجد طلبات بعد. تظهر هنا الطلبات المدفوعة إلكترونيًا.",sign_out:"تسجيل الخروج",e_email:"اكتب بريدًا إلكترونيًا، مثل name@gmail.com.",e_code:"لم يعمل هذا الرمز. استخدم الرمز من أحدث رسالة، أو اطلب رمزًا جديدًا.",e_send:"تعذّر إرسال الرمز. انتظر دقيقة وحاول مرة أخرى.",e_save:"لم تُحفظ بياناتك. تحقق من رقم الهاتف وحاول مرة أخرى.",save_addr:"احفظ هذه البيانات في حسابي",st_pending:"بانتظار الدفع",st_paid:"مدفوع",st_failed:"لم يُدفع",st_sent:"أُرسل عبر واتساب",demo_code:"تجربة: لا يُرسل بريد. رمزك هو",loading:"جارٍ التحميل",paying:"جارٍ فتح صفحة الدفع الآمنة",pay_fail:"تعذّر فتح صفحة الدفع. حاول مرة أخرى، أو اختر الدفع عند الاستلام.",cod_instead:"ادفع نقدًا عند الاستلام بدلًا من ذلك",demo_live:"الكي نت والبطاقة وApple Pay تفتح صفحة ماي فاتورة الآمنة. الدفع عند الاستلام يرسل طلبك إلينا عبر واتساب.",checking:"نتحقق من الدفع",paid_h:id=>`تم الدفع. الطلب ${id} جاهز للتوصيل`,paid_p:"وصلنا الدفع. أرسل الطلب عبر واتساب لنؤكد لك موعد التوصيل.",paid_send:"أرسل الطلب عبر واتساب",unpaid_h:"لم يكتمل الدفع",unpaid_p:"لم يُخصم أي مبلغ، وسلتك كما هي. حاول مرة أخرى أو ادفع عند الاستلام.",back_co:"العودة إلى إتمام الطلب",check_fail:"لم نتمكن من تأكيد الدفع بعد. راسلنا عبر واتساب برقم الطلب وسنتحقق.",soon_line:"غير متوفر بعد:",wa_hello_soon:"مرحبًا كفي، أبحث عن منتج غير معروض لديكم بعد.",ask_wa_short:"واتساب"});
+  nf_h:"لم نصبّ شيئًا هنا",nf_p:"هذه الصفحة غير موجودة. المتجر على بعد نقرة.",nf_btn:"اذهب إلى المتجر",acct_signin:"تسجيل الدخول",sending:"جارٍ إرسال الرمز…",verifying:"جارٍ التحقق من الرمز…",saving:"جارٍ الحفظ…",e_link:"لم يكتمل تسجيل الدخول. حاول مرة أخرى، أو ادخل ببريدك وكلمة المرور.",e_wait:n=>`أرسلنا لك رمزًا للتو. تحقق من بريدك (ومجلد الرسائل غير المرغوب فيها)، أو انتظر ${n} ثانية لطلب رمز جديد.`,acct_mine:"حسابك",acct_h_in:"سجّل الدخول إلى كفي",acct_p_in:"نرسل لك رمز دخول بالبريد. لا حاجة لكلمة مرور، ويمكنك الطلب دون حساب.",f_email:"البريد الإلكتروني",send_code:"أرسل الرمز",code_sent:e=>`أرسلنا رمزًا إلى ${e}. استخدم أحدث رسالة: كل رمز جديد يلغي الرمز السابق.`,f_code:"الرمز من البريد",sign_in:"دخول",other_email:"استخدم بريدًا آخر",acct_h:"حسابك",saved_h:"بياناتك المحفوظة",saved_p:"نملؤها لك عند إتمام الطلب.",save:"احفظ البيانات",saved:"تم حفظ البيانات",orders_h:"طلباتك",no_orders:"لا توجد طلبات بعد. تظهر هنا الطلبات المدفوعة إلكترونيًا.",sign_out:"تسجيل الخروج",e_email:"اكتب بريدًا إلكترونيًا، مثل name@gmail.com.",e_code:"لم يعمل هذا الرمز. استخدم الرمز من أحدث رسالة، أو اطلب رمزًا جديدًا.",e_send:"تعذّر إرسال الرمز. انتظر دقيقة وحاول مرة أخرى.",e_save:"لم تُحفظ بياناتك. تحقق من رقم الهاتف وحاول مرة أخرى.",save_addr:"احفظ هذه البيانات في حسابي",st_pending:"بانتظار الدفع",st_paid:"مدفوع",st_failed:"لم يُدفع",st_sent:"أُرسل عبر واتساب",demo_code:"تجربة: لا يُرسل بريد. رمزك هو",loading:"جارٍ التحميل",paying:"جارٍ فتح صفحة الدفع الآمنة",pay_fail:"تعذّر فتح صفحة الدفع. حاول مرة أخرى، أو اختر طريقة دفع أخرى.",cod_instead:"ادفع نقدًا عند الاستلام بدلًا من ذلك",demo_live:"الكي نت والبطاقة وApple Pay تفتح صفحة ماي فاتورة الآمنة.",checking:"نتحقق من الدفع",paid_h:id=>`تم الدفع. الطلب ${id} جاهز للتوصيل`,paid_p:"وصلنا الدفع. أرسل الطلب عبر واتساب لنؤكد لك موعد التوصيل.",paid_send:"أرسل الطلب عبر واتساب",unpaid_h:"لم يكتمل الدفع",unpaid_p:"لم يُخصم أي مبلغ، وسلتك كما هي. حاول مرة أخرى أو اختر طريقة دفع أخرى.",back_co:"العودة إلى إتمام الطلب",check_fail:"لم نتمكن من تأكيد الدفع بعد. راسلنا عبر واتساب برقم الطلب وسنتحقق.",soon_line:"غير متوفر بعد:",wa_hello_soon:"مرحبًا كفي، أبحث عن منتج غير معروض لديكم بعد.",ask_wa_short:"واتساب"});
 
 /* ===== shared parts ===== */
 const arName=o=>`<p class="ar2"><bdi lang="${lang==="ar"?"en":"ar"}" dir="${lang==="ar"?"ltr":"rtl"}">${esc(other(o))}</bdi></p>`;
@@ -214,24 +214,39 @@ function viewHome(){
   <section class="pour sec" id="stock" style="--n:${P.length}" aria-labelledby="stockH"><div class="stage wrap">
     <div class="pour-head"><h2 id="stockH">${t("stock_h")}</h2><p>${t("pour_p")}</p></div>
     <ol class="serve">${cups}</ol>${meter}</div></section>
-  ${CATS.filter(c=>inCat(c).length).length>1?`<section class="wrap" aria-labelledby="catsH"><div class="cats-head"><h2 id="catsH" data-rise>${t("cats_h")}</h2></div>${catList(null,true)}</section>`:""}
+  ${catRail()}${brandRail()}
   <section class="strip" aria-labelledby="delH"><div class="wrap"><h2 id="delH" class="sr">${t("nav_delivery")}</h2>
     <ul><li>${ICON.truck}<span><b>${t("deliv_h")}</b> ${t("deliv_sub")}</span></li><li>${ICON.tag}<span>${t("d2")}</span></li><li>${ICON.card}<span>${t("d3")}</span></li></ul>
     <a class="textlink" href="#delivery">${t("deliv_more")}</a></div></section>`;
 }
+/* product lists: the visitor picks a grid of cards or rows; the choice is remembered on this browser */
+const VIEW_GRID='<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.2"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.2"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.2"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.2"/></svg>';
+const VIEW_ROWS='<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><rect x="4" y="4.5" width="5" height="5" rx="1"/><rect x="4" y="14.5" width="5" height="5" rx="1"/><path d="M12 6h8M12 8.5h5M12 16h8M12 18.5h5"/></svg>';
+const listView=()=>store.get("kafei-view","rows")==="grid"?"grid":"rows";
+function plist(items){
+  const v=listView();
+  return `<div class="view-bar" role="group" aria-label="${t("view_h")}"><button type="button" class="view-btn" data-view="grid" aria-pressed="${v==="grid"}" aria-label="${t("view_grid")}" title="${t("view_grid")}">${VIEW_GRID}</button><button type="button" class="view-btn" data-view="rows" aria-pressed="${v==="rows"}" aria-label="${t("view_rows")}" title="${t("view_rows")}">${VIEW_ROWS}</button></div>
+  <ul class="plist${v==="grid"?" grid":""}">${items.map(prow).join("")}</ul>`;
+}
+document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-view]"); if(!b) return;
+  const v=b.dataset.view; store.set("kafei-view",v);
+  $$(".plist").forEach(l=>l.classList.toggle("grid",v==="grid"));
+  $$("[data-view]").forEach(x=>x.setAttribute("aria-pressed",String(x.dataset.view===v)));
+});
 function prow(p){
-  return `<li class="prow">${vessel(p)}<div><h2><a href="#p-${p.id}">${esc(L(p.name))}</a></h2>${arName(p.name)}<p class="kind">${esc(L(p.kind))}</p></div>${askLink(p,"textlink")}</li>`;
+  return `<li class="prow">${vessel(p)}<div><h2><a href="#p-${p.id}">${esc(L(p.name))}</a></h2>${arName(p.name)}<p class="kind">${esc(L(p.kind))}</p></div><div class="acts-r">${askLink(p,"textlink")}</div></li>`;
 }
 function viewShop(){
   return `<div class="wrap page-head">${crumbs([["home",t("home")],["shop",t("shop_h")]])}<h1 data-rise>${t("shop_h")}</h1><p class="lead">${t("shop_lead")}</p>
-    <nav class="chips" aria-label="${t("cats_label")}"><a href="#shop" aria-current="page">${t("all")} <span>${P.length}</span></a>${CATS.filter(c=>inCat(c).length).map(c=>`<a href="#shop-${c.id}">${esc(L(c.name))} <span>${inCat(c).length}</span></a>`).join("")}</nav></div>
-  <div class="wrap"><ul class="plist">${P.map(prow).join("")}</ul></div>`;
+    <nav class="chips" aria-label="${t("cats_label")}"><a href="#shop" aria-current="page">${t("all")}</a>${CATS.filter(c=>inCat(c).length).map(c=>`<a href="#shop-${c.id}">${esc(L(c.name))}</a>`).join("")}</nav></div>
+  <div class="wrap">${plist(P)}</div>`;
 }
 function viewCategory(c,sb){
   const s=sb&&c.subs?c.subs.find(x=>x.id===sb):null, list=inCat(c,s&&s.id), nm=s?s.name:c.name;
-  const chips=c.subs?`<nav class="chips" aria-label="${esc(L(c.name))}"><a href="#shop-${c.id}" ${s?"":'aria-current="page"'}>${t("all")} <span>${inCat(c).length}</span></a>${c.subs.map(x=>`<a href="#shop-${c.id}-${x.id}" ${s&&s.id===x.id?'aria-current="page"':""}>${esc(L(x.name))} <span>${inCat(c,x.id).length}</span></a>`).join("")}</nav>`:"";
+  const chips=c.subs?`<nav class="chips" aria-label="${esc(L(c.name))}"><a href="#shop-${c.id}" ${s?"":'aria-current="page"'}>${t("all")}</a>${c.subs.map(x=>`<a href="#shop-${c.id}-${x.id}" ${s&&s.id===x.id?'aria-current="page"':""}>${esc(L(x.name))}</a>`).join("")}</nav>`:"";
   const tr=[["home",t("home")],["shop",t("shop_h")],["shop-"+c.id,L(c.name)]]; if(s) tr.push(["",L(s.name)]);
-  const body=list.length?`<ul class="plist">${list.map(prow).join("")}</ul>`
+  const body=list.length?plist(list)
     :`<div class="soon">${vessel(null)}<div><h2>${t("soon_h")}</h2><p>${esc(t("soon_p",L(nm)))}</p><a class="textlink" href="${wa(t("soon_wa",L(nm)))}" target="_blank" rel="noopener">${t("ask_wa")}</a></div></div>`;
   return `<div class="wrap page-head">${crumbs(tr)}<h1 data-rise>${esc(L(nm))}</h1>${arName(nm)}${chips}</div>
   <div class="wrap">${body}</div>
@@ -252,10 +267,10 @@ function viewProduct(p){
   const facts=p.facts?`<dl class="facts">${p.facts.map(f=>`<dt>${lang==="ar"?f[1]:f[0]}</dt><dd>${lang==="ar"?f[3]:f[2]}</dd>`).join("")}</dl>`:"";
   const acts=p.price==null||allOut?`<div class="acts sticky">${askLink(allOut?{...p,out:true}:{...p,price:null},"btn",sel,"pdpAsk")}</div>`
     :`<div class="acts sticky"><div class="stepper" role="group" aria-label="${t("qty")}"><button type="button" data-pq="-1" aria-label="${t("dec")}">−</button><output id="pq">1</output><button type="button" data-pq="1" aria-label="${t("inc")}">+</button></div><button class="btn" type="button" id="pdpAdd" data-pid="${p.id}"><span>${t("add")}</span></button></div>`;
-  return `<div class="wrap page-head">${crumbs([["home",t("home")],["shop-"+c.id,L(c.name)],["",L(p.name)]])}</div>
+  return `<div class="wrap page-head slim">${crumbs([["home",t("home")],["shop-"+c.id,L(c.name)],["",L(p.name)]])}</div>
   <div class="wrap pdp"><div class="stage-col">${vessel(shown,true,'data-pourin')}${detailTiles(p,sel)}</div>
-    <div class="copy"><h1>${esc(L(p.name))}</h1>${arName(p.name)}<p class="kind">${esc(L(p.kind))}</p><p class="what">${esc(L(p.what))}</p><p class="desc">${esc(L(p.desc))}</p>${facts}
-    ${swatches(p,sel)}${allOut?`<p class="desc">${t(hasC?"all_sold":"one_sold")}</p>`:p.price==null?`<p class="desc">${t("price_soon")}</p>`:`<p class="price num">${money(p.price)}</p>`}${acts}<p><a class="textlink" href="#shop-${c.id}">${t("back")} ${esc(L(c.name))}</a></p></div></div>`;
+    <div class="copy"><h1>${esc(L(p.name))}</h1>${arName(p.name)}<p class="kind">${esc(L(p.kind))}</p><p class="what">${esc(L(p.what))}</p>
+    ${swatches(p,sel)}${allOut?`<p class="desc">${t(hasC?"all_sold":"one_sold")}</p>`:p.price==null?`<p class="desc">${t("price_soon")}</p>`:`<p class="price num">${money(p.price)}</p>`}${acts}<p class="desc">${esc(L(p.desc))}</p>${facts}<p><a class="textlink" href="#shop-${c.id}">${t("back")} ${esc(L(c.name))}</a></p></div></div>`;
 }
 function viewDelivery(){
   return `<div class="wrap page-head">${crumbs([["home",t("home")],["",t("deliv_page_h")]])}<h1 data-rise>${t("deliv_page_h")}</h1><p class="lead">${t("deliv_big")}</p></div>
@@ -270,22 +285,63 @@ function viewAbout(){
     <ul class="brands">${P.map(p=>`<li><a href="#p-${p.id}"><b>${esc(L(p.name))}</b><span>${esc(L(p.kind))}</span></a></li>`).join("")}</ul></section>
   <section class="wrap split" aria-labelledby="askH"><h2 id="askH" data-rise>${t("ask_h")}</h2><div><p>${t("ask_p")}</p><p style="margin-top:24px"><a class="btn" href="${wa(t("wa_hello"))}" target="_blank" rel="noopener">${ICON.wa}<span>${t("wa_open")}</span></a></p></div></section>`;
 }
+/* ===== addresses: every page has a real one (/shop, /shop/grinders/manual, /p/xbloom-studio, /account).
+   Inside the code a page is still named by a short key ("shop", "shop-grinders-manual", "p-xbloom-studio"); these turn one into the other.
+   Old links with #keys (kafeikw.com/#shop) are moved to the real address on arrival. */
+const ROUTE_KEY=/^(home|shop|shop-[a-z0-9-]+|p-[a-z0-9-]+|brand-[a-z0-9-]+|delivery|about|checkout|order|paid|account)$/;
+function keyToPath(k){
+  if(!k||k==="home") return "/";
+  if(k.startsWith("shop-")){ const rest=k.slice(5), c=CATS.find(x=>rest===x.id||rest.startsWith(x.id+"-")); return "/shop/"+(c?c.id+(rest.length>c.id.length?"/"+rest.slice(c.id.length+1):""):rest); }
+  if(k.startsWith("p-")) return "/p/"+k.slice(2);
+  if(k.startsWith("brand-")) return "/brand/"+k.slice(6);
+  return "/"+k;
+}
+function pathToKey(p){
+  let s; try{ s=p.split("/").filter(Boolean).map(decodeURIComponent); }catch(e){ return "?"; }
+  if(!s.length) return "home";
+  if(s[0]==="shop") return s.length>1?"shop-"+s.slice(1).join("-"):"shop";
+  if((s[0]==="p"||s[0]==="brand")&&s.length===2) return s[0]+"-"+s[1];
+  return s.length===1?s[0]:"?";
+}
+const curKey=()=>pathToKey(location.pathname);
+(function(){ const h=location.hash.slice(1); if(location.pathname==="/"&&ROUTE_KEY.test(h)&&h!=="home") history.replaceState(null,"",keyToPath(h)); })();
+function go(k,replace){ const u=keyToPath(k); if(replace) history.replaceState(null,"",u); else history.pushState(null,"",u); closeDrawer(); render(); }
+/* every #key link becomes its real address as soon as it is drawn, so it can be opened in a new tab, shared and found by search engines */
+function realLinks(n){ if(!n||n.nodeType!==1) return; const list=n.matches('a[href^="#"]')?[n]:[]; list.push(...n.querySelectorAll('a[href^="#"]'));
+  for(const a of list){ const k=a.getAttribute("href").slice(1); if(ROUTE_KEY.test(k)) a.setAttribute("href",keyToPath(k)); } }
+new MutationObserver(ms=>{ for(const m of ms) m.addedNodes.forEach(realLinks); }).observe(document.documentElement,{childList:true,subtree:true});
+realLinks(document.body);
+/* clicks on the shop's own pages switch in place; #anchors scroll within the page */
+document.addEventListener("click",e=>{
+  if(e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey) return;
+  const a=e.target.closest("a[href]"); if(!a||a.target||a.hasAttribute("download")) return;
+  const raw=a.getAttribute("href");
+  if(raw.startsWith("#")){ const k=raw.slice(1); if(ROUTE_KEY.test(k)){ e.preventDefault(); go(k); return; }
+    const el=k&&document.getElementById(k); if(!el) return; e.preventDefault(); scrollToY(el.getBoundingClientRect().top+scrollY-(k==="main"?0:8),false); if(k==="main") el.focus({preventScroll:true}); return; }
+  let u; try{ u=new URL(a.href); }catch(err){ return; }
+  if(u.origin!==location.origin) return;
+  const k=pathToKey(u.pathname); if(!ROUTE_KEY.test(k)) return;
+  e.preventDefault();
+  if(u.pathname===location.pathname&&u.hash){ const el=document.getElementById(u.hash.slice(1)); if(el) scrollToY(el.getBoundingClientRect().top+scrollY-8,false); return; }
+  history.pushState(null,"",u.pathname+u.search+u.hash); closeDrawer(); render();
+},true);
+addEventListener("popstate",()=>{ closeDrawer(); render(); });
 /* sign-in links in emails come back as kafeikw.com/#access_token=...&refresh_token=... (or #error_description=... when expired).
    Keep the tokens for Supabase, take them out of the address bar, and show the account page. */
 let authReturn=null;
 (function(){ const h=location.hash.slice(1); if(!/(^|&)(access_token|error_description|error_code)=/.test(h)) return;
-  authReturn=Object.fromEntries(new URLSearchParams(h)); history.replaceState(null,"",location.pathname+location.search+"#account"); })();
+  authReturn=Object.fromEntries(new URLSearchParams(h)); history.replaceState(null,"","/account"+location.search); })();
 /* return from MyFatoorah: confirm with the server, never with the redirect alone */
 let payReturn=null;
 (function(){ const q=new URLSearchParams(location.search.slice(1).replace(/\?/g,"&")); if(!q.get("pay")) return;
   payReturn={kind:q.get("pay"),order:q.get("order")||"",track:q.get("paymentId")||q.get("paymentid")||q.get("PaymentId")||"",state:"checking"};
-  history.replaceState(null,"",location.pathname+"#paid"); })();
+  history.replaceState(null,"","/paid"); })();
 function viewPaid(){
   const p=payReturn, pend=store.get("kafei-pending",null);
   if(!p) return view404();
   if(p.state==="checking"){
     if(!(p.kind==="return"&&p.track&&CONFIG.payments)){ p.state=p.kind==="return"?"unknown":"unpaid"; }
-    else { fetch(CONFIG.payments.status+"?payment_id="+encodeURIComponent(p.track)).then(r=>r.json()).then(d=>{ p.state=d.paid?"paid":(d.final===false?"unknown":"unpaid"); p.method=d.method; },()=>{ p.state="unknown"; }).then(()=>{ if(location.hash==="#paid") swap(); });
+    else { fetch(CONFIG.payments.status+"?payment_id="+encodeURIComponent(p.track)).then(r=>r.json()).then(d=>{ p.state=d.paid?"paid":(d.final===false?"unknown":"unpaid"); p.method=d.method; },()=>{ p.state="unknown"; }).then(()=>{ if(curKey()==="paid") swap(); });
       return `<div class="wrap page-head"><h1>${t("checking")}</h1></div>`; }
   }
   if(p.state==="paid"){
@@ -298,7 +354,7 @@ function viewPaid(){
   return `<div class="wrap page-head"><h1>${t("unpaid_h")}</h1><p class="lead">${t("unpaid_p")}</p><p style="display:flex;flex-wrap:wrap;gap:10px;margin-top:28px"><a class="btn" href="#checkout"><span>${t("back_co")}</span></a><a class="btn ghost" href="#shop"><span>${t("ok_back")}</span></a></p></div>`;
 }
 /* ===== customer accounts (Supabase): email code sign-in, saved details, order history ===== */
-let sb=null, sbUser=null, sbProfile=null, sbReady=null, acctStep="email", acctEmail="", acctMsg="";
+let sb=null, sbUser=null, sbProfile=null, sbReady=null, acctStep="signin", acctEmail="", acctMsg="";
 const accountsDemo=()=>!!(CONFIG.accounts&&CONFIG.accounts.demo);
 const accountsOn=()=>!!(CONFIG.accounts&&(accountsDemo()||(/^https?:$/.test(location.protocol)&&!/claude|anthropic/i.test(location.hostname))));
 /* demo stand-in for Supabase: same calls, kept in this browser. Used only when CONFIG.accounts.demo is true. */
@@ -331,7 +387,7 @@ function sbLoad(){
         if(a.access_token&&a.refresh_token){ const {error}=await sb.auth.setSession({access_token:a.access_token,refresh_token:a.refresh_token}); if(error) setTimeout(()=>toast(t("e_link")),400); }
         else setTimeout(()=>toast(t("e_link")),400); }
       const {data}=await sb.auth.getSession(); sbUser=data&&data.session?data.session.user:null; if(sbUser) await loadProfile();
-      sb.auth.onAuthStateChange((_e,s)=>{ const was=!!sbUser; sbUser=s?s.user:null; if(!sbUser) sbProfile=null; updateAcct(); if(was!==!!sbUser&&location.hash==="#account") renderAccount(); });
+      sb.auth.onAuthStateChange((_e,s)=>{ const was=!!sbUser; sbUser=s?s.user:null; if(!sbUser) sbProfile=null; updateAcct(); if(was!==!!sbUser&&curKey()==="account") renderAccount(); });
       updateAcct(); return sb; })
     .catch(e=>{ console.warn("accounts unavailable",e); sbReady=null; return null; });
   return sbReady;
@@ -340,37 +396,35 @@ async function sbToken(){ if(!sb) return null; try{ const {data}=await sb.auth.g
 async function loadProfile(){ try{ const {data}=await sb.from("profiles").select("*").eq("id",sbUser.id).maybeSingle(); sbProfile=data||null; }catch(e){ sbProfile=null; } }
 async function saveProfile(p,quiet){ if(!sb||!sbUser) return false;
   const row={id:sbUser.id,updated_at:new Date().toISOString()}; for(const k of ["name","phone","gov","area","block","street","avenue","house","notes"]) row[k]=(p[k]||"").trim()||null;
-  const {error}=await sb.from("profiles").upsert(row); if(!error){ sbProfile=row; if(!quiet) toast(t("saved")); return true; } if(!quiet) toast(t("e_save")); return false; }
-function updateAcct(){ const b=$("#acctBtn"); if(!b) return; b.hidden=!accountsOn(); b.classList.toggle("in",!!sbUser); b.setAttribute("aria-label",sbUser?t("acct_mine"):t("acct_signin")); if(location.hash==="#account") b.setAttribute("aria-current","page"); else b.removeAttribute("aria-current"); }
+  if(p.username!==undefined) row.username=(p.username||"").trim()||null;
+  const {error}=await sb.from("profiles").upsert(row); if(!error){ sbProfile={...(sbProfile||{}),...row}; if(!quiet) toast(t("saved")); return true; } if(!quiet) toast(error.code==="23505"?t("e_user_taken"):t("e_save")); return false; }
+function updateAcct(){ const b=$("#acctBtn"); if(!b) return; b.hidden=!accountsOn(); b.classList.toggle("in",!!sbUser); b.setAttribute("aria-label",sbUser?t("acct_mine"):t("acct_signin")); if(curKey()==="account") b.setAttribute("aria-current","page"); else b.removeAttribute("aria-current"); }
 function viewAccount(){
   if(!accountsOn()) return view404();
   setTimeout(renderAccount,0);
+  // nobody signed in on this browser: draw the sign-in form at once instead of waiting for the sign-in service to load
+  let saved=false; try{ saved=Object.keys(localStorage).some(k=>/^sb-.*-auth-token$/.test(k)); }catch(e){}
+  if(!sbUser&&!saved&&!acctMsg){ if(googleOn===null) googleOn=store.get("kafei-google",true);
+    return `<div id="acctView" data-fast="${acctStep}|${googleOn}">${authCard(crumbs([["home",t("home")],["",t("acct_signin")]]),"")}</div>`; }
   return `<div id="acctView"><div class="wrap page-head">${crumbs([["home",t("home")],["",t("acct_mine")]])}<h1>${t("loading")}</h1></div></div>`;
 }
-async function renderAccount(){
+async function renderAccount(){ await renderAccountInner(); startLoop($("#acctView .acct-art video")); const h1=$("#acctView h1"); if(h1&&curKey()==="account") document.title=`${h1.textContent.trim()} · ${lang==="ar"?"كفي Kafei":"Kafei كفي"}`; }
+async function renderAccountInner(){
   await sbLoad(); const box=$("#acctView"); if(!box) return;
   const head=crumbs([["home",t("home")],["",sbUser?t("acct_h"):t("acct_signin")]]);
   const err=acctMsg?`<div class="err-summary" role="alert"><h2>${esc(acctMsg)}</h2></div>`:""; acctMsg="";
   if(!sb){ box.innerHTML=`<div class="wrap page-head">${head}<h1>${t("acct_signin")}</h1><p class="lead">${t("e_send")}</p></div>`; return; }
-  if(!sbUser){
-    if(acctStep==="code"){
-      box.innerHTML=`<div class="wrap page-head">${head}<h1>${t("acct_h_in")}</h1><p class="lead">${esc(t("code_sent",acctEmail))}</p>${accountsDemo()&&demoCode?`<p class="okmsg" style="margin-top:14px;font-size:1.125rem">${t("demo_code")} <span class="num" dir="ltr">${demoCode}</span></p>`:""}
-      <form class="acct-card" id="acctCode" novalidate>${err}<div class="f"><label for="otp">${t("f_code")}</label><input id="otp" class="code" inputmode="numeric" autocomplete="one-time-code" maxlength="12" required></div>
-      <button class="btn" type="submit"><span>${t("sign_in")}</span></button><button class="linkbtn" type="button" id="acctBack">${t("other_email")}</button></form></div>`;
-      $("#otp").focus(); return;
-    }
-    box.innerHTML=`<div class="wrap page-head">${head}<h1>${t("acct_h_in")}</h1><p class="lead">${t("acct_p_in")}</p>
-    <form class="acct-card" id="acctEmail" novalidate>${err}<div class="f"><label for="email">${t("f_email")}</label><input id="email" type="email" inputmode="email" autocomplete="email" required value="${esc(acctEmail)}" dir="ltr"></div>
-    <button class="btn" type="submit"><span>${t("send_code")}</span></button></form></div>`;
-    return;
-  }
+  if(!sbUser){ const fast=box.dataset.fast; delete box.dataset.fast; const was=googleOn; googleOn=null; await checkGoogle(); if($("#acctView")!==box) return;
+    if(fast&&fast===`${acctStep}|${was}`&&was===googleOn&&!err) return; // the form drawn at once is already right: keep what the visitor has typed
+    box.innerHTML=authCard(head,err); const f=box.querySelector("form input"); if(f&&acctStep!=="signin") f.focus(); return; }
   let orders=[]; try{ const {data}=await sb.from("orders").select("id,created_at,status,method,total_fils,items").order("created_at",{ascending:false}).limit(20); orders=data||[]; }catch(e){}
   const p=sbProfile||{}, val=k=>esc(p[k]||"");
   const df=new Intl.DateTimeFormat(lang==="ar"?"ar-KW":"en-GB",{day:"numeric",month:"short",year:"numeric"});
-  box.innerHTML=`<div class="wrap page-head">${head}<h1>${t("acct_h")}</h1><p class="lead" dir="ltr" style="text-align:start">${esc(sbUser.email||"")}</p></div>
+  box.innerHTML=`<div class="wrap page-head">${head}<h1>${t("acct_h")}</h1><p class="lead" dir="ltr" style="text-align:start">${p.username?`<b>@${esc(p.username)}</b><br>`:""}${esc(sbUser.email||"")}</p></div>
   <div class="wrap acct-grid">
     <form id="acctProfile" novalidate><h2>${t("saved_h")}</h2><p class="muted" style="margin:-6px 0 18px">${t("saved_p")}</p>${err}
       <div class="fgrid">
+        <div class="f full"><label for="puser">${t("f_user")}</label><input id="puser" autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="20" dir="ltr" value="${val("username")}"><p class="help">${t("f_user_h")}</p></div>
         <div class="f full"><label for="pname">${t("f_name")}</label><input id="pname" autocomplete="name" value="${val("name")}"></div>
         <div class="f full"><label for="pphone">${t("f_phone")}</label><div class="tel"><span>+965</span><input id="pphone" type="tel" inputmode="tel" maxlength="9" value="${val("phone")}"></div></div>
         <div class="f"><label for="pgov">${t("f_gov")}</label><select id="pgov"><option value="">${t("f_choose")}</option>${GOVS.map(g=>`<option value="${g[0]}" ${p.gov===g[0]?"selected":""}>${lang==="ar"?g[2]:g[1]}</option>`).join("")}</select></div>
@@ -385,29 +439,125 @@ async function renderAccount(){
     <section aria-labelledby="ordH"><h2 id="ordH">${t("orders_h")}</h2>${orders.length?`<ol class="olist">${orders.map(o=>`<li><b class="num">${esc(o.id)}</b><span class="st ${esc(o.status)}">${t("st_"+o.status)}</span><span class="meta">${df.format(new Date(o.created_at))}, <span class="num">${money(o.total_fils)}</span>${(o.items||[]).length?", "+esc(o.items.map(i=>i.qty+" × "+i.name).join(lang==="ar"?"، ":", ")):""}</span></li>`).join("")}</ol>`:`<p class="muted">${t("no_orders")}</p>`}</section>
   </div>`;
 }
+Object.assign(T.en,{acct_p_in:"Sign in with your email or username. Checkout works without an account too.",f_login:"Email or username",f_pass:"Password",f_pass_new:"New password",f_user:"Username",
+  f_user_h:"3 to 20 letters or numbers. Dots and underscores are fine.",f_pass_h:"At least 8 characters.",show_pass:"Show",hide_pass:"Hide",
+  to_signup:"Create an account",to_signin:"I already have an account",forgot:"Forgot your password?",google:"Continue with Google",or:"or",
+  su_h:"Create your Kafei account",su_p:"We email you a code once to check the address. After that you sign in with your password.",su_btn:"Create account",
+  vf_h:"Check your email",vf_p:e=>`We sent a 6-digit code to ${e}. Enter it to finish. You only do this once.`,vf_btn:"Confirm email",resend:"Send a new code",resent:"New code sent",
+  fg_h:"Reset your password",fg_p:"Enter the email on your account. We'll send a code to set a new password.",fg_btn:"Send code",
+  rs_h:"Set a new password",rs_p:e=>`Enter the code we sent to ${e} and choose a new password.`,rs_btn:"Save new password",rs_done:"Password changed. You're signed in.",
+  e_login:"That email, username or password is wrong.",e_pass:"Use at least 8 characters for the password.",e_user:"Usernames are 3 to 20 letters or numbers, and may use dots and underscores.",
+  e_user_taken:"That username is taken. Try another.",e_exists:"There's already an account with this email. Sign in, or reset your password.",
+  e_unconfirmed:"Confirm your email first. We sent you a new code.",e_signup:"We couldn't create the account. Wait a minute and try again.",
+  e_many:n=>`Too many tries. Wait ${Math.ceil(n/60)} minutes and try again.`,signing:"Signing in…",creating:"Creating account…",acct_user:"Username",
+  e_google:"Google sign-in didn't finish. Try again, or use your email and password."});
+Object.assign(T.ar,{acct_p_in:"سجّل الدخول ببريدك أو اسم المستخدم. ويمكنك الطلب دون حساب أيضًا.",f_login:"البريد أو اسم المستخدم",f_pass:"كلمة المرور",f_pass_new:"كلمة المرور الجديدة",f_user:"اسم المستخدم",
+  f_user_h:"من 3 إلى 20 حرفًا إنجليزيًا أو رقمًا، ويمكن استخدام النقطة والشرطة السفلية.",f_pass_h:"8 أحرف على الأقل.",show_pass:"إظهار",hide_pass:"إخفاء",
+  to_signup:"أنشئ حسابًا",to_signin:"لدي حساب بالفعل",forgot:"نسيت كلمة المرور؟",google:"المتابعة عبر Google",or:"أو",
+  su_h:"أنشئ حسابك في كفي",su_p:"نرسل لك رمزًا مرة واحدة للتأكد من بريدك، وبعدها تدخل بكلمة المرور.",su_btn:"إنشاء الحساب",
+  vf_h:"تحقق من بريدك",vf_p:e=>`أرسلنا رمزًا من 6 أرقام إلى ${e}. أدخله لإكمال التسجيل. هذه الخطوة مرة واحدة فقط.`,vf_btn:"تأكيد البريد",resend:"أرسل رمزًا جديدًا",resent:"أُرسل رمز جديد",
+  fg_h:"إعادة تعيين كلمة المرور",fg_p:"اكتب البريد المسجّل في حسابك، وسنرسل لك رمزًا لتعيين كلمة مرور جديدة.",fg_btn:"أرسل الرمز",
+  rs_h:"عيّن كلمة مرور جديدة",rs_p:e=>`أدخل الرمز الذي أرسلناه إلى ${e} واختر كلمة مرور جديدة.`,rs_btn:"احفظ كلمة المرور",rs_done:"تم تغيير كلمة المرور، وأنت الآن مسجّل الدخول.",
+  e_login:"البريد أو اسم المستخدم أو كلمة المرور غير صحيحة.",e_pass:"استخدم 8 أحرف على الأقل لكلمة المرور.",e_user:"اسم المستخدم من 3 إلى 20 حرفًا إنجليزيًا أو رقمًا، ويمكن أن يحتوي على نقطة أو شرطة سفلية.",
+  e_user_taken:"اسم المستخدم مأخوذ. جرّب اسمًا آخر.",e_exists:"يوجد حساب بهذا البريد. سجّل الدخول، أو أعد تعيين كلمة المرور.",
+  e_unconfirmed:"أكّد بريدك أولًا. أرسلنا لك رمزًا جديدًا.",e_signup:"تعذّر إنشاء الحساب. انتظر دقيقة وحاول مرة أخرى.",
+  e_many:n=>`محاولات كثيرة. انتظر ${Math.ceil(n/60)} دقائق وحاول مرة أخرى.`,signing:"جارٍ الدخول…",creating:"جارٍ إنشاء الحساب…",acct_user:"اسم المستخدم",
+  e_google:"لم يكتمل الدخول عبر Google. حاول مرة أخرى، أو استخدم البريد وكلمة المرور."});
+let acctLogin="", googleOn=null;
+const USER_RE=/^[A-Za-z0-9._]{3,20}$/, EMAIL_RE=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+async function checkGoogle(){ if(googleOn!==null) return googleOn;
+  try{ const r=await fetch(CONFIG.accounts.url+"/auth/v1/settings",{headers:{apikey:CONFIG.accounts.anonKey}}); const d=await r.json(); googleOn=!!(d&&d.external&&d.external.google); store.set("kafei-google",googleOn); }catch(e){ googleOn=false; }
+  return googleOn; }
+const GLOGO=`<svg viewBox="0 0 48 48" width="20" height="20" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg>`;
+const passField=(id,lab,ac,help)=>`<div class="f"><label for="${id}">${t(lab)}</label><div class="pw"><input id="${id}" type="password" autocomplete="${ac}" required minlength="8" maxlength="200" dir="ltr"><button type="button" class="pw-eye" data-eye="${id}" aria-controls="${id}" aria-pressed="false">${t("show_pass")}</button></div>${help?`<p class="help">${t(help)}</p>`:""}</div>`;
+function authCard(head,err){
+  const page=(h,p,form)=>`<div class="wrap page-head acct-split"><div>${head}<h1>${h}</h1><p class="lead">${p}</p>${form}</div><figure class="acct-art" aria-hidden="true"><img src="img/hero-760.webp" alt="" loading="lazy" decoding="async" width="760" height="428"><video muted loop playsinline preload="none" data-src="img/hero-pourover.mp4"></video></figure></div>`;
+  const g=googleOn?`<div class="or"><span>${t("or")}</span></div><button class="btn ghost gbtn" type="button" id="acctGoogle">${GLOGO}<span>${t("google")}</span></button>`:"";
+  const emailF=`<div class="f"><label for="email">${t("f_email")}</label><input id="email" type="email" inputmode="email" autocomplete="email" required value="${esc(acctEmail)}" dir="ltr"></div>`;
+  const codeF=`<div class="f"><label for="otp">${t("f_code")}</label><input id="otp" class="code" inputmode="numeric" autocomplete="one-time-code" maxlength="12" required dir="ltr"></div>`;
+  if(acctStep==="signup") return page(t("su_h"),t("su_p"),`<form class="acct-card" id="acctSignup" novalidate>${err}${emailF}
+    <div class="f"><label for="uname">${t("f_user")}</label><input id="uname" autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="20" required dir="ltr"><p class="help">${t("f_user_h")}</p></div>
+    ${passField("pass","f_pass","new-password","f_pass_h")}<button class="btn" type="submit"><span>${t("su_btn")}</span></button>${g}
+    <button class="linkbtn" type="button" data-step="signin">${t("to_signin")}</button></form>`);
+  if(acctStep==="verify") return page(t("vf_h"),esc(t("vf_p",acctEmail)),`<form class="acct-card" id="acctVerify" novalidate>${err}${codeF}
+    <button class="btn" type="submit"><span>${t("vf_btn")}</span></button><button class="linkbtn" type="button" id="acctResend">${t("resend")}</button></form>`);
+  if(acctStep==="forgot") return page(t("fg_h"),t("fg_p"),`<form class="acct-card" id="acctForgot" novalidate>${err}${emailF}
+    <button class="btn" type="submit"><span>${t("fg_btn")}</span></button><button class="linkbtn" type="button" data-step="signin">${t("to_signin")}</button></form>`);
+  if(acctStep==="reset") return page(t("rs_h"),esc(t("rs_p",acctEmail)),`<form class="acct-card" id="acctReset" novalidate>${err}${codeF}${passField("pass","f_pass_new","new-password","f_pass_h")}
+    <button class="btn" type="submit"><span>${t("rs_btn")}</span></button><button class="linkbtn" type="button" data-step="forgot">${t("resend")}</button></form>`);
+  return page(t("acct_h_in"),t("acct_p_in"),`<form class="acct-card" id="acctSignin" novalidate>${err}
+    <div class="f"><label for="login">${t("f_login")}</label><input id="login" autocomplete="username" autocapitalize="none" spellcheck="false" required value="${esc(acctLogin)}" dir="ltr"></div>
+    ${passField("pass","f_pass","current-password")}<button class="btn" type="submit"><span>${t("sign_in")}</span></button>
+    <button class="linkbtn" type="button" data-step="forgot">${t("forgot")}</button>${g}
+    <div class="or"><span>${t("or")}</span></div><button class="btn ghost" type="button" data-step="signup"><span>${t("to_signup")}</span></button></form>`);
+}
+const busy=(btn,label)=>{ if(!btn) return ()=>{}; btn.disabled=true; const old=btn.innerHTML; btn.innerHTML=`<span class="spin" aria-hidden="true"></span><span>${label}</span>`; btn.setAttribute("aria-busy","true");
+  return ()=>{ if(btn.isConnected){ btn.disabled=false; btn.innerHTML=old; btn.removeAttribute("aria-busy"); } }; };
+const waitSecs=error=>{ const m=/(\d+)\s*seconds?/i.exec(error&&error.message||""); return m?+m[1]:60; };
+const isLimit=error=>!!error&&(error.status===429||/rate|seconds/i.test(error.message||""));
+async function signedIn(session){ if(session) await sb.auth.setSession({access_token:session.access_token,refresh_token:session.refresh_token});
+  const {data}=await sb.auth.getSession(); sbUser=data&&data.session?data.session.user:null; acctStep="signin"; if(sbUser) await loadProfile(); updateAcct(); return renderAccount(); }
 document.addEventListener("submit",async e=>{
-  const id=e.target.id; if(!["acctEmail","acctCode","acctProfile"].includes(id)) return; e.preventDefault();
-  const btn=e.target.querySelector("button[type=submit]"), busyLabel={acctEmail:t("sending"),acctCode:t("verifying"),acctProfile:t("saving")}[id];
-  if(btn){ btn.disabled=true; btn.dataset.label=btn.innerHTML; btn.innerHTML=`<span class="spin" aria-hidden="true"></span><span>${busyLabel}</span>`; btn.setAttribute("aria-busy","true"); }
+  const id=e.target.id; if(!["acctSignin","acctSignup","acctVerify","acctForgot","acctReset","acctProfile"].includes(id)) return; e.preventDefault();
+  const label={acctSignin:t("signing"),acctSignup:t("creating"),acctVerify:t("verifying"),acctForgot:t("sending"),acctReset:t("saving"),acctProfile:t("saving")}[id];
+  const done=busy(e.target.querySelector("button[type=submit]"),label), v=k=>{ const el=document.getElementById(k); return el?el.value.trim():""; };
+  const fail=m=>{ acctMsg=m; return renderAccount(); };
   try{
-    if(id==="acctEmail"){ const em=$("#email").value.trim(); acctEmail=em;
-      if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)){ acctMsg=t("e_email"); return renderAccount(); }
-      const {error}=await sb.auth.signInWithOtp({email:em,options:{shouldCreateUser:true}});
-      if(error){ const m=/(\d+)\s*seconds?/i.exec(error.message||""), busy=error.status===429||/rate|seconds/i.test(error.message||"");
-        console.warn("send code failed",error.status,error.message); acctMsg=busy?t("e_wait",m?+m[1]:60):t("e_send"); return renderAccount(); }
-      acctStep="code"; return renderAccount(); }
-    if(id==="acctCode"){ const code=$("#otp").value.replace(/\D/g,""); if(code.length<6){ acctMsg=t("e_code"); return renderAccount(); }
-      const {data,error}=await sb.auth.verifyOtp({email:acctEmail,token:code,type:"email"});
-      if(error||!data||!data.session){ acctMsg=t("e_code"); return renderAccount(); }
-      sbUser=data.session.user; acctStep="email"; await loadProfile(); updateAcct(); return renderAccount(); }
-    if(id==="acctProfile"){ const val=k=>$("#p"+k).value; const phone=val("phone").replace(/\D/g,"");
-      if(phone&&!/^[4569]\d{7}$/.test(phone)){ acctMsg=t("e_phone"); return renderAccount(); }
-      await saveProfile({name:val("name"),phone,gov:val("gov"),area:val("area"),block:val("block"),street:val("street"),avenue:val("avenue"),house:val("house")}); }
-  } finally { if(btn&&btn.isConnected){ btn.disabled=false; if(btn.dataset.label) btn.innerHTML=btn.dataset.label; btn.removeAttribute("aria-busy"); } }
+    if(id==="acctSignin"){ const login=v("login"), password=$("#pass").value; acctLogin=login;
+      if(!login||!password) return fail(t("e_login"));
+      if(login.includes("@")){
+        const {data,error}=await sb.auth.signInWithPassword({email:login,password});
+        if(!error&&data&&data.session) return signedIn();
+        if(error&&error.code==="email_not_confirmed"){ acctEmail=login; await sb.auth.resend({type:"signup",email:login}); acctStep="verify"; return fail(t("e_unconfirmed")); }
+        return fail(isLimit(error)?t("e_wait",waitSecs(error)):t("e_login")); }
+      const r=await fetch("/api/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({login,password})}); const d=await r.json().catch(()=>({}));
+      if(r.ok&&d.access_token) return signedIn(d);
+      if(d.error==="email_not_confirmed"&&d.email){ acctEmail=d.email; await sb.auth.resend({type:"signup",email:d.email}); acctStep="verify"; return fail(t("e_unconfirmed")); }
+      if(d.error==="too_many") return fail(t("e_many",d.wait||600));
+      return fail(t("e_login")); }
+    if(id==="acctSignup"){ const email=v("email"), username=v("uname"), password=$("#pass").value; acctEmail=email;
+      if(!EMAIL_RE.test(email)) return fail(t("e_email"));
+      if(!USER_RE.test(username)) return fail(t("e_user"));
+      if(password.length<8) return fail(t("e_pass"));
+      const {data:free,error:fe}=await sb.rpc("username_available",{u:username}); if(!fe&&free===false) return fail(t("e_user_taken"));
+      const {data,error}=await sb.auth.signUp({email,password,options:{data:{username}}});
+      if(error){ console.warn("sign-up failed",error.status,error.message);
+        if(/already registered|exists/i.test(error.message||"")) return fail(t("e_exists"));
+        if(/database error/i.test(error.message||"")) return fail(t("e_user_taken"));
+        if(/password/i.test(error.message||"")) return fail(t("e_pass"));
+        return fail(isLimit(error)?t("e_wait",waitSecs(error)):t("e_signup")); }
+      if(data&&data.user&&Array.isArray(data.user.identities)&&!data.user.identities.length) return fail(t("e_exists"));
+      if(data&&data.session) return signedIn();
+      acctStep="verify"; return renderAccount(); }
+    if(id==="acctVerify"){ const code=v("otp").replace(/\D/g,""); if(code.length<6) return fail(t("e_code"));
+      let {data,error}=await sb.auth.verifyOtp({email:acctEmail,token:code,type:"signup"});
+      if(error||!data||!data.session) ({data,error}=await sb.auth.verifyOtp({email:acctEmail,token:code,type:"email"}));
+      if(error||!data||!data.session) return fail(t("e_code"));
+      return signedIn(); }
+    if(id==="acctForgot"){ const email=v("email"); acctEmail=email; if(!EMAIL_RE.test(email)) return fail(t("e_email"));
+      const {error}=await sb.auth.resetPasswordForEmail(email);
+      if(error){ console.warn("reset failed",error.status,error.message); return fail(isLimit(error)?t("e_wait",waitSecs(error)):t("e_send")); }
+      acctStep="reset"; return renderAccount(); }
+    if(id==="acctReset"){ const code=v("otp").replace(/\D/g,""), password=$("#pass").value;
+      if(code.length<6) return fail(t("e_code")); if(password.length<8) return fail(t("e_pass"));
+      const {data,error}=await sb.auth.verifyOtp({email:acctEmail,token:code,type:"recovery"});
+      if(error||!data||!data.session) return fail(t("e_code"));
+      const {error:ue}=await sb.auth.updateUser({password}); if(ue){ console.warn("password update failed",ue.message); return fail(/password/i.test(ue.message||"")?t("e_pass"):t("e_save")); }
+      toast(t("rs_done")); return signedIn(); }
+    if(id==="acctProfile"){ const val=k=>$("#p"+k).value; const phone=val("phone").replace(/\D/g,""), uEl=$("#puser"), username=uEl?uEl.value.trim():undefined;
+      if(phone&&!/^[4569]\d{7}$/.test(phone)) return fail(t("e_phone"));
+      if(username&&!USER_RE.test(username)) return fail(t("e_user"));
+      if(username&&username.toLowerCase()!==String((sbProfile||{}).username||"").toLowerCase()){ const {data:free}=await sb.rpc("username_available",{u:username}); if(free===false) return fail(t("e_user_taken")); }
+      await saveProfile({name:val("name"),phone,gov:val("gov"),area:val("area"),block:val("block"),street:val("street"),avenue:val("avenue"),house:val("house"),username}); }
+  } finally { done(); }
 });
 document.addEventListener("click",async e=>{
-  if(e.target.closest("#acctOut")){ await sb.auth.signOut(); sbUser=null; sbProfile=null; updateAcct(); renderAccount(); }
-  if(e.target.closest("#acctBack")){ acctStep="email"; renderAccount(); }
+  if(e.target.closest("#acctOut")){ await sb.auth.signOut(); sbUser=null; sbProfile=null; acctStep="signin"; updateAcct(); renderAccount(); return; }
+  const st=e.target.closest("[data-step]"); if(st){ acctStep=st.dataset.step; renderAccount(); return; }
+  const eye=e.target.closest("[data-eye]"); if(eye){ const i=document.getElementById(eye.dataset.eye), show=i.type==="password"; i.type=show?"text":"password"; eye.textContent=show?t("hide_pass"):t("show_pass"); eye.setAttribute("aria-pressed",String(show)); return; }
+  if(e.target.closest("#acctResend")){ const b=e.target.closest("#acctResend"); b.disabled=true; const {error}=await sb.auth.resend({type:"signup",email:acctEmail});
+    toast(error?(isLimit(error)?t("e_wait",waitSecs(error)):t("e_send")):t("resent")); setTimeout(()=>{ if(b.isConnected) b.disabled=false; },30000); return; }
+  if(e.target.closest("#acctGoogle")){ const {error}=await sb.auth.signInWithOAuth({provider:"google",options:{redirectTo:location.origin+"/"}}); if(error){ acctMsg=t("e_google"); renderAccount(); } }
 });
 function prefillCheckout(){
   if(!sbUser||!$("#coForm")) return;
@@ -423,19 +573,19 @@ function renderFooter(){
   $("#footer").innerHTML=`<div class="wrap"><div class="name"><p class="word" lang="ar">كفي</p>${FINJAN("finjan")}<p class="custom">${t("lead")}</p></div>
   <p class="brand">${t("brand")}</p>
   <nav aria-labelledby="fShop"><h2 id="fShop">${t("f_shop")}</h2><ul><li><a href="#shop">${t("all_products")}</a></li>${CATS.filter(c=>inCat(c).length).map(c=>`<li><a href="#shop-${c.id}">${esc(L(c.name))}</a></li>`).join("")}</ul></nav>
-  <nav aria-labelledby="fHelp"><h2 id="fHelp">${t("f_help")}</h2><ul><li><a href="#delivery">${t("nav_delivery")}</a></li><li><a href="#about">${t("nav_about")}</a></li><li><a href="${wa(t("wa_hello"))}" target="_blank" rel="noopener">${t("ask_wa_short")} <bdi dir="ltr" class="num">${CONFIG.phoneDisplay}</bdi></a></li></ul></nav>
+  <nav aria-labelledby="fHelp"><h2 id="fHelp">${t("f_help")}</h2><ul><li><a href="#delivery">${t("nav_delivery")}</a></li><li><a href="#about">${t("nav_about")}</a></li><li><a href="/privacy">${lang==="ar"?"سياسة الخصوصية":"Privacy policy"}</a></li><li><a href="${wa(t("wa_hello"))}" target="_blank" rel="noopener">${t("ask_wa_short")} <bdi dir="ltr" class="num">${CONFIG.phoneDisplay}</bdi></a></li></ul></nav>
   <p class="imprint">${t("f_imprint")}</p></div>`;
 }
 
 /* ===== motion: one clock (gsap.ticker drives Lenis, ScrollTrigger and the idle ripple) ===== */
 const G=window.gsap, ST=window.ScrollTrigger;
 const motionOn=()=>!!(G&&ST&&!reduce.matches);
-let lenis=null, pageCtx=null, idleEls=[];
+let lenis=null, pageCtx=null, idleEls=[], firstIntro=true, heroTok=null;
 if(motionOn()){
   G.registerPlugin(ST);
   if(window.Lenis){ lenis=new Lenis({lerp:.12,wheelMultiplier:1}); lenis.on("scroll",ST.update);
     G.ticker.add(t=>lenis.raf(t*1000)); G.ticker.lagSmoothing(0);
-    let last=0; lenis.on("scroll",({scroll})=>{ if(Math.abs(scroll-last)<4) return; document.documentElement.classList.toggle("frame-away",scroll>200&&scroll>last&&!document.querySelector("#nav.open")); last=scroll; }); }
+    let last=0; lenis.on("scroll",({scroll})=>{ if(Math.abs(scroll-last)<4) return; document.documentElement.classList.toggle("frame-away",scroll>200&&scroll>last&&!document.querySelector("#menu.open")); last=scroll; }); }
   G.ticker.add(time=>{ for(const e of idleEls){ e.style.transform=`translateX(${-((time*14)%50)}%)`; } });
 } else document.documentElement.classList.remove("motion","intro");
 function scrollToY(y,instant){ if(lenis) lenis.scrollTo(y,{immediate:!!instant,duration:1.1}); else scrollTo({top:y,behavior:instant||reduce.matches?"auto":"smooth"}); }
@@ -447,14 +597,21 @@ function setupPage(){
   pageCtx=G.context(()=>{
     // hero intro: the name fills up from below. The stylesheet already holds the text in its start position
     // on first load (html.intro), so the pre-built page never shows it, hides it, then replays it.
-    if($(".hero")){ const tl=G.timeline({defaults:{ease:"expo.out"}});
+    // On a slow phone the safety timer in the page head may already have shown the text: then it stays put, no replay.
+    // Otherwise the text is held hidden until the display font has arrived (at most 1.2 s), so letters don't swap shape mid-rise.
+    const root=document.documentElement, held=root.classList.contains("intro");
+    if($(".hero")&&(held||(!firstIntro&&!quietSwap))){
       G.set(".hero .ch, .hero .ar span",{y:0,yPercent:110}); G.set(".hero [data-intro]",{y:26,opacity:0});
-      document.documentElement.classList.remove("intro");
-      tl.to(".hero .ch",{yPercent:0,duration:1.1,stagger:.05})
-        .to(".hero .ar span",{yPercent:0,duration:1},"-=.85")
-        .to(".hero [data-intro]",{y:0,opacity:1,duration:.9,stagger:.08},"-=.75");
-      // once per visit, the finjan in the logo gives the shake that names the shop: enough
-      if(!introShaken){ introShaken=true; tl.to(".logo .lm",{keyframes:{rotation:[0,-14,10,-7,4,0]},duration:.85,ease:"power1.inOut",transformOrigin:"50% 78%"},"-=.5"); } }
+      clearTimeout(window.__introSafe); root.classList.remove("intro");
+      const tok=heroTok={}, play=()=>{ if(heroTok!==tok||!pageCtx||!$(".hero")) return; pageCtx.add(()=>{ const tl=G.timeline({defaults:{ease:"expo.out"}});
+        tl.to(".hero .ch",{yPercent:0,duration:1.1,stagger:.05})
+          .to(".hero .ar span",{yPercent:0,duration:1},"-=.85")
+          .to(".hero [data-intro]",{y:0,opacity:1,duration:.9,stagger:.08},"-=.75");
+        // once per visit, the finjan in the logo gives the shake that names the shop: enough
+        if(!introShaken){ introShaken=true; tl.to(".logo .lm",{keyframes:{rotation:[0,-14,10,-7,4,0]},duration:.85,ease:"power1.inOut",transformOrigin:"50% 78%"},"-=.5"); } }); };
+      const fonts=document.fonts&&document.fonts.status!=="loaded"?Promise.race([document.fonts.ready,new Promise(r=>setTimeout(r,700))]):null;
+      if(fonts) fonts.then(()=>requestAnimationFrame(play)); else requestAnimationFrame(play); }
+    if($(".hero")) firstIntro=false;
     // headings rise into place once
     $$("[data-rise]").forEach(h=>G.from(h,{clipPath:"inset(0 0 100% 0)",y:24,duration:1,ease:"expo.out",scrollTrigger:{trigger:h,start:"top 88%",once:true}}));
     // product page: the photo pours into its vessel
@@ -491,7 +648,7 @@ function setupPour(){
   apply(0);
   btns.forEach((b,i)=>b.addEventListener("click",()=>scrollToY(st.start+(st.end-st.start)*(i/(n-1))+2)));
 }
-function teardownPage(){ if(pageCtx){ pageCtx.revert(); pageCtx=null; } idleEls=[]; }
+function teardownPage(){ heroTok=null; if(pageCtx){ pageCtx.revert(); pageCtx=null; } idleEls=[]; }
 
 /* curtain: a pour in, a drain out */
 function curtain(dir){ return new Promise(res=>{ const c=$("#curtain"), f=$("#curtain .fill");
@@ -499,42 +656,54 @@ function curtain(dir){ return new Promise(res=>{ const c=$("#curtain"), f=$("#cu
   else G.to(f,{yPercent:105,duration:.6,ease:"power2.out",onComplete:()=>{ c.style.visibility="hidden"; res(); }}); }); }
 
 /* ===== router ===== */
-let firstRender=true, rendering=false, queued=false;
+let firstRender=true, rendering=false, queued=false, quietSwap=false;
 const ROUTES=["home","shop","delivery","about","checkout","order"];
 function route(){
-  const h=(location.hash||"#home").slice(1)||"home";
-  if(h==="home") return {html:viewHome(),nav:""};
+  const h=curKey(), anchor=location.hash.slice(1);
+  if(h==="home") return {html:viewHome(),nav:"",target:anchor==="stock"?"stock":null};
   if(h==="shop") return {html:viewShop(),nav:"shop"};
   if(h.startsWith("shop-")){ const rest=h.slice(5), c=CATS.find(x=>rest===x.id||rest.startsWith(x.id+"-"));
     if(c) return {html:viewCategory(c,rest.length>c.id.length?rest.slice(c.id.length+1):null),nav:"shop"}; }
   if(h.startsWith("p-")&&byId[h.slice(2)]) return {html:viewProduct(byId[h.slice(2)]),nav:"shop"};
+  if(h.startsWith("brand-")){ const b=brandById(h.slice(6)); if(b) return {html:viewBrand(b),nav:"shop"}; }
   if(h==="delivery") return {html:viewDelivery(),nav:"delivery"};
   if(h==="about") return {html:viewAbout(),nav:"about"};
   if(h==="checkout") return {html:viewCheckout(),nav:""};
   if(h==="order") return {html:viewOrder(),nav:"shop"};
   if(h==="paid") return {html:viewPaid(),nav:""};
   if(h==="account") return {html:viewAccount(),nav:""};
-  if(h==="main"||h==="stock") return {html:viewHome(),nav:"",target:h};
   return {html:view404(),nav:"",nf:true};
+}
+/* the pour video (home hero, sign-in page): starts once the page has loaded, fades in when it plays,
+   and on phones that block autoplay (battery or data saver) starts on the first touch or scroll */
+function startLoop(vid){
+  if(!vid||reduce.matches||vid.dataset.started) return; vid.dataset.started="1";
+  const go=()=>{ if(!vid.isConnected||!vid.offsetParent) return; vid.muted=true; vid.defaultMuted=true; vid.playsInline=true; vid.setAttribute("playsinline",""); vid.src=vid.dataset.src;
+    vid.addEventListener("playing",()=>vid.classList.add("on"),{once:true});
+    const retry=()=>{ off(); if(vid.isConnected&&vid.paused) vid.play().catch(()=>{}); }, ev=["touchstart","pointerdown","scroll","keydown"], off=()=>ev.forEach(e=>removeEventListener(e,retry,true));
+    vid.play().catch(()=>{ ev.forEach(e=>addEventListener(e,retry,{capture:true,passive:true})); }); };
+  if(document.readyState==="complete") setTimeout(go,300); else addEventListener("load",()=>setTimeout(go,300),{once:true});
 }
 function swap(){
   teardownPage();
   const r=route();
-  $("#main").innerHTML=r.html;
+  $("#main").innerHTML=r.html; if(!firstRender) $("#main").style.minHeight="";
   const h1=$("#main h1"), base=lang==="ar"?"كفي Kafei: مكائن وأدوات قهوة في الكويت":"Kafei كفي: coffee machines and gear in Kuwait";
   document.title=$(".hero")||!h1?base:`${h1.textContent.trim()} · ${lang==="ar"?"كفي Kafei":"Kafei كفي"}`;
   $$("#nav a").forEach(a=>{ if(a.dataset.nav===r.nav) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
-  $("#nav").classList.remove("open"); $("#menuBtn").setAttribute("aria-expanded","false");
+  closeMenu(false);
   document.documentElement.classList.remove("frame-away");
-  if(!reduce.matches){ const vid=$(".hero video"); if(vid){ const go=()=>{ if(!vid.isConnected) return; vid.src=vid.dataset.src; vid.addEventListener("playing",()=>vid.classList.add("on"),{once:true}); vid.play().catch(()=>{}); }; if(document.readyState==="complete") setTimeout(go,300); else addEventListener("load",()=>setTimeout(go,300),{once:true}); } }
-  scrollToY(0,true);
-  setupPage();
+  startLoop($(".hero video"));
+  if(!quietSwap) scrollToY(0,true);
+  setupPage(); requestAnimationFrame(railState);
   updateAcct(); if(r.html.includes('id="coForm"')) sbLoad().then(prefillCheckout);
   const el=r.target&&document.getElementById(r.target);
   if(el&&r.target!=="main") requestAnimationFrame(()=>scrollToY(el.getBoundingClientRect().top+scrollY-8,true));
-  if(!firstRender&&pendingFocus!==false) $("#main").focus({preventScroll:true});
-  pendingFocus=true;
+  if(!firstRender&&!quietSwap&&pendingFocus!==false) $("#main").focus({preventScroll:true});
+  pendingFocus=true; quietSwap=false;
 }
+/* redraw the page in place after fresh data (products from the server): no curtain, no scroll jump, no replayed intro */
+function refreshInPlace(){ if(rendering){ queued=true; return; } quietSwap=true; swap(); }
 async function render(){
   if(rendering){ queued=true; return; }
   if(firstRender||!motionOn()){ swap(); firstRender=false; return; }
@@ -549,12 +718,118 @@ function applyLang(){
   $$("[data-t]").forEach(e=>e.textContent=t(e.dataset.t)); $("#skip").textContent=t("skip");
   renderFooter(); updateCount();
 }
-/* in-page anchors scroll smoothly instead of re-rendering */
+
+/* ===== brands, slide-out menu and home carousels ===== */
+Object.assign(T.en,{menu_h:"Menu",menu_close:"Close the menu",m_shop:"Shop",m_cats:"Categories",view_h:"Show products as",view_grid:"Grid",view_rows:"Rows",m_brands:"Brands",m_more:"More",m_wa:"Message us on WhatsApp",
+  brands_h:"Shop by brand",brand_lead:n=>`Everything we stock from ${n}.`,soon_h2:"Coming soon",soon_ask_short:"Arriving soon. Ask us on WhatsApp",soon_ask:"Ask us what's arriving",rail_prev:"Previous",rail_next:"Next",soon_short:"Coming soon"});
+Object.assign(T.ar,{menu_h:"القائمة",menu_close:"أغلق القائمة",m_shop:"المتجر",m_cats:"الأقسام",view_h:"طريقة العرض",view_grid:"شبكة",view_rows:"صفوف",m_brands:"الماركات",m_more:"المزيد",m_wa:"راسلنا على واتساب",
+  brands_h:"تسوّق حسب الماركة",brand_lead:n=>`كل ما نوفّره من ${n}.`,soon_h2:"قريبًا",soon_ask_short:"يصل قريبًا. اسألنا على واتساب",soon_ask:"اسألنا عمّا سيصل",rail_prev:"السابق",rail_next:"التالي",soon_short:"قريبًا"});
+
+const brandSlug=b=>String(b||"").toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+/* brands come from the products themselves (the "Brand" box in the dashboard), most products first */
+function brands(){
+  const m=new Map();
+  for(const p of P){ const b=(p.brand||"").trim(), s=brandSlug(b); if(!s) continue; if(!m.has(s)) m.set(s,{id:s,name:b,items:[]}); m.get(s).items.push(p); }
+  return [...m.values()].sort((a,b)=>b.items.length-a.items.length||a.name.localeCompare(b.name));
+}
+const brandById=id=>brands().find(b=>b.id===id)||null;
+
+function viewBrand(b){
+  return `<div class="wrap page-head">${crumbs([["home",t("home")],["shop",t("shop_h")],["",b.name]])}<h1 data-rise>${esc(b.name)}</h1><p class="lead">${esc(t("brand_lead",b.name))}</p></div>
+  <div class="wrap">${plist(b.items)}</div>`;
+}
+
+/* ---- carousels ---- */
+function rail(id,title,cards,n){
+  return `<section class="rail-sec" aria-labelledby="${id}H"><div class="wrap rail-head"><h2 id="${id}H" data-rise>${title}</h2>
+    <div class="rail-btns"><button type="button" class="rail-btn" data-rail="${id}" data-dir="-1" aria-label="${t("rail_prev")}" aria-controls="${id}">${ARROW}</button><button type="button" class="rail-btn" data-rail="${id}" data-dir="1" aria-label="${t("rail_next")}" aria-controls="${id}">${ARROW}</button></div></div>
+    <ul class="rail" id="${id}" tabindex="0" aria-label="${title}">${cards}</ul></section>`;
+}
+const ARROW=`<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>`;
+/* category icons: one geometric set drawn for Kafei on a 24-unit grid, round caps and joins,
+   and clear space between parts. The line weight is set in CSS (finer on the cards, firmer in the menu). */
+const CAT_ICON={"espresso-machines":["0 0 24 24","<g fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"3\" width=\"18\" height=\"5\" rx=\"2\"/><path d=\"M13 5.5h4\"/><path d=\"M5 8v13M19 8v13M3 21h18\"/><path d=\"M10 8v1.5h4V8\"/><path d=\"M9.5 14h5v1a2.5 2.5 0 0 1-5 0z\"/></g>"],"pourover-machines":["0 0 24 24","<g fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"4\" y=\"3\" width=\"5\" height=\"18\" rx=\"1.5\"/><path d=\"M9 4h9a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H9\"/><path d=\"M15 9v1.5\"/><path d=\"M12 13h6v2.5a3 3 0 0 1-6 0z\"/><path d=\"M9 21h11\"/></g>"],"beans":["0 0 24 24","<g fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><g transform=\"rotate(45 8 8)\"><ellipse cx=\"8\" cy=\"8\" rx=\"3.25\" ry=\"5\"/><path d=\"M8 4.5c-1.1 1.2 1.1 5.8 0 7\"/></g><g transform=\"rotate(45 16 16)\"><ellipse cx=\"16\" cy=\"16\" rx=\"3.25\" ry=\"5\"/><path d=\"M16 12.5c-1.1 1.2 1.1 5.8 0 7\"/></g></g>"],"pourover-accessories":["0 0 24 24","<g fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M11.5 6.5V5\"/><path d=\"M10 9V7.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5V9\"/><path d=\"M9 9h5l2 11H7z\"/><path d=\"M15.2 11.5h1.8a2 2 0 0 1 2 2v1.5a2 2 0 0 1-2 2h-.6\"/><path d=\"M7.4 17.5C5.2 17.5 4.3 15.5 3.9 13L3 8.5\"/><path d=\"M5 22h14\"/></g>"],"espresso-accessories":["0 0 24 24","<g fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 4.5a2.75 2.75 0 0 0-2.75 2.75c0 1.8 1.5 2.75 1.5 4.75h2.5c0-2 1.5-2.95 1.5-4.75A2.75 2.75 0 0 0 12 4.5z\"/><ellipse cx=\"12\" cy=\"14\" rx=\"7\" ry=\"2\"/><path d=\"M5 14v3c0 1.1 3.1 2 7 2s7-.9 7-2v-3\"/></g>"],"cups":["0 0 24 24","<g fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M9 2.5v2.5M13 2.5v2.5\"/><path d=\"M5 8h12v4a6 6 0 0 1-12 0z\"/><path d=\"M17 9.5h1a2.5 2.5 0 0 1 0 5h-1.4\"/><path d=\"M3 21h17\"/></g>"],"tumblers":["0 0 24 24","<g fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"8\" y=\"2\" width=\"8\" height=\"3\" rx=\"1\"/><rect x=\"7\" y=\"7\" width=\"10\" height=\"15\" rx=\"3\"/><path d=\"M7 12h10\"/></g>"],"grinders":["0 0 24 24","<g fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 9V5h6\"/><rect x=\"18\" y=\"2.5\" width=\"3\" height=\"5\" rx=\"1.5\"/><rect x=\"7\" y=\"9\" width=\"10\" height=\"13\" rx=\"2.5\"/><path d=\"M7 17h10\"/></g>"]};
+const catIcon=c=>{ const i=CAT_ICON[c.id]; return i?`<svg class="cat-ico" viewBox="${i[0]}" aria-hidden="true">${i[1]}</svg>`:""; };
+/* every category gets a card: its mark on its Sadu colour and its name once; the ones not in stock yet carry a small "coming soon" tag */
+function catRail(){
+  const order=[...CATS.filter(c=>inCat(c).length),...CATS.filter(c=>!inCat(c).length)];
+  const cards=order.map(c=>{ const n=inCat(c).length, bd=BANDS[c.band]||BANDS.cream;
+    // the light "cream" cards sit a step darker here, so the picture area stands apart from the name strip below it
+    const tb=c.band==="cream"?"#CDBDA8":bd[0];
+    return `<li class="tile cat"><a href="#shop-${c.id}" style="--tb:${tb};--tf:${bd[1]}">
+      <span class="tile-img">${catIcon(c)}${n?"":`<span class="tile-flag">${t("soon_short")}</span>`}</span>
+      <span class="tile-txt"><b>${esc(L(c.short||c.name))}</b></span></a></li>`; }).join("");
+  return rail("catRail",t("cats_h"),cards);
+}
+function brandRail(){
+  const bs=brands(); if(!bs.length) return "";
+  const cards=bs.map(b=>{ const p=b.items[0];
+    return `<li class="tile brand"><a href="#brand-${b.id}">
+      <span class="tile-img" aria-hidden="true">${p?`<img src="${p.img}" alt="" ${p.fit==="contain"?'class="contain"':""} loading="lazy" decoding="async" width="400" height="400">`:""}</span>
+      <span class="tile-txt"><b dir="auto">${esc(b.name)}</b><span>${t("n_products",b.items.length)}</span></span></a></li>`; }).join("");
+  return rail("brandRail",t("brands_h"),cards);
+}
+function railState(){
+  $$(".rail").forEach(r=>{ const max=r.scrollWidth-r.clientWidth, x=Math.abs(r.scrollLeft);
+    $$(`[data-rail="${r.id}"]`).forEach(b=>{ b.disabled=b.dataset.dir==="-1"?x<4:x>max-4; });
+    r.closest(".rail-sec").classList.toggle("fits",max<4); });
+}
 document.addEventListener("click",e=>{
-  const a=e.target.closest('a[href="#stock"]'); if(!a) return;
-  const el=document.getElementById("stock"); if(!el) return;
-  e.preventDefault(); scrollToY(el.getBoundingClientRect().top+scrollY,false);
+  const b=e.target.closest("[data-rail]"); if(!b) return;
+  const r=document.getElementById(b.dataset.rail); if(!r) return;
+  const step=Math.max(240,r.clientWidth*.8)*(+b.dataset.dir)*(document.documentElement.dir==="rtl"?-1:1);
+  r.scrollBy({left:step,behavior:reduce.matches?"auto":"smooth"});
+});
+document.addEventListener("scroll",e=>{ if(e.target.classList&&e.target.classList.contains("rail")) railState(); },true);
+addEventListener("resize",railState);
+
+/* ---- slide-out menu ---- */
+let menuFocus=null;
+function renderMenu(){
+  const catsOpen=curKey().startsWith("shop-");
+  const bs=brands(), cur=curKey();
+  const link=(h,label,extra="")=>`<li><a href="#${h}" ${cur===h?'aria-current="page"':""}>${label}${extra}</a></li>`;
+  $("#menu").innerHTML=`<div class="drawer-head"><h2 id="menuTitle">${t("menu_h")}</h2><button class="x-btn" id="menuClose" type="button" aria-label="${t("menu_close")}"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <nav class="menu-body" aria-labelledby="menuTitle">
+    <h3>${t("m_shop")}</h3><ul class="menu-list">${link("shop",t("all_products"))}
+      <li class="menu-group${catsOpen?" open":""}"><button type="button" class="menu-drop" id="menuDrop" aria-expanded="${catsOpen}" aria-controls="menuCats">${t("m_cats")}<svg class="chev" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="menu-sub" id="menuCats"><ul ${catsOpen?"":"inert"}>${CATS.map(c=>`<li><a href="#shop-${c.id}" ${cur.startsWith("shop-"+c.id)?'aria-current="page"':""}>${catIcon(c)}<span>${esc(L(c.name))}</span>${inCat(c).length?"":`<span class="n n-soon">${t("soon_short")}</span>`}</a></li>`).join("")}</ul></div></li></ul>
+    ${bs.length?`<h3>${t("m_brands")}</h3><ul class="menu-list">${bs.map(b=>link("brand-"+b.id,`<bdi>${esc(b.name)}</bdi>`)).join("")}</ul>`:""}
+    <h3>${t("m_more")}</h3><ul class="menu-list">${link("delivery",t("nav_delivery"))}${link("about",t("nav_about"))}${accountsOn()?link("account",sbUser?t("acct_mine"):t("acct_signin")):""}</ul>
+  </nav>
+  <div class="drawer-foot menu-foot"><a class="btn" href="${wa(t("wa_hello"))}" target="_blank" rel="noopener">${ICON.wa}<span>${t("m_wa")}</span></a><button class="btn ghost" type="button" id="menuLang">${t("lang")}</button></div>`;
+}
+function openMenu(){
+  closeDrawer(); menuFocus=document.activeElement; renderMenu();
+  const m=$("#menu"),s=$("#scrim"); m.hidden=false; s.hidden=false;
+  requestAnimationFrame(()=>{ m.classList.add("open"); s.classList.add("show"); $("#menuClose").focus(); });
+  document.documentElement.style.overflow="hidden"; $("#menuBtn").setAttribute("aria-expanded","true");
+}
+function closeMenu(back=true){
+  const m=$("#menu"),s=$("#scrim"); if(!m||m.hidden) return;
+  m.classList.remove("open"); s.classList.remove("show"); document.documentElement.style.overflow=""; $("#menuBtn").setAttribute("aria-expanded","false");
+  setTimeout(()=>{ if(!m.classList.contains("open")){ m.hidden=true; if($("#drawer").hidden) s.hidden=true; } },reduce.matches?0:460);
+  if(back&&menuFocus&&menuFocus.focus) menuFocus.focus();
+}
+document.addEventListener("click",e=>{
+  if(e.target.closest("#menuBtn")){ e.stopImmediatePropagation(); $("#menu").hidden?openMenu():closeMenu(); return; }
+  if(e.target.closest("#menuClose")||(e.target.id==="scrim"&&!$("#menu").hidden)){ closeMenu(); return; }
+  if(e.target.closest("#menuLang")){ closeMenu(false); $("#langBtn").click(); return; }
+  if(e.target.closest("#menu a")) closeMenu(false);
 },true);
+/* the categories fold open and shut inside the menu */
+document.addEventListener("click",e=>{
+  const d=e.target.closest("#menuDrop"); if(!d) return;
+  const g=d.closest(".menu-group"), open=!g.classList.contains("open");
+  g.classList.toggle("open",open); d.setAttribute("aria-expanded",String(open));
+  const ul=g.querySelector(".menu-sub ul"); if(open) ul.removeAttribute("inert"); else ul.setAttribute("inert","");
+});
+document.addEventListener("keydown",e=>{
+  const m=$("#menu"); if(!m||m.hidden) return;
+  if(e.key==="Escape"){ closeMenu(); return; }
+  if(e.key==="Tab"){ const f=$$("#menu a,#menu button").filter(x=>x.offsetParent); if(!f.length) return; const a=f[0],z=f[f.length-1];
+    if(e.shiftKey&&document.activeElement===a){ e.preventDefault(); z.focus(); } else if(!e.shiftKey&&document.activeElement===z){ e.preventDefault(); a.focus(); } }
+});
 /* ===== cart ===== */
 const sub=()=>cart.reduce((s,l)=>s+byId[l.id].price*l.qty,0);
 const count=()=>cart.reduce((s,l)=>s+l.qty,0);
@@ -580,7 +855,7 @@ function viewCheckout(){
     <fieldset><legend>${t("co_addr")}</legend><div class="fgrid">
       <div class="f"><label for="gov">${t("f_gov")} <span class="req" aria-hidden="true">*</span></label><select id="gov" required aria-required="true"><option value="">${t("f_choose")}</option>${GOVS.map(g=>`<option value="${g[0]}">${lang==="ar"?g[2]:g[1]}</option>`).join("")}</select><p class="err" id="gov-err" hidden></p></div>
       ${field("area",t("f_area"))}${field("block",t("f_block"),{mode:"numeric"})}${field("street",t("f_street"))}${field("avenue",t("f_avenue"),{req:false})}${field("house",t("f_house"))}${field("notes",t("f_notes"),{type:"textarea",req:false,full:true})}</div></fieldset>
-    <fieldset><legend>${t("co_pay")}</legend><div class="radios">${["knet","card","apple","cod"].map((m,i)=>`<label class="radio"><input type="radio" name="pay" value="${m}" ${i===0?"checked":""}><span>${t("pay_"+m)}</span></label>`).join("")}</div></fieldset>
+    <fieldset><legend>${t("co_pay")}</legend><div class="radios">${["knet","card","apple"].map((m,i)=>`<label class="radio"><input type="radio" name="pay" value="${m}" ${i===0?"checked":""}><span>${t("pay_"+m)}</span></label>`).join("")}</div></fieldset>
     <button class="btn" type="submit" style="width:100%;min-height:58px">${t("place")}, <span class="num">${money(s+f)}</span></button><p class="demo">${t(CONFIG.payments?"demo_live":"demo")}</p>
   </form>
   <aside class="summary" aria-labelledby="sumH"><h2 id="sumH">${t("cart_h")}</h2>${cart.map(l=>`<p style="display:flex;justify-content:space-between;gap:12px;padding:6px 0"><span>${l.qty} × ${esc(cName(byId[l.id],colorOf(byId[l.id],l.color)))}</span><span class="num">${money(byId[l.id].price*l.qty)}</span></p>`).join("")}
@@ -612,11 +887,10 @@ function submitCheckout(e){
   const lines=[t("wa_order"),...cart.map(l=>`• ${l.qty} × ${cName(byId[l.id],colorOf(byId[l.id],l.color))}: ${money(byId[l.id].price*l.qty)}`),`${t("delivery")}: ${f?money(f):t("free")}`,`${t("total")}: ${money(s+f)}`,`${t("f_name")}: ${v("name")}`,`${t("f_phone")}: +965 ${v("phone")}`,`${t("co_addr")}: ${lang==="ar"?g[2]:g[1]}, ${v("area")}, ${t("f_block")} ${v("block")}, ${t("f_street")} ${v("street")}${v("avenue")?", "+v("avenue"):""}, ${v("house")}`,`${t("co_pay")}: ${t("pay_"+$("input[name=pay]:checked").value)}`];
   if(sbUser&&$("#saveAddr")&&$("#saveAddr").checked) saveProfile({name:v("name"),phone:v("phone").replace(/\D/g,""),gov:v("gov"),area:v("area"),block:v("block"),street:v("street"),avenue:v("avenue"),house:v("house"),notes:v("notes")},true);
   const method=$("input[name=pay]:checked").value;
-  if(method!=="cod"&&CONFIG.payments){ startPayment(method,v,g,lines); return; }
-  if(CONFIG.payments){ placeCod(v,g,lines,s,f); return; }
+  if(CONFIG.payments){ startPayment(method,v,g,lines); return; }
   lastOrder={id:"KF-"+(20000+Math.floor(Math.random()*79999)),wa:wa(lines.join("\n"))};
   demoRecordOrder({id:lastOrder.id,status:"sent",method:"cod",total_fils:s+f,items:cart.map(l=>({id:l.id,color:l.color,name:cName(byId[l.id],colorOf(byId[l.id],l.color)),qty:l.qty}))});
-  cart=[]; saveCart(); location.hash="order";
+  cart=[]; saveCart(); go("order");
 }
 async function placeCod(v,g,lines,s,f){
   const btn=$("#coForm button[type=submit]"); btn.disabled=true;
@@ -630,7 +904,7 @@ async function placeCod(v,g,lines,s,f){
   id=id||"KF-"+(20000+Math.floor(Math.random()*79999));
   lastOrder={id,wa:wa([lines[0]+" ("+id+")",...lines.slice(1)].join("\n"))};
   demoRecordOrder({id,status:"sent",method:"cod",total_fils:s+f,items:cart.map(l=>({id:l.id,color:l.color,name:cName(byId[l.id],colorOf(byId[l.id],l.color)),qty:l.qty}))});
-  cart=[]; saveCart(); location.hash="order";
+  cart=[]; saveCart(); go("order");
 }
 async function startPayment(method,v,g,lines){
   const btn=$("#coForm button[type=submit]"), box=$("#errSum"), label=btn.innerHTML;
@@ -646,8 +920,8 @@ async function startPayment(method,v,g,lines){
     location.href=d.link;
   }catch(err){
     btn.disabled=false; btn.innerHTML=label;
-    box.innerHTML=`<div class="err-summary" role="alert" tabindex="-1" id="errBox"><h2>${esc(err.message||t("pay_fail"))}</h2><ul><li><a href="#" data-focus="pay-cod">${t("cod_instead")}</a></li></ul></div>`;
-    const c=$('input[name=pay][value=cod]'); if(c) c.id="pay-cod"; $("#errBox").focus();
+    box.innerHTML=`<div class="err-summary" role="alert" tabindex="-1" id="errBox"><h2>${esc(err.message||t("pay_fail"))}</h2></div>`;
+    $("#errBox").focus();
   }
 }
 
@@ -669,7 +943,6 @@ document.addEventListener("click",e=>{
   if(e.target.closest("#cartBtn")){ openDrawer(); return; }
   if(e.target.closest("#drawerClose")||e.target.id==="scrim"||e.target.closest("[data-close]")){ closeDrawer(); return; }
   if(e.target.closest("#langBtn")){ lang=lang==="ar"?"en":"ar"; store.set("kafei-lang",lang); applyLang(); pendingFocus=false; render(); replay($("#main"),"lang-in"); return; }
-  if(e.target.closest("#menuBtn")){ const n=$("#nav"),o=!n.classList.contains("open"); n.classList.toggle("open",o); $("#menuBtn").setAttribute("aria-expanded",String(o)); return; }
   if(e.target.closest("#copyPhone")){ try{ navigator.clipboard.writeText(CONFIG.phoneDisplay).then(()=>toast(t("copied")),selectPhone); }catch(err){ selectPhone(); } return; }
   const fl=e.target.closest("[data-focus]"); if(fl){ e.preventDefault(); const el=document.getElementById(fl.dataset.focus); el&&el.focus(); }
 });
@@ -683,25 +956,30 @@ document.addEventListener("keydown",e=>{
 });
 /* colour swatches: swap the photo, the colour name and the WhatsApp question */
 document.addEventListener("change",e=>{
-  if(e.target.name!=="pcolor") return; const id=(location.hash.match(/^#p-(.+)$/)||[])[1], p=byId[id], c=colorOf(p,e.target.value); if(!c) return;
+  if(e.target.name!=="pcolor") return; const id=(curKey().match(/^p-(.+)$/)||[])[1], p=byId[id], c=colorOf(p,e.target.value); if(!c) return;
   const img=$(".pdp .vessel img"); if(img){ img.src=c.img||p.img; img.alt=cName(p,c); }
   $$(".pdp [data-detail]").forEach(d=>{ const i=+d.dataset.detail; if(c.details&&c.details[i]){ d.src=c.details[i]; d.alt=`${cName(p,c)}, ${t(i?"d_side":"d_close")}`; } });
   $("#swName").textContent=L(c.name); const a=$("#pdpAsk"); if(a) a.href=wa(t("wa_item",cName(p,c)));
 });
 document.addEventListener("focusout",e=>{ const id=e.target.id; if(RULES[id]&&e.target.closest("#coForm")&&(e.target.value||e.target.getAttribute("aria-invalid")==="true")) validate(id); });
 document.addEventListener("submit",e=>{ if(e.target.id==="coForm") submitCheckout(e); });
-window.addEventListener("hashchange",()=>{ closeDrawer(); render(); });
-applyLang(); render();
-/* products from the owner's dashboard: replace the built-in list once they arrive; keep it if they don't */
+applyLang();
+/* products from the owner's dashboard: replace the built-in list once they arrive; keep it if they don't.
+   The first draw waits for them (up to 1.5 s) so the page, and the hero intro, are drawn once with the right products.
+   If they come later, the page is redrawn in place without replaying anything. */
 /* (a host without the /api functions answers 404: then checkout sends every order on WhatsApp instead of showing a payment error) */
-if(CONFIG.payments&&CONFIG.payments.products) fetch(CONFIG.payments.products).then(r=>{
-  if(r.status===404||r.status===405){ CONFIG.payments=null; if(location.hash==="#checkout") render(); return null; }
+let booted=false; const boot=()=>{ if(booted) return; booted=true; render(); };
+/* a link straight to an inner page draws at once (the pre-built home was cleared for it), unless it names a product only the server knows */
+const deepNow=()=>{ if(!document.documentElement.classList.contains("deep")) return false; const h=curKey(); return !(h.startsWith("p-")&&!byId[h.slice(2)])&&!h.startsWith("brand-"); };
+if(CONFIG.payments&&CONFIG.payments.products){ setTimeout(boot,1500); if(deepNow()) boot();
+  fetch(CONFIG.payments.products).then(r=>{
+  if(r.status===404||r.status===405){ CONFIG.payments=null; if(booted&&curKey()==="checkout") refreshInPlace(); return null; }
   return r.status===200?r.json():null; }).then(list=>{
-  if(!Array.isArray(list)||!list.length) return;
+  if(!Array.isArray(list)||!list.length||JSON.stringify(list)===JSON.stringify(P)) return boot();
   P.length=0; list.forEach(x=>P.push(x)); for(const k of Object.keys(byId)) delete byId[k]; P.forEach(x=>byId[x.id]=x);
   const have=new Set(cart.map(lineKey)); cart=cart.filter(okLine);
   for(const l of cartSaved) if(!have.has(lineKey(l))&&okLine(l)) cart.push(l);
-  updateCount(); render();
-}).catch(()=>{});
+  updateCount(); if(booted) refreshInPlace(); else boot();
+}).catch(boot); } else boot();
 })();
 
