@@ -18,6 +18,7 @@
       updated: t => `Figures from the shop's orders, updated ${t}.`,
       orders: "Orders", revenue: "Money collected", revenue_s: "Paid online, and cash on delivered orders", collect: "Cash to collect", collect_s: "Cash orders not yet delivered",
       profit: "Profit", profit_s: "Money collected minus product cost", profit_part: "Some products have no cost price yet, so they are left out", stockval: "Stock value", stockval_s: "What the stock on the shelf cost you", th_profit: "Profit", th_cost: "Cost", th_margin: "Margin", f_cost: "Cost price in KWD", f_cost_h: "What you paid per unit. Only you see this; it is never shown in the shop.", margin_line: (g, pc) => `Profit per unit: ${g} (${pc}% margin)`, margin_loss: g => `Below cost: you lose ${g} per unit`,
+      codes_h: "Discount codes", codes_s: "Customers type these at checkout. The discount comes off the items, not delivery.", codes_none: "Run 11_discount_codes.sql in Supabase to start using codes.", codes_empty: "No codes yet.", newc: "New code", c_code: "Code", c_kind: "Type", c_pct: "Percent off", c_fixed: "KWD off", c_value: "Amount", c_value_h: "For percent, a whole number like 10. For KWD, an amount like 2.000.", c_min: "Minimum order in KWD (optional)", c_ends: "Last day (optional)", c_once: "Once per customer (by phone number)", c_active: "Active: customers can use it now", c_uses: "Used", c_given: "Given away", c_rule: "Discount", c_limits: "Limits", c_once_s: "once each", c_min_s: m => `min ${m}`, c_ends_s: d => `until ${d}`, c_off: "paused", savec: "Save code", savedc: "Code saved", delc: "Delete", delc_q: c => `Delete the code ${c}? Orders that used it keep their discount.`, deletedc: "Code deleted", pausec: "Pause", resumec: "Turn on", discounts: "Discounts given",
       avg: "Average order", active: "Customers", active_s: n => `${n} returning`,
       daily_h: "Money collected per day", daily_s: n => `Last ${n} days, in KWD`, weekly_h: "Orders per week", weekly_s: "Last 12 weeks, weeks start on Sunday",
       pay_h: "How customers pay", pay_s: "Orders in this period", knet: "KNET", card: "Card", apple: "Apple Pay", cod: "Cash on delivery",
@@ -54,6 +55,7 @@
       updated: t => `أرقام من طلبات المتجر، آخر تحديث ${t}.`,
       orders: "الطلبات", revenue: "المبالغ المحصّلة", revenue_s: "المدفوع إلكترونيًا ونقد الطلبات المسلّمة", collect: "نقد للتحصيل", collect_s: "طلبات نقدية لم تُسلّم بعد",
       profit: "الربح", profit_s: "المبالغ المحصّلة ناقص تكلفة المنتجات", profit_part: "بعض المنتجات بلا سعر تكلفة بعد، لذلك لم تُحتسب", stockval: "قيمة المخزون", stockval_s: "تكلفة البضاعة الموجودة لديك", th_profit: "الربح", th_cost: "التكلفة", th_margin: "الهامش", f_cost: "سعر التكلفة بالدينار", f_cost_h: "ما دفعته للوحدة الواحدة. يظهر لك فقط ولا يظهر في المتجر أبدًا.", margin_line: (g, pc) => `الربح للوحدة: ${g} (هامش ${pc}%)`, margin_loss: g => `أقل من التكلفة: تخسر ${g} للوحدة`,
+      codes_h: "أكواد الخصم", codes_s: "يكتبها العملاء عند الدفع. الخصم على المنتجات وليس على التوصيل.", codes_none: "شغّل الملف 11_discount_codes.sql في Supabase لتبدأ باستخدام الأكواد.", codes_empty: "لا توجد أكواد بعد.", newc: "كود جديد", c_code: "الكود", c_kind: "النوع", c_pct: "نسبة خصم", c_fixed: "خصم بالدينار", c_value: "القيمة", c_value_h: "للنسبة رقم صحيح مثل 10، وللدينار مبلغ مثل 2.000.", c_min: "أقل قيمة للطلب بالدينار (اختياري)", c_ends: "آخر يوم (اختياري)", c_once: "مرة واحدة لكل عميل (حسب رقم الهاتف)", c_active: "مفعّل: يقدر العملاء يستخدمونه الآن", c_uses: "مرات الاستخدام", c_given: "قيمة الخصومات", c_rule: "الخصم", c_limits: "الشروط", c_once_s: "مرة لكل عميل", c_min_s: m => `حد أدنى ${m}`, c_ends_s: d => `حتى ${d}`, c_off: "موقوف", savec: "حفظ الكود", savedc: "تم حفظ الكود", delc: "حذف", delc_q: c => `حذف الكود ${c}؟ الطلبات التي استخدمته تبقى بخصمها.`, deletedc: "تم حذف الكود", pausec: "إيقاف", resumec: "تفعيل", discounts: "الخصومات الممنوحة",
       avg: "متوسط الطلب", active: "العملاء", active_s: n => `${n} عائدون`,
       daily_h: "المحصّل يوميًا", daily_s: n => `آخر ${n} يومًا، بالدينار`, weekly_h: "الطلبات أسبوعيًا", weekly_s: "آخر 12 أسبوعًا، يبدأ الأسبوع يوم الأحد",
       pay_h: "طريقة الدفع", pay_s: "طلبات هذه الفترة", knet: "كي نت", card: "بطاقة", apple: "Apple Pay", cod: "الدفع عند الاستلام",
@@ -103,7 +105,7 @@
   const emptyCats = () => { const live = catalog().filter(p => p.visible !== false); const out = [];
     for (const [c, subs] of Object.entries(ALLCATS)) { if (!live.some(p => p.cat === c)) out.push(catName(c)); else for (const sb of subs) if (!live.some(p => p.cat === c && p.sub === sb)) out.push(catName(c) + ": " + t("s_" + sb)); }
     return out; };
-  let editing = null, photoData = null;   // editing: null, "new", or a product id
+  let editing = null, photoData = null, editingCode = null;   // editingCode: null, "new", or a code   // editing: null, "new", or a product id
 
   /* ---------- Supabase sign-in ---------- */
   let sb = null, session = null, step = "email", email = "", msg = "", data = null, state = "signin";
@@ -208,8 +210,43 @@
         <section class="panel" aria-labelledby="h6"><div class="panel-head"><h2 id="h6">${t("prod_h")}</h2><p class="sub">${t("prod_s")}</p></div>${prod}</section>
         <section class="panel" aria-labelledby="h8"><div class="panel-head"><h2 id="h8">${t("cust_h")}</h2><p class="sub">${t("cust_s")}</p></div>${cust}</section>
         <section class="panel wide" aria-labelledby="h9" id="prods"><div class="panel-head"><h2 id="h9">${t("prods_h")}</h2>${s.catalog ? `<button class="btn small" type="button" id="newp">${t("newp")}</button>` : ""}</div><p class="sub" style="margin:-6px 0 12px">${t("prods_s")}</p>${viewProducts(s)}</section>
+        <section class="panel wide" aria-labelledby="h10" id="codes"><div class="panel-head"><h2 id="h10">${t("codes_h")}</h2>${s.codes ? `<button class="btn small" type="button" id="newc">${t("newc")}</button>` : ""}</div><p class="sub" style="margin:-6px 0 12px">${t("codes_s")}</p>${viewCodes(s)}</section>
         <section class="panel wide" aria-labelledby="h7"><div class="panel-head"><h2 id="h7">${t("stock_h")}</h2><p class="sub">${t("stock_s")}</p></div>${stock}</section>
       </div></div>`;
+  }
+  function viewCodes(s) {
+    if (!s.codes) return `<p class="empty">${t("codes_none")}</p>`;
+    const form = editingCode ? codeForm(editingCode === "new" ? null : s.codes.find(c => c.code === editingCode)) : "";
+    const day = iso => new Date(iso).toLocaleDateString(lang === "ar" ? "ar-KW" : "en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "Asia/Kuwait" });
+    const rows = s.codes.map(c => `<tr>
+      <td><b class="num" dir="ltr">${esc(c.code)}</b></td>
+      <td class="num">${c.kind === "percent" ? c.value + "%" : kwd(c.value)}</td>
+      <td>${[c.once_per_customer ? t("c_once_s") : "", c.min_order_fils ? t("c_min_s", kwd(c.min_order_fils)) : "", c.ends_at ? t("c_ends_s", day(c.ends_at)) : ""].filter(Boolean).join(", ") || "—"}</td>
+      <td class="r num">${nf(c.uses)}</td><td class="r num">${kwd(c.given_fils)}</td>
+      <td>${c.active && !(c.ends_at && new Date(c.ends_at) < new Date()) ? chip("good", t("visible"), 0).replace(/ <span class="num">0<\/span>/, "") : chip("neutral", t("c_off"), 0).replace(/ <span class="num">0<\/span>/, "")}</td>
+      <td class="r" style="white-space:nowrap"><button class="btn ghost small" type="button" data-editc="${esc(c.code)}">${t("edit")}</button> <button class="btn ghost small" type="button" data-togglec="${esc(c.code)}">${c.active ? t("pausec") : t("resumec")}</button> <button class="btn ghost small" type="button" data-delc="${esc(c.code)}">${t("delc")}</button></td></tr>`).join("");
+    return form + (s.codes.length ? `<div class="tscroll"><table class="cards"><thead><tr><th>${t("c_code")}</th><th>${t("c_rule")}</th><th>${t("c_limits")}</th><th class="r">${t("c_uses")}</th><th class="r">${t("c_given")}</th><th>${t("th_state")}</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>` : `<p class="empty">${t("codes_empty")}</p>`);
+  }
+  // the dashboard form sends KWD and percent as typed; the server checks and converts them
+  const codeBody = c => ({ code: c.code, kind: c.kind, value: c.kind === "percent" ? c.value : (c.value / 1000).toFixed(3), once: c.once_per_customer, min: c.min_order_fils ? (c.min_order_fils / 1000).toFixed(3) : "", ends: c.ends_at ? new Date(new Date(c.ends_at).getTime() + 3 * 36e5).toISOString().slice(0, 10) : "", active: c.active });
+  function codeForm(c) {
+    const b = c ? codeBody(c) : { code: "", kind: "percent", value: "", once: true, min: "", ends: "", active: true };
+    return `<form class="pform" id="cform" novalidate><h3>${c ? esc(c.code) : t("newc")}</h3><div id="cerr"></div><div class="fgrid">
+      <div class="f"><label for="cf-code">${t("c_code")}</label><input id="cf-code" maxlength="20" dir="ltr" autocapitalize="characters" value="${esc(b.code)}" ${c ? "readonly" : ""} style="text-transform:uppercase"></div>
+      <div class="f"><label for="cf-kind">${t("c_kind")}</label><select id="cf-kind"><option value="percent" ${b.kind === "percent" ? "selected" : ""}>${t("c_pct")}</option><option value="fixed" ${b.kind === "fixed" ? "selected" : ""}>${t("c_fixed")}</option></select></div>
+      <div class="f"><label for="cf-value">${t("c_value")}</label><input id="cf-value" inputmode="decimal" maxlength="10" dir="ltr" value="${esc(b.value)}"><p class="note">${t("c_value_h")}</p></div>
+      <div class="f"><label for="cf-min">${t("c_min")}</label><input id="cf-min" inputmode="decimal" maxlength="10" dir="ltr" value="${esc(b.min)}"></div>
+      <div class="f"><label for="cf-ends">${t("c_ends")}</label><input id="cf-ends" type="date" value="${esc(b.ends)}"></div>
+      <label class="check full"><input type="checkbox" id="cf-once" ${b.once ? "checked" : ""}> <span>${t("c_once")}</span></label>
+      <label class="check full"><input type="checkbox" id="cf-active" ${b.active ? "checked" : ""}> <span>${t("c_active")}</span></label>
+    </div><p style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px"><button class="btn" type="submit">${t("savec")}</button><button class="btn ghost" type="button" id="ccancel">${t("cancel")}</button></p></form>`;
+  }
+  async function submitCode() {
+    const g = k => { const e = $("#cf-" + k); return e.type === "checkbox" ? e.checked : e.value; };
+    const btn = $("#cform button[type=submit]"); btn.disabled = true;
+    const r = await api("POST", { action: "code_save", code: { code: g("code"), kind: g("kind"), value: g("value"), min: g("min"), ends: g("ends"), once: g("once"), active: g("active") } }).catch(() => ({ status: 0, d: {} }));
+    if (r.status === 200) { editingCode = null; toast(t("savedc")); await load(); const sec = $("#codes"); if (sec) sec.scrollIntoView({ block: "start" }); return; }
+    $("#cerr").innerHTML = `<p class="err" role="alert">${esc((r.d && r.d.message) || t("e_save"))}</p>`; btn.disabled = false;
   }
   function viewProducts(s) {
     if (!s.catalog) return `<p class="empty">${t("no_cat")}</p>`;
@@ -306,7 +343,7 @@
 
   /* ---------- events ---------- */
   document.addEventListener("submit", async e => {
-    e.preventDefault(); if (e.target.id === "pform") return submitProduct(); const btn = e.target.querySelector("button[type=submit]"); if (btn) btn.disabled = true;
+    e.preventDefault(); if (e.target.id === "pform") return submitProduct(); if (e.target.id === "cform") return submitCode(); const btn = e.target.querySelector("button[type=submit]"); if (btn) btn.disabled = true;
     try {
       if (e.target.id === "fEmail") { email = $("#em").value.trim();
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { msg = t("e_email"); return render(); }
@@ -334,6 +371,15 @@
     if (el.id === "newp") { editing = "new"; photoData = null; render(); return $("#pform").scrollIntoView({ block: "start" }); }
     if (el.dataset.editp) { editing = el.dataset.editp; photoData = null; render(); return $("#pform").scrollIntoView({ block: "start" }); }
     if (el.id === "pcancel") { editing = null; photoData = null; return render(); }
+    if (el.id === "newc") { editingCode = "new"; render(); return $("#cform").scrollIntoView({ block: "start" }); }
+    if (el.dataset.editc) { editingCode = el.dataset.editc; render(); return $("#cform").scrollIntoView({ block: "start" }); }
+    if (el.id === "ccancel") { editingCode = null; return render(); }
+    if (el.dataset.togglec) { const c = data.codes.find(x => x.code === el.dataset.togglec); if (!c) return; el.disabled = true;
+      const r = await api("POST", { action: "code_save", code: { ...codeBody(c), active: !c.active } });
+      if (r.status === 200) { toast(t("savedc")); return load(); } el.disabled = false; return toast(r.d.message || t("e_save")); }
+    if (el.dataset.delc) { if (!confirm(t("delc_q", el.dataset.delc))) return; el.disabled = true;
+      const r = await api("POST", { action: "code_delete", code: el.dataset.delc });
+      if (r.status === 200) { toast(t("deletedc")); return load(); } el.disabled = false; return toast(r.d.message || t("e_save")); }
     if (el.dataset.togglep) { const p = data.catalog.find(x => x.id === el.dataset.togglep); if (!p) return; el.disabled = true;
       const r = await api("POST", { action: "product_save", product: { ...p, price: p.price_fils == null ? "" : p.price_fils / 1000, cost: p.cost_fils == null ? "" : p.cost_fils / 1000, visible: !p.visible } });
       if (r.status === 200) { toast(t("savedp")); return load(); } el.disabled = false; return toast(r.d.message || t("e_save")); }

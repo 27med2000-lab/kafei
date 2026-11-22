@@ -75,6 +75,7 @@ function renderMenu(){
         <div class="menu-sub" id="menuCats"><ul ${catsOpen?"":"inert"}>${CATS.map(c=>`<li><a href="#shop-${c.id}" ${cur.startsWith("shop-"+c.id)?'aria-current="page"':""}>${catIcon(c)}<span>${esc(L(c.name))}</span>${inCat(c).length?"":`<span class="n n-soon">${t("soon_short")}</span>`}</a></li>`).join("")}</ul></div></li></ul>
     ${bs.length?`<h3>${t("m_brands")}</h3><ul class="menu-list">${bs.map(b=>link("brand-"+b.id,`<bdi>${esc(b.name)}</bdi>`)).join("")}</ul>`:""}
     <h3>${t("m_more")}</h3><ul class="menu-list">${link("delivery",t("nav_delivery"))}${link("about",t("nav_about"))}${accountsOn()?link("account",sbUser?t("acct_mine"):t("acct_signin")):""}</ul>
+    <ul class="menu-social">${socialLinks("soc")}</ul>
   </nav>
   <div class="drawer-foot menu-foot"><a class="btn" href="${wa(t("wa_hello"))}" target="_blank" rel="noopener">${ICON.wa}<span>${t("m_wa")}</span></a><button class="btn ghost" type="button" id="menuLang">${t("lang")}</button></div>`;
 }

@@ -53,7 +53,7 @@ async function describe(pathname) {
     const list = (await products()).filter(x => x.brand && x.brand.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") === s[1]); if (!list.length) return null;
     return { title: list[0].brand, desc: `Everything Kafei stocks from ${list[0].brand}. ${DELIVERY}` };
   }
-  const fixed = { delivery: ["Delivery", "Delivery across Kuwait: same day in the Capital and Hawalli when you order before 2 pm. Free over KWD 15."],
+  const fixed = { delivery: ["Delivery", "Delivery across Kuwait: same day in the Capital and Hawalli when you order before 2 pm. Delivery is KWD 1.500."],
     about: ["About us", "Kafei is a small coffee-gear shop in Kuwait. In the Gulf you shake your finjan when you've had enough; that little shake is our name."],
     account: ["Your account", "Sign in to Kafei to see your orders and saved address.", true], checkout: ["Checkout", "", true], order: ["Order sent", "", true], paid: ["Payment", "", true] };
   if (s.length === 1 && fixed[s[0]]) { const [title, desc, noindex] = fixed[s[0]]; return { title, desc: desc || DELIVERY, noindex }; }

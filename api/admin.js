@@ -2,6 +2,7 @@
 //   GET  ?days=30            -> every figure the dashboard shows, computed here from real rows only
 //   POST {action:"stock", product_id, units, low_at}            -> set stock
 //   POST {action:"delivery", order_id, delivery_status}         -> mark an order delivered / to deliver / cancelled
+//   POST {action:"code_save", code:{code, kind, value, once, min, ends, active}} / {action:"code_delete", code} -> discount codes
 import { sbAuth, json, readBody, supa, supaOn, userFromToken, bearer, isAdmin, CATALOGUE, GOVS, CATS, productRows, forgetCatalogue, adjustStock } from "./_lib.js";
 
 const SAME_DAY = new Set(["capital", "hawalli"]);
@@ -68,6 +69,9 @@ export function summarise(allOrders, stockRows, signupDates, now = Date.now(), d
   for (const o of placed) for (const it of o.items || []) { const p = byProduct[it.id]; if (!p) continue; p.units += it.qty || 0;
     if (collected(o)) { const q = it.qty || 0, line = (it.price_fils || 0) * q; p.revenue_fils += line;
       if (costOf[it.id] === null) profitMissing = true; else { const g = line - costOf[it.id] * q; p.profit_fils += g; profit += g; profitKnown = true; } } }
+  // discount codes come off the profit (they're taken off the whole order, not one product)
+  const discounts = placed.filter(collected).reduce((s, o) => s + (o.discount_fils || 0), 0);
+  profit -= discounts;
 
   const methods = { knet: 0, card: 0, apple: 0, cod: 0 };
   for (const o of placed) if (o.method in methods) methods[o.method]++;
@@ -96,7 +100,7 @@ export function summarise(allOrders, stockRows, signupDates, now = Date.now(), d
   for (const r of stock) { const c = costOf[r.product || r.id]; if (r.units > 0 && c !== null && c !== undefined) { stockValue += r.units * c; stockValueKnown = true; } }
   return {
     generated_at: new Date(now).toISOString(), days,
-    totals: { orders: placed.length, revenue_fils: revenue, profit_fils: profitKnown ? profit : null, profit_partial: profitKnown && profitMissing, stock_value_fils: stockValueKnown ? stockValue : null, to_collect_fils: toCollect, average_fils: placed.length ? Math.round(placed.reduce((s, o) => s + (o.total_fils || 0), 0) / placed.length) : null },
+    totals: { orders: placed.length, revenue_fils: revenue, discount_fils: discounts, profit_fils: profitKnown ? profit : null, profit_partial: profitKnown && profitMissing, stock_value_fils: stockValueKnown ? stockValue : null, to_collect_fils: toCollect, average_fils: placed.length ? Math.round(placed.reduce((s, o) => s + (o.total_fils || 0), 0) / placed.length) : null },
     daily, weeks, products: Object.values(byProduct), methods, states, gov, same_day: sameDay, delivery, open,
     customers: { active: activeKeys.size, new: fresh, returning, signups_known: signupDates !== null },
     stock
@@ -116,7 +120,7 @@ export default async function handler(req, res) {
       const days = Math.min(365, Math.max(7, Number(new URL(req.url, "http://x").searchParams.get("days")) || 30));
       const since = new Date(Date.now() - Math.max(days, 84) * DAY).toISOString();
       const [orders, stockRows, ups] = await Promise.all([
-        allRows(`/rest/v1/orders?select=id,user_id,status,method,total_fils,items,phone,gov,delivery_status,created_at&created_at=gte.${encodeURIComponent(since)}&order=created_at.asc`),
+        allRows(`/rest/v1/orders?select=*&created_at=gte.${encodeURIComponent(since)}&order=created_at.asc`),
         allRows(`/rest/v1/stock?select=product_id,units,low_at`),
         signups()
       ]);
@@ -125,6 +129,7 @@ export default async function handler(req, res) {
       const rows = await productRows(); setProducts(rows);
       const s = summarise([...history.map(h => ({ ...h, _h: true })), ...orders], stockRows, ups, Date.now(), days);
       s.catalog = rows ? rows.map(r => ({ ...r })) : null;   // every product, hidden ones too, for editing
+      s.codes = await codeList();
       return json(res, 200, s);
     }
     if (req.method === "POST") {
@@ -140,6 +145,13 @@ export default async function handler(req, res) {
         if ((!blank && !(units >= 0 && units <= 100000)) || !(low >= 0 && low <= 1000)) return json(res, 400, { error: "units", message: "Units must be a whole number, 0 or more." });
         const r = await supa("POST", "/rest/v1/stock", { product_id: b.product_id, units, low_at: low, updated_at: new Date().toISOString() }, { Prefer: "resolution=merge-duplicates,return=minimal" });
         return r.ok ? json(res, 200, { saved: true }) : json(res, 502, { error: "save", message: "Stock was not saved. Try again." });
+      }
+      if (b?.action === "code_save") return saveCode(res, b.code || {});
+      if (b?.action === "code_delete") {
+        const c = String(b.code || "").toUpperCase();
+        if (!/^[A-Z0-9]{3,20}$/.test(c)) return json(res, 400, { error: "code", message: "Unknown code." });
+        const r = await supa("DELETE", `/rest/v1/discount_codes?code=eq.${encodeURIComponent(c)}`, null, { Prefer: "return=minimal" });
+        return r.ok ? json(res, 200, { saved: true }) : json(res, 502, { error: "save", message: "The code was not deleted. Try again." });
       }
       if (b?.action === "delivery") {
         if (!["to_deliver", "delivered", "cancelled"].includes(b.delivery_status) || !/^[A-Za-z0-9-]{4,40}$/.test(String(b.order_id || ""))) return json(res, 400, { error: "delivery", message: "Unknown order or state." });
@@ -200,6 +212,37 @@ export function cleanProduct(p, existingIds) {
   return { row: { id, cat: p.cat, sub, name_en, name_ar, brand: clip(p.brand, 40) || null, cost_fils, kind_en: clip(p.kind_en, 60), kind_ar: clip(p.kind_ar, 60), what_en: clip(p.what_en, 160), what_ar: clip(p.what_ar, 160),
     desc_en: clip(p.desc_en, 800), desc_ar: clip(p.desc_ar, 800), facts, colors, price_fils, img, fit: p.fit === "contain" ? "contain" : "cover", visible: p.visible !== false,
     sort: Number.isFinite(Number(p.sort)) ? Math.max(0, Math.min(9999, Math.floor(Number(p.sort)))) : 100, updated_at: new Date().toISOString() }, isNew: !(p.id && existingIds.includes(p.id)) };
+}
+// every discount code with how many paid orders used it; null when the table hasn't been set up yet
+async function codeList() {
+  const r = await supa("GET", "/rest/v1/discount_codes?select=*&order=created_at.desc").catch(() => null);
+  if (!r || !r.ok || !Array.isArray(r.data)) return null;
+  const used = await supa("GET", "/rest/v1/orders?select=discount_code,discount_fils&discount_code=not.is.null&status=in.(paid,cod)").catch(() => null);
+  const n = {}, off = {}; for (const o of used && used.ok && Array.isArray(used.data) ? used.data : []) { n[o.discount_code] = (n[o.discount_code] || 0) + 1; off[o.discount_code] = (off[o.discount_code] || 0) + (o.discount_fils || 0); }
+  return r.data.map(c => ({ ...c, uses: n[c.code] || 0, given_fils: off[c.code] || 0 }));
+}
+// checks a code from the dashboard form; {row} or {error}
+export function cleanCode(c) {
+  const err = error => ({ error });
+  const code = String(c.code || "").toUpperCase().replace(/\s+/g, "");
+  if (!/^[A-Z0-9]{3,20}$/.test(code)) return err("The code must be 3 to 20 letters or numbers, with no spaces.");
+  const kind = c.kind === "fixed" ? "fixed" : "percent";
+  const v = Number(String(c.value ?? "").replace(",", "."));
+  let value;
+  if (kind === "percent") { if (!(Number.isInteger(v) && v >= 1 && v <= 90)) return err("Write the percentage as a whole number from 1 to 90."); value = v; }
+  else { if (!(v > 0 && v <= 10000)) return err("Write the amount off in KWD, for example 2.000."); value = Math.round(v * 1000); }
+  let min = null;
+  if (c.min !== undefined && c.min !== null && String(c.min).trim() !== "") { const m = Number(String(c.min).replace(",", ".")); if (!(m >= 0 && m <= 100000)) return err("Write the minimum order in KWD, or leave it empty."); min = Math.round(m * 1000) || null; }
+  let ends = null;
+  if (c.ends) { if (!/^\d{4}-\d{2}-\d{2}$/.test(String(c.ends))) return err("Choose an end date, or leave it empty."); ends = new Date(c.ends + "T23:59:59+03:00").toISOString(); }
+  return { row: { code, kind, value, once_per_customer: c.once !== false, min_order_fils: min, ends_at: ends, active: c.active !== false } };
+}
+async function saveCode(res, c) {
+  const k = cleanCode(c);
+  if (k.error) return json(res, 400, { error: "code", message: k.error });
+  const r = await supa("POST", "/rest/v1/discount_codes", k.row, { Prefer: "resolution=merge-duplicates,return=minimal" });
+  if (!r.ok) return json(res, 502, { error: "save", message: r.status === 404 ? "Run 11_discount_codes.sql in Supabase first." : "The code was not saved. Try again." });
+  return json(res, 200, { saved: true });
 }
 async function saveProduct(res, p) {
   const rows = (await productRows()) || [];

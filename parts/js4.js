@@ -17,7 +17,7 @@ function submitCheckout(e){
   e.preventDefault(); const bad=Object.keys(RULES).filter(id=>!validate(id)); const box=$("#errSum");
   if(bad.length){ box.innerHTML=`<div class="err-summary" role="alert" tabindex="-1" id="errBox"><h2>${t("e_sum",bad.length)}</h2><ul>${bad.map(id=>`<li><a href="#${id}" data-focus="${id}">${t("e_"+id)}</a></li>`).join("")}</ul></div>`; $("#errBox").focus(); return; }
   const v=id=>document.getElementById(id).value.trim(), g=GOVS.find(x=>x[0]===v("gov")), s=sub(), f=fee(s);
-  const lines=[t("wa_order"),...cart.map(l=>`• ${l.qty} × ${cName(byId[l.id],colorOf(byId[l.id],l.color))}: ${money(byId[l.id].price*l.qty)}`),`${t("delivery")}: ${f?money(f):t("free")}`,`${t("total")}: ${money(s+f)}`,`${t("f_name")}: ${v("name")}`,`${t("f_phone")}: +965 ${v("phone")}`,`${t("co_addr")}: ${lang==="ar"?g[2]:g[1]}, ${v("area")}, ${t("f_block")} ${v("block")}, ${t("f_street")} ${v("street")}${v("avenue")?", "+v("avenue"):""}, ${v("house")}`,`${t("co_pay")}: ${t("pay_"+$("input[name=pay]:checked").value)}`];
+  const lines=[t("wa_order"),...cart.map(l=>`• ${l.qty} × ${cName(byId[l.id],colorOf(byId[l.id],l.color))}: ${money(byId[l.id].price*l.qty)}`),...(promo?[`${t("code_line",promo.code)}: −${money(disc(s))}`]:[]),`${t("delivery")}: ${f?money(f):t("free")}`,`${t("total")}: ${money(s-disc(s)+f)}`,`${t("f_name")}: ${v("name")}`,`${t("f_phone")}: +965 ${v("phone")}`,`${t("co_addr")}: ${lang==="ar"?g[2]:g[1]}, ${v("area")}, ${t("f_block")} ${v("block")}, ${t("f_street")} ${v("street")}${v("avenue")?", "+v("avenue"):""}, ${v("house")}`,`${t("co_pay")}: ${t("pay_"+$("input[name=pay]:checked").value)}`];
   if(sbUser&&$("#saveAddr")&&$("#saveAddr").checked) saveProfile({name:v("name"),phone:v("phone").replace(/\D/g,""),gov:v("gov"),area:v("area"),block:v("block"),street:v("street"),avenue:v("avenue"),house:v("house"),notes:v("notes")},true);
   const method=$("input[name=pay]:checked").value;
   if(CONFIG.payments){ startPayment(method,v,g,lines); return; }
@@ -42,7 +42,7 @@ async function placeCod(v,g,lines,s,f){
 async function startPayment(method,v,g,lines){
   const btn=$("#coForm button[type=submit]"), box=$("#errSum"), label=btn.innerHTML;
   btn.disabled=true; btn.innerHTML=`<span>${t("paying")}</span>`;
-  const body={items:cart.map(l=>({id:l.id,qty:l.qty,color:l.color})),method,lang,customer:{name:v("name"),phone:v("phone")},
+  const body={items:cart.map(l=>({id:l.id,qty:l.qty,color:l.color})),method,lang,code:promo?promo.code:undefined,customer:{name:v("name"),phone:v("phone")},
     address:{gov:g[1],area:v("area"),block:v("block"),street:v("street"),avenue:v("avenue"),house:v("house"),notes:v("notes")}};
   try{
     const tok=await sbToken(), hd={"Content-Type":"application/json"}; if(tok) hd.Authorization="Bearer "+tok;

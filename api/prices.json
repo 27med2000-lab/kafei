@@ -1,7 +1,7 @@
 {
   "_note": "The server charges these prices, never the browser's. Prices are in fils (389000 = KWD 389.000). null = not for sale online yet. Keep them equal to the prices in the site's product list (P in parts/js1.js). \"colors\" lists the colours a product comes in; each order line must then name one, and a colour with \"soldOut\": true cannot be ordered. \"img\" and \"brand\" are only used for the search-engine product listing.",
   "_delivery": {
-    "freeOverFils": 15000,
+    "freeOverFils": null,
     "feeFils": 1500
   },
   "xbloom-studio": {

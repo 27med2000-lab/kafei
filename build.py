@@ -28,7 +28,7 @@ for f in os.listdir("img"): shutil.copy("img/" + f, D + "/img/" + f)
 os.makedirs(D + "/fonts", exist_ok=True)
 for f in os.listdir("fonts"):
     if f.endswith(".woff2"): shutil.copy("fonts/" + f, D + "/fonts/" + f)
-for f in ("_lib.js", "checkout.js", "status.js", "myfatoorah-webhook.js", "order-cod.js", "admin.js", "products.js", "login.js", "pages.js", "prices.json"): shutil.copy("api/" + f, D + "/api/" + f)
+for f in ("_lib.js", "checkout.js", "status.js", "myfatoorah-webhook.js", "order-cod.js", "admin.js", "products.js", "login.js", "discount.js", "pages.js", "prices.json"): shutil.copy("api/" + f, D + "/api/" + f)
 shutil.copy("admin.html", D + "/admin.html"); shutil.copy("privacy.html", D + "/privacy.html"); shutil.copy("terms.html", D + "/terms.html"); shutil.copy("returns.html", D + "/returns.html"); shutil.copy("404.html", D + "/404.html"); shutil.copy("admin.js", D + "/admin.js")
 shutil.copy("server.mjs", D + "/server.mjs"); shutil.copy("htaccess.txt", D + "/.htaccess")  # Apache/LiteSpeed hosts  # for Node.js hosts such as Hostinger: npm start
 open(D + "/vercel.json", "w").write('{\n  "headers": [{ "source": "/api/(.*)", "headers": [{ "key": "Cache-Control", "value": "no-store" }] }],\n  "functions": { "api/*.js": { "includeFiles": "api/prices.json" } }\n}\n')
@@ -49,7 +49,7 @@ _prods = [{"@type": "Product", "name": v["name"], "brand": {"@type": "Brand", "n
   "url": DOMAIN + "/#p-" + k,
   "offers": {"@type": "Offer", "price": "%.3f" % (v["price"] / 1000), "priceCurrency": "KWD", "availability": "https://schema.org/InStock", "url": DOMAIN + "/#p-" + k}}
   for k, v in _cat.items() if not k.startswith("_") and isinstance(v, dict) and v.get("price")]
-_ld = {"@context": "https://schema.org", "@graph": [{"@type": "OnlineStore", "name": "Kafei كفي", "url": DOMAIN + "/", "logo": DOMAIN + "/img/apple-touch-icon-180.png",
+_ld = {"@context": "https://schema.org", "@graph": [{"@type": "OnlineStore", "name": "Kafei كفي", "url": DOMAIN + "/", "sameAs": ["https://www.instagram.com/kafei_kw/", "https://www.tiktok.com/@kafei_kw"], "logo": DOMAIN + "/img/apple-touch-icon-180.png",
   "telephone": "+96566908822", "areaServed": "KW", "currenciesAccepted": "KWD", "paymentAccepted": "KNET, Credit Card, Apple Pay"}] + _prods}
 if "application/ld+json" not in idx_d:
     idx_d = idx_d.replace("</head>", '<script type="application/ld+json">' + _json.dumps(_ld, ensure_ascii=False).replace("</", "<\\/") + "</script>\n</head>", 1)

@@ -5,7 +5,7 @@ const CONFIG = {
   phoneDisplay: "+965 6690 8822",
   whatsapp: "96566908822",
   phoneVerified: true,
-  freeOver: 15000, fee: 1500,     // fils
+  freeOver: null, fee: 1500,     // fils
   // Online payment (MyFatoorah). Works where the /api functions are deployed; the claude.ai demo falls back to WhatsApp.
   // Customer accounts (Supabase). Paste your project URL and anon (public) key from Supabase > Project Settings > API.
   // The anon key is safe in the page: the row-level security in supabase/schema.sql decides what each customer can see.
@@ -60,7 +60,7 @@ en:{menu:"Menu",skip:"Skip to content",nav_home:"Home",nav_shop:"Shop",nav_deliv
   film_esp:"An espresso shot through a bottomless portafilter", film_po:"Coffee blooming in a pour-over filter", film_po2:"Pouring water from a kettle into a dripper",
   shop_esp:"Espresso machines", shop_po:"Pour-over machines",
   deliv_more:"Delivery details", deliv_page_h:"Delivery",
-  fx_same:"Same day", fx_fee:"Delivery fee", fx_pay:"Payment", fx_fee_v:"Free over KWD 15. Under that, KWD 1.500.", fx_pay_v:"KNET, card or Apple Pay.", fx_same_v:"Order before 2 pm and it reaches the Capital and Hawalli the same day.",
+  fx_same:"Same day", fx_fee:"Delivery fee", fx_pay:"Payment", fx_fee_v:"KWD 1.500 anywhere in Kuwait.", fx_pay_v:"KNET, card or Apple Pay.", fx_same_v:"Order before 2 pm and it reaches the Capital and Hawalli the same day.",
   how_h:"How ordering works", st1:"Choose a product and tap Ask for price, or add it to your cart.", st2:"We reply on WhatsApp with the price and the delivery time.", st3:"Pay by KNET, card or Apple Pay.",
   far_h:"Outside the Capital and Hawalli?", far_p:"Message us and we'll tell you the delivery day for your area.", far_wa:"Hello Kafei, when can you deliver to my area?",
   about_h:"About us", about_lead:"Kafei sells a short list of coffee machines and beans in Kuwait, in Arabic and English.",
@@ -70,14 +70,14 @@ en:{menu:"Menu",skip:"Skip to content",nav_home:"Home",nav_shop:"Shop",nav_deliv
   cart_n:n=>n===1?"1 item in cart":`${n} items in cart`,
   lead:"A short list of coffee gear, chosen and delivered in Kuwait.",
   t1:"Same day in the Capital and Hawalli when you order before 2 pm",
-  t2:"Free delivery over KWD 15, otherwise KWD 1.500",
+  t2:"Delivery KWD 1.500 anywhere in Kuwait",
   t3:"KNET, card or Apple Pay",
   see_all:"See all four", loom_label:"Kafei's four products",
   ask_price:"Ask for price", details:"Details", color_h:"Colour", choose_color:"Choose a colour", view_colors:"View colours", d_close:"close-up of the brewing head", d_side:"side view", details_h:"Closer look", sold_out:"sold out", all_sold:"Every colour is sold out right now. Ask us when the next ones arrive.", one_sold:"Sold out right now. Ask us when the next ones arrive.", out_ask:"Sold out. Ask us", wa_back:n=>`Hello Kafei, when will the ${n} be back in stock?`, add:"Add to cart", added:n=>`Added ${n} to your cart`,
   price_soon:"Price on request. Message us and we'll reply with today's price and delivery time.",
   wa_item:(n)=>`Hello Kafei, what is the price of the ${n}, and when can you deliver it?`,
   deliv_big:"Order before 2 pm and it reaches the Capital and Hawalli the same day.",
-  d2:"Free over KWD 15. Under that, KWD 1.500", d3:"Pay with KNET, card or Apple Pay",
+  d2:"Delivery KWD 1.500 anywhere in Kuwait", d3:"Pay with KNET, card or Apple Pay",
   ask_h:"Ask us first", ask_p:"Not sure which machine suits your counter or your coffee? Send us a message and we'll help you choose.",
   wa_open:"Message on WhatsApp", copy:"Copy number", copied:"Number copied", copy_fail:"Select the number to copy it",
   shop_h:"Shop", home:"Home",
@@ -85,7 +85,7 @@ en:{menu:"Menu",skip:"Skip to content",nav_home:"Home",nav_shop:"Shop",nav_deliv
   f_shop:"Shop", f_help:"Help", f_imprint:"Kafei, Kuwait. Prices in Kuwaiti dinar.", f_credits:"Brewing footage:",
   qty:"Quantity", dec:"Fewer", inc:"More", remove:"Remove", close:"Close cart",
   cart_h:"Your cart", empty:"Nothing poured yet. Everything we have in stock is in the shop.",
-  subtotal:"Subtotal", delivery:"Delivery", free:"Free", total:"Total", checkout:"Checkout", shop_all:"See all four",
+  subtotal:"Subtotal", delivery:"Delivery", code_l:"Discount code", code_apply:"Apply", code_remove:"Remove", code_on:(c,d)=>`${c} applied: ${d} off`, code_line:c=>`Discount (${c})`, code_need:"Type a discount code first.", code_fail:"The code could not be checked. Try again.", free:"Free", total:"Total", checkout:"Checkout", shop_all:"See all four",
   co_h:"Checkout", co_contact:"Contact", co_addr:"Delivery address", co_pay:"Payment", co_empty:"Your cup is empty, so there's nothing to check out yet.",
   f_name:"Full name", f_phone:"Mobile number", f_phone_help:"We send delivery updates by WhatsApp.", f_gov:"Governorate", f_choose:"Choose a governorate",
   f_area:"Area", f_block:"Block", f_street:"Street", f_avenue:"Avenue (optional)", f_house:"House or building", f_notes:"Notes for the driver (optional)",
@@ -105,7 +105,7 @@ ar:{menu:"القائمة",skip:"انتقل إلى المحتوى",nav_home:"ال
   film_esp:"شوت إسبريسو من حامل فلتر مفتوح", film_po:"قهوة تتفتح في فلتر التقطير", film_po2:"صب الماء من الغلاية في القمع",
   shop_esp:"مكائن الإسبريسو", shop_po:"مكائن التقطير",
   deliv_more:"تفاصيل التوصيل", deliv_page_h:"التوصيل",
-  fx_same:"في نفس اليوم", fx_fee:"رسوم التوصيل", fx_pay:"الدفع", fx_fee_v:"مجاني فوق 15 د.ك، وأقل من ذلك 1.500 د.ك.", fx_pay_v:"كي نت، بطاقة أو Apple Pay.", fx_same_v:"اطلب قبل الساعة 2 ظهرًا ويصلك في العاصمة وحولي في اليوم نفسه.",
+  fx_same:"في نفس اليوم", fx_fee:"رسوم التوصيل", fx_pay:"الدفع", fx_fee_v:"1.500 د.ك لجميع مناطق الكويت.", fx_pay_v:"كي نت، بطاقة أو Apple Pay.", fx_same_v:"اطلب قبل الساعة 2 ظهرًا ويصلك في العاصمة وحولي في اليوم نفسه.",
   how_h:"كيف تطلب", st1:"اختر المنتج واضغط «اسأل عن السعر»، أو أضفه إلى السلة.", st2:"نرد عليك عبر واتساب بالسعر وموعد التوصيل.", st3:"ادفع بالكي نت أو البطاقة أو Apple Pay.",
   far_h:"خارج العاصمة وحولي؟", far_p:"راسلنا ونخبرك بيوم التوصيل لمنطقتك.", far_wa:"مرحبًا كفي، متى يمكن التوصيل لمنطقتي؟",
   about_h:"من نحن", about_lead:"كفي متجر يبيع قائمة قصيرة من مكائن القهوة والبن في الكويت، بالعربية والإنجليزية.",
@@ -115,14 +115,14 @@ ar:{menu:"القائمة",skip:"انتقل إلى المحتوى",nav_home:"ال
   cart_n:n=>n===1?"منتج واحد في السلة":`${n} منتجات في السلة`,
   lead:"قائمة قصيرة من أدوات القهوة، نختارها ونوصّلها في الكويت.",
   t1:"في نفس اليوم للعاصمة وحولي للطلبات قبل الساعة 2 ظهرًا",
-  t2:"توصيل مجاني فوق 15 د.ك، وإلا 1.500 د.ك",
+  t2:"التوصيل 1.500 د.ك لجميع مناطق الكويت",
   t3:"كي نت، بطاقة أو Apple Pay",
   see_all:"اعرض المنتجات الأربعة", loom_label:"منتجات كفي الأربعة",
   ask_price:"اسأل عن السعر", details:"التفاصيل", color_h:"اللون", choose_color:"اختر لونًا", view_colors:"عرض الألوان", d_close:"لقطة قريبة لرأس التحضير", d_side:"منظر جانبي", details_h:"نظرة أقرب", sold_out:"نفد", all_sold:"نفدت كل الألوان حاليًا. اسألنا عن موعد وصول الدفعة القادمة.", one_sold:"نفد حاليًا. اسألنا عن موعد وصول الدفعة القادمة.", out_ask:"نفد. اسألنا", wa_back:n=>`مرحبًا كفي، متى يتوفر ${n} من جديد؟`, add:"أضف إلى السلة", added:n=>`أُضيف ${n} إلى سلتك`,
   price_soon:"السعر عند الطلب. راسلنا ونرد عليك بسعر اليوم وموعد التوصيل.",
   wa_item:(n)=>`مرحبًا كفي، كم سعر ${n}، ومتى يمكن توصيله؟`,
   deliv_big:"اطلب قبل الساعة 2 ظهرًا ويصلك في العاصمة وحولي في اليوم نفسه.",
-  d2:"مجاني فوق 15 د.ك، وأقل من ذلك 1.500 د.ك", d3:"ادفع بالكي نت أو البطاقة أو Apple Pay",
+  d2:"التوصيل 1.500 د.ك لجميع مناطق الكويت", d3:"ادفع بالكي نت أو البطاقة أو Apple Pay",
   ask_h:"اسألنا أولًا", ask_p:"محتار أي ماكينة تناسب مطبخك أو قهوتك؟ راسلنا ونساعدك في الاختيار.",
   wa_open:"راسلنا عبر واتساب", copy:"انسخ الرقم", copied:"تم نسخ الرقم", copy_fail:"حدّد الرقم لنسخه",
   shop_h:"المتجر", home:"الرئيسية",
@@ -130,7 +130,7 @@ ar:{menu:"القائمة",skip:"انتقل إلى المحتوى",nav_home:"ال
   f_shop:"المتجر", f_help:"المساعدة", f_imprint:"كفي، الكويت. الأسعار بالدينار الكويتي.", f_credits:"لقطات التحضير:",
   qty:"الكمية", dec:"أقل", inc:"أكثر", remove:"إزالة", close:"أغلق السلة",
   cart_h:"سلتك", empty:"لم نصبّ شيئًا بعد. كل ما لدينا في المتجر.",
-  subtotal:"المجموع الفرعي", delivery:"التوصيل", free:"مجاني", total:"الإجمالي", checkout:"إتمام الطلب", shop_all:"اعرض المنتجات الأربعة",
+  subtotal:"المجموع الفرعي", delivery:"التوصيل", code_l:"كود الخصم", code_apply:"تطبيق", code_remove:"إزالة", code_on:(c,d)=>`تم تطبيق ${c}: خصم ${d}`, code_line:c=>`الخصم (${c})`, code_need:"اكتب كود الخصم أولًا.", code_fail:"تعذّر التحقق من الكود. حاول مرة أخرى.", free:"مجاني", total:"الإجمالي", checkout:"إتمام الطلب", shop_all:"اعرض المنتجات الأربعة",
   co_h:"إتمام الطلب", co_contact:"بيانات التواصل", co_addr:"عنوان التوصيل", co_pay:"الدفع", co_empty:"فنجالك فارغ، فلا يوجد ما تطلبه بعد.",
   f_name:"الاسم الكامل", f_phone:"رقم الهاتف", f_phone_help:"نرسل تحديثات التوصيل عبر واتساب.", f_gov:"المحافظة", f_choose:"اختر المحافظة",
   f_area:"المنطقة", f_block:"القطعة", f_street:"الشارع", f_avenue:"الجادة (اختياري)", f_house:"المنزل أو المبنى", f_notes:"ملاحظات للسائق (اختياري)",
@@ -569,11 +569,15 @@ function prefillCheckout(){
 function view404(){
   return `<div class="wrap nf"><div class="vessel" aria-hidden="true"></div><div><h1>${t("nf_h")}</h1><p>${t("nf_p")}</p><a class="btn" href="#shop"><span>${t("nf_btn")}</span></a></div></div>`;
 }
+/* ===== social accounts ===== */
+const SOCIAL=[["Instagram","https://www.instagram.com/kafei_kw/","M7.03.084c-1.277.06-2.149.264-2.91.563a5.9 5.9 0 0 0-2.124 1.388a5.9 5.9 0 0 0-1.38 2.127C.321 4.926.12 5.8.064 7.076s-.069 1.688-.063 4.947s.021 3.667.083 4.947c.061 1.277.264 2.149.563 2.911c.308.789.72 1.457 1.388 2.123a5.9 5.9 0 0 0 2.129 1.38c.763.295 1.636.496 2.913.552c1.278.056 1.689.069 4.947.063s3.668-.021 4.947-.082c1.28-.06 2.147-.265 2.91-.563a5.9 5.9 0 0 0 2.123-1.388a5.9 5.9 0 0 0 1.38-2.129c.295-.763.496-1.636.551-2.912c.056-1.28.07-1.69.063-4.948c-.006-3.258-.02-3.667-.081-4.947c-.06-1.28-.264-2.148-.564-2.911a5.9 5.9 0 0 0-1.387-2.123a5.9 5.9 0 0 0-2.128-1.38c-.764-.294-1.636-.496-2.914-.55C15.647.009 15.236-.006 11.977 0S8.31.021 7.03.084m.14 21.693c-1.17-.05-1.805-.245-2.228-.408a3.7 3.7 0 0 1-1.382-.895a3.7 3.7 0 0 1-.9-1.378c-.165-.423-.363-1.058-.417-2.228c-.06-1.264-.072-1.644-.08-4.848c-.006-3.204.006-3.583.061-4.848c.05-1.169.246-1.805.408-2.228c.216-.561.477-.96.895-1.382a3.7 3.7 0 0 1 1.379-.9c.423-.165 1.057-.361 2.227-.417c1.265-.06 1.644-.072 4.848-.08c3.203-.006 3.583.006 4.85.062c1.168.05 1.804.244 2.227.408c.56.216.96.475 1.382.895s.681.817.9 1.378c.165.422.362 1.056.417 2.227c.06 1.265.074 1.645.08 4.848c.005 3.203-.006 3.583-.061 4.848c-.051 1.17-.245 1.805-.408 2.23c-.216.56-.477.96-.896 1.38a3.7 3.7 0 0 1-1.378.9c-.422.165-1.058.362-2.226.418c-1.266.06-1.645.072-4.85.079s-3.582-.006-4.848-.06m9.783-16.192a1.44 1.44 0 1 0 1.437-1.442a1.44 1.44 0 0 0-1.437 1.442M5.839 12.012a6.161 6.161 0 1 0 12.323-.024a6.162 6.162 0 0 0-12.323.024M8 12.008A4 4 0 1 1 12.008 16A4 4 0 0 1 8 12.008"],["TikTok","https://www.tiktok.com/@kafei_kw","M12.525.02c1.31-.02 2.61-.01 3.91-.02c.08 1.53.63 3.09 1.75 4.17c1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97c-.57-.26-1.1-.59-1.62-.93c-.01 2.92.01 5.84-.02 8.75c-.08 1.4-.54 2.79-1.35 3.94c-1.31 1.92-3.58 3.17-5.91 3.21c-1.43.08-2.86-.31-4.08-1.03c-2.02-1.19-3.44-3.37-3.65-5.71c-.02-.5-.03-1-.01-1.49c.18-1.9 1.12-3.72 2.58-4.96c1.66-1.44 3.98-2.13 6.15-1.72c.02 1.48-.04 2.96-.04 4.44c-.99-.32-2.15-.23-3.02.37c-.63.41-1.11 1.04-1.36 1.75c-.21.51-.15 1.07-.14 1.61c.24 1.64 1.82 3.02 3.5 2.87c1.12-.01 2.19-.66 2.77-1.61c.19-.33.4-.67.41-1.06c.1-1.79.06-3.57.07-5.36c.01-4.03-.01-8.05.02-12.07"]];
+const socialLinks=cls=>SOCIAL.map(([name,url,d])=>`<li><a class="${cls}" href="${url}" target="_blank" rel="noopener me"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="${d}"/></svg><span>${name}</span> <span class="handle" dir="ltr">@kafei_kw</span></a></li>`).join("");
 function renderFooter(){
   $("#footer").innerHTML=`<div class="wrap"><div class="name"><p class="word" lang="ar">كفي</p>${FINJAN("finjan")}<p class="custom">${t("lead")}</p></div>
   <p class="brand">${t("brand")}</p>
   <nav aria-labelledby="fShop"><h2 id="fShop">${t("f_shop")}</h2><ul><li><a href="#shop">${t("all_products")}</a></li>${CATS.filter(c=>inCat(c).length).map(c=>`<li><a href="#shop-${c.id}">${esc(L(c.name))}</a></li>`).join("")}</ul></nav>
   <nav aria-labelledby="fHelp"><h2 id="fHelp">${t("f_help")}</h2><ul><li><a href="#delivery">${t("nav_delivery")}</a></li><li><a href="#about">${t("nav_about")}</a></li><li><a href="/returns">${lang==="ar"?"الإرجاع والاستبدال":"Returns and exchanges"}</a></li><li><a href="/terms">${lang==="ar"?"شروط البيع":"Terms of sale"}</a></li><li><a href="/privacy">${lang==="ar"?"سياسة الخصوصية":"Privacy policy"}</a></li><li><a href="${wa(t("wa_hello"))}" target="_blank" rel="noopener">${t("ask_wa_short")} <bdi dir="ltr" class="num">${CONFIG.phoneDisplay}</bdi></a></li></ul></nav>
+  <nav aria-labelledby="fSocial"><h2 id="fSocial">${lang==="ar"?"تابعنا":"Follow us"}</h2><ul>${socialLinks("soc")}</ul></nav>
   <p class="imprint">${t("f_imprint")}</p></div>`;
 }
 
@@ -796,6 +800,7 @@ function renderMenu(){
         <div class="menu-sub" id="menuCats"><ul ${catsOpen?"":"inert"}>${CATS.map(c=>`<li><a href="#shop-${c.id}" ${cur.startsWith("shop-"+c.id)?'aria-current="page"':""}>${catIcon(c)}<span>${esc(L(c.name))}</span>${inCat(c).length?"":`<span class="n n-soon">${t("soon_short")}</span>`}</a></li>`).join("")}</ul></div></li></ul>
     ${bs.length?`<h3>${t("m_brands")}</h3><ul class="menu-list">${bs.map(b=>link("brand-"+b.id,`<bdi>${esc(b.name)}</bdi>`)).join("")}</ul>`:""}
     <h3>${t("m_more")}</h3><ul class="menu-list">${link("delivery",t("nav_delivery"))}${link("about",t("nav_about"))}${accountsOn()?link("account",sbUser?t("acct_mine"):t("acct_signin")):""}</ul>
+    <ul class="menu-social">${socialLinks("soc")}</ul>
   </nav>
   <div class="drawer-foot menu-foot"><a class="btn" href="${wa(t("wa_hello"))}" target="_blank" rel="noopener">${ICON.wa}<span>${t("m_wa")}</span></a><button class="btn ghost" type="button" id="menuLang">${t("lang")}</button></div>`;
 }
@@ -833,7 +838,7 @@ document.addEventListener("keydown",e=>{
 /* ===== cart ===== */
 const sub=()=>cart.reduce((s,l)=>s+byId[l.id].price*l.qty,0);
 const count=()=>cart.reduce((s,l)=>s+l.qty,0);
-const fee=s=>s===0||s>=CONFIG.freeOver?0:CONFIG.fee;
+const fee=s=>s===0||(CONFIG.freeOver&&s>=CONFIG.freeOver)?0:CONFIG.fee;
 function saveCart(){ store.set("kafei-cart2",cart); updateCount(); }
 function updateCount(){ $("#cartCount").textContent=count(); $("#cartSr").textContent=t("cart_n",count()); }
 function addToCart(id,q=1,color=null){ const p=byId[id]; if(!p||p.price==null||p.out) return; let c=null;
@@ -845,6 +850,28 @@ let toastT; function toast(m){ const e=$("#toast"); e.textContent=m; e.classList
 
 function field(id,label,o={}){ const req=o.req!==false;
   return `<div class="f ${o.full?"full":""}"><label for="${id}">${label}${req?' <span class="req" aria-hidden="true">*</span>':""}</label>${o.type==="textarea"?`<textarea id="${id}"></textarea>`:`<input id="${id}" type="text" ${req?'required aria-required="true"':""} ${o.auto?`autocomplete="${o.auto}"`:""} ${o.mode?`inputmode="${o.mode}"`:""}>`}<p class="err" id="${id}-err" hidden></p></div>`; }
+/* ===== discount code (checked again by the server when paying) ===== */
+let promo=null;
+const disc=s=>!promo||!s?0:promo.kind==="percent"?Math.round(s*promo.value/100):Math.min(promo.value,s);
+const promoLabel=p=>p.kind==="percent"?`${p.value}%`:money(p.value);
+const coTotals=(s,f)=>`<dt>${t("subtotal")}</dt><dd class="num">${money(s)}</dd>${promo?`<dt>${esc(t("code_line",promo.code))}</dt><dd class="num">−${money(disc(s))}</dd>`:""}<dt>${t("delivery")}</dt><dd>${f?money(f):t("free")}</dd><dt class="grand">${t("total")}</dt><dd class="grand num">${money(s-disc(s)+f)}</dd>`;
+function coRefresh(){ const s=sub(),f=fee(s),d=$("#coTotals"),p=$("#coPay"),i=$("#code"),b=$("#codeBtn");
+  if(d) d.innerHTML=coTotals(s,f); if(p) p.textContent=money(s-disc(s)+f);
+  if(i){ i.readOnly=!!promo; if(promo) i.value=promo.code; } if(b) b.textContent=promo?t("code_remove"):t("code_apply"); }
+async function applyPromo(){
+  const i=$("#code"), m=$("#code-msg"), b=$("#codeBtn");
+  if(promo){ promo=null; m.textContent=""; coRefresh(); i.value=""; i.focus(); return; }
+  const code=i.value.trim(); if(!code){ m.textContent=t("code_need"); i.focus(); return; }
+  b.disabled=true;
+  try{ const r=await fetch("/api/discount",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({code,phone:($("#phone")||{}).value||"",sub:sub()})});
+    const d=await r.json().catch(()=>({}));
+    if(r.ok&&d.code){ promo=d; m.textContent=t("code_on",d.code,promoLabel(d)); coRefresh(); }
+    else m.textContent=d.message||t("code_fail");
+  }catch(e){ m.textContent=t("code_fail"); }
+  b.disabled=false;
+}
+document.addEventListener("click",e=>{ if(e.target.closest("#codeBtn")) applyPromo(); });
+document.addEventListener("keydown",e=>{ if(e.key==="Enter"&&e.target.id==="code"){ e.preventDefault(); if(!promo) applyPromo(); } });
 function viewCheckout(){
   if(!cart.length) return `<div class="wrap page-head"><h1 class="display">${t("co_h")}</h1><div class="empty"><p>${t("co_empty")}</p><a class="btn" href="#shop">${t("shop_all")}</a></div></div>`;
   const s=sub(), f=fee(s);
@@ -855,11 +882,12 @@ function viewCheckout(){
     <fieldset><legend>${t("co_addr")}</legend><div class="fgrid">
       <div class="f"><label for="gov">${t("f_gov")} <span class="req" aria-hidden="true">*</span></label><select id="gov" required aria-required="true"><option value="">${t("f_choose")}</option>${GOVS.map(g=>`<option value="${g[0]}">${lang==="ar"?g[2]:g[1]}</option>`).join("")}</select><p class="err" id="gov-err" hidden></p></div>
       ${field("area",t("f_area"))}${field("block",t("f_block"),{mode:"numeric"})}${field("street",t("f_street"))}${field("avenue",t("f_avenue"),{req:false})}${field("house",t("f_house"))}${field("notes",t("f_notes"),{type:"textarea",req:false,full:true})}</div></fieldset>
+    <fieldset><legend>${t("code_l")}</legend><div class="codebox"><input id="code" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="20" aria-describedby="code-msg" value="${promo?esc(promo.code):""}" ${promo?"readonly":""}><button class="btn ghost" type="button" id="codeBtn">${promo?t("code_remove"):t("code_apply")}</button></div><p class="help" id="code-msg" aria-live="polite">${promo?esc(t("code_on",promo.code,promoLabel(promo))):""}</p></fieldset>
     <fieldset><legend>${t("co_pay")}</legend><div class="radios">${["knet","card","apple"].map((m,i)=>`<label class="radio"><input type="radio" name="pay" value="${m}" ${i===0?"checked":""}><span>${t("pay_"+m)}</span></label>`).join("")}</div></fieldset>
-    <button class="btn" type="submit" style="width:100%;min-height:58px">${t("place")}, <span class="num">${money(s+f)}</span></button><p class="demo">${t(CONFIG.payments?"demo_live":"demo")}</p><p class="demo">${lang==="ar"?`بالدفع فأنت توافق على <a href="/terms">شروط البيع</a> و<a href="/returns">سياسة الإرجاع</a>.`:`By paying you agree to our <a href="/terms">terms of sale</a> and <a href="/returns">returns policy</a>.`}</p>
+    <button class="btn" type="submit" style="width:100%;min-height:58px">${t("place")}, <span class="num" id="coPay">${money(s-disc(s)+f)}</span></button><p class="demo">${t(CONFIG.payments?"demo_live":"demo")}</p><p class="demo">${lang==="ar"?`بالدفع فأنت توافق على <a href="/terms">شروط البيع</a> و<a href="/returns">سياسة الإرجاع</a>.`:`By paying you agree to our <a href="/terms">terms of sale</a> and <a href="/returns">returns policy</a>.`}</p>
   </form>
   <aside class="summary" aria-labelledby="sumH"><h2 id="sumH">${t("cart_h")}</h2>${cart.map(l=>`<p style="display:flex;justify-content:space-between;gap:12px;padding:6px 0"><span>${l.qty} × ${esc(cName(byId[l.id],colorOf(byId[l.id],l.color)))}</span><span class="num">${money(byId[l.id].price*l.qty)}</span></p>`).join("")}
-    <dl class="totals" style="margin-top:12px"><dt>${t("subtotal")}</dt><dd class="num">${money(s)}</dd><dt>${t("delivery")}</dt><dd>${f?money(f):t("free")}</dd><dt class="grand">${t("total")}</dt><dd class="grand num">${money(s+f)}</dd></dl></aside></div>`;
+    <dl class="totals" id="coTotals" style="margin-top:12px">${coTotals(s,f)}</dl></aside></div>`;
 }
 function viewOrder(){
   if(!lastOrder) return viewShop();
@@ -884,7 +912,7 @@ function submitCheckout(e){
   e.preventDefault(); const bad=Object.keys(RULES).filter(id=>!validate(id)); const box=$("#errSum");
   if(bad.length){ box.innerHTML=`<div class="err-summary" role="alert" tabindex="-1" id="errBox"><h2>${t("e_sum",bad.length)}</h2><ul>${bad.map(id=>`<li><a href="#${id}" data-focus="${id}">${t("e_"+id)}</a></li>`).join("")}</ul></div>`; $("#errBox").focus(); return; }
   const v=id=>document.getElementById(id).value.trim(), g=GOVS.find(x=>x[0]===v("gov")), s=sub(), f=fee(s);
-  const lines=[t("wa_order"),...cart.map(l=>`• ${l.qty} × ${cName(byId[l.id],colorOf(byId[l.id],l.color))}: ${money(byId[l.id].price*l.qty)}`),`${t("delivery")}: ${f?money(f):t("free")}`,`${t("total")}: ${money(s+f)}`,`${t("f_name")}: ${v("name")}`,`${t("f_phone")}: +965 ${v("phone")}`,`${t("co_addr")}: ${lang==="ar"?g[2]:g[1]}, ${v("area")}, ${t("f_block")} ${v("block")}, ${t("f_street")} ${v("street")}${v("avenue")?", "+v("avenue"):""}, ${v("house")}`,`${t("co_pay")}: ${t("pay_"+$("input[name=pay]:checked").value)}`];
+  const lines=[t("wa_order"),...cart.map(l=>`• ${l.qty} × ${cName(byId[l.id],colorOf(byId[l.id],l.color))}: ${money(byId[l.id].price*l.qty)}`),...(promo?[`${t("code_line",promo.code)}: −${money(disc(s))}`]:[]),`${t("delivery")}: ${f?money(f):t("free")}`,`${t("total")}: ${money(s-disc(s)+f)}`,`${t("f_name")}: ${v("name")}`,`${t("f_phone")}: +965 ${v("phone")}`,`${t("co_addr")}: ${lang==="ar"?g[2]:g[1]}, ${v("area")}, ${t("f_block")} ${v("block")}, ${t("f_street")} ${v("street")}${v("avenue")?", "+v("avenue"):""}, ${v("house")}`,`${t("co_pay")}: ${t("pay_"+$("input[name=pay]:checked").value)}`];
   if(sbUser&&$("#saveAddr")&&$("#saveAddr").checked) saveProfile({name:v("name"),phone:v("phone").replace(/\D/g,""),gov:v("gov"),area:v("area"),block:v("block"),street:v("street"),avenue:v("avenue"),house:v("house"),notes:v("notes")},true);
   const method=$("input[name=pay]:checked").value;
   if(CONFIG.payments){ startPayment(method,v,g,lines); return; }
@@ -909,7 +937,7 @@ async function placeCod(v,g,lines,s,f){
 async function startPayment(method,v,g,lines){
   const btn=$("#coForm button[type=submit]"), box=$("#errSum"), label=btn.innerHTML;
   btn.disabled=true; btn.innerHTML=`<span>${t("paying")}</span>`;
-  const body={items:cart.map(l=>({id:l.id,qty:l.qty,color:l.color})),method,lang,customer:{name:v("name"),phone:v("phone")},
+  const body={items:cart.map(l=>({id:l.id,qty:l.qty,color:l.color})),method,lang,code:promo?promo.code:undefined,customer:{name:v("name"),phone:v("phone")},
     address:{gov:g[1],area:v("area"),block:v("block"),street:v("street"),avenue:v("avenue"),house:v("house"),notes:v("notes")}};
   try{
     const tok=await sbToken(), hd={"Content-Type":"application/json"}; if(tok) hd.Authorization="Bearer "+tok;

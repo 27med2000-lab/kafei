@@ -1,7 +1,7 @@
 /* ===== cart ===== */
 const sub=()=>cart.reduce((s,l)=>s+byId[l.id].price*l.qty,0);
 const count=()=>cart.reduce((s,l)=>s+l.qty,0);
-const fee=s=>s===0||s>=CONFIG.freeOver?0:CONFIG.fee;
+const fee=s=>s===0||(CONFIG.freeOver&&s>=CONFIG.freeOver)?0:CONFIG.fee;
 function saveCart(){ store.set("kafei-cart2",cart); updateCount(); }
 function updateCount(){ $("#cartCount").textContent=count(); $("#cartSr").textContent=t("cart_n",count()); }
 function addToCart(id,q=1,color=null){ const p=byId[id]; if(!p||p.price==null||p.out) return; let c=null;
