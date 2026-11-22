@@ -37,15 +37,20 @@ applyLang();
 let booted=false; const boot=()=>{ if(booted) return; booted=true; render(); };
 /* a link straight to an inner page draws at once (the pre-built home was cleared for it), unless it names a product only the server knows */
 const deepNow=()=>{ if(!document.documentElement.classList.contains("deep")) return false; const h=curKey(); return !(h.startsWith("p-")&&!byId[h.slice(2)])&&!h.startsWith("brand-"); };
-if(CONFIG.payments&&CONFIG.payments.products){ setTimeout(boot,1500); if(deepNow()) boot();
+if(CONFIG.payments&&CONFIG.payments.products){
+  // until the server answers, show nothing rather than the built-in list (it may hold products you've hidden)
+  const BUILTIN=P.slice(); P.length=0; for(const k of Object.keys(byId)) delete byId[k];
+  const useBuiltin=()=>{ if(P.length) return; BUILTIN.forEach(x=>P.push(x)); P.forEach(x=>byId[x.id]=x); renderFooter(); };
+  setTimeout(boot,1500); if(deepNow()) boot();
   fetch(CONFIG.payments.products).then(r=>{
-  if(r.status===404||r.status===405){ CONFIG.payments=null; if(booted&&curKey()==="checkout") refreshInPlace(); return null; }
+  if(r.status===404||r.status===405){ CONFIG.payments=null; useBuiltin(); if(booted) refreshInPlace(); return null; }
   return r.status===200?r.json():null; }).then(list=>{
-  if(!Array.isArray(list)||!list.length||JSON.stringify(list)===JSON.stringify(P)) return boot();
+  if(!Array.isArray(list)){ useBuiltin(); if(booted) refreshInPlace(); return boot(); }   // no database (204) or no answer: the built-in list
+  if(JSON.stringify(list)===JSON.stringify(P)){ renderFooter(); return boot(); }
   P.length=0; list.forEach(x=>P.push(x)); for(const k of Object.keys(byId)) delete byId[k]; P.forEach(x=>byId[x.id]=x);
   const have=new Set(cart.map(lineKey)); cart=cart.filter(okLine);
   for(const l of cartSaved) if(!have.has(lineKey(l))&&okLine(l)) cart.push(l);
-  updateCount(); if(booted) refreshInPlace(); else boot();
-}).catch(boot); } else boot();
+  updateCount(); renderFooter(); if(booted) refreshInPlace(); else boot();
+}).catch(()=>{ useBuiltin(); if(booted) refreshInPlace(); boot(); }); } else boot();
 })();
 </script>
