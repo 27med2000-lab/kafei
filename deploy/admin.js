@@ -17,6 +17,7 @@
       e_read: "The dashboard could not read the shop's data. Try again in a minute.", retry: "Try again", loading: "Loading the shop's figures",
       updated: t => `Figures from the shop's orders, updated ${t}.`,
       orders: "Orders", revenue: "Money collected", revenue_s: "Paid online, and cash on delivered orders", collect: "Cash to collect", collect_s: "Cash orders not yet delivered",
+      profit: "Profit", profit_s: "Money collected minus product cost", profit_part: "Some products have no cost price yet, so they are left out", stockval: "Stock value", stockval_s: "What the stock on the shelf cost you", th_profit: "Profit", th_cost: "Cost", th_margin: "Margin", f_cost: "Cost price in KWD", f_cost_h: "What you paid per unit. Only you see this; it is never shown in the shop.", margin_line: (g, pc) => `Profit per unit: ${g} (${pc}% margin)`, margin_loss: g => `Below cost: you lose ${g} per unit`,
       avg: "Average order", active: "Customers", active_s: n => `${n} returning`,
       daily_h: "Money collected per day", daily_s: n => `Last ${n} days, in KWD`, weekly_h: "Orders per week", weekly_s: "Last 12 weeks, weeks start on Sunday",
       pay_h: "How customers pay", pay_s: "Orders in this period", knet: "KNET", card: "Card", apple: "Apple Pay", cod: "Cash on delivery",
@@ -52,6 +53,7 @@
       e_read: "تعذّر قراءة بيانات المتجر. حاول بعد دقيقة.", retry: "حاول مرة أخرى", loading: "جارٍ تحميل أرقام المتجر",
       updated: t => `أرقام من طلبات المتجر، آخر تحديث ${t}.`,
       orders: "الطلبات", revenue: "المبالغ المحصّلة", revenue_s: "المدفوع إلكترونيًا ونقد الطلبات المسلّمة", collect: "نقد للتحصيل", collect_s: "طلبات نقدية لم تُسلّم بعد",
+      profit: "الربح", profit_s: "المبالغ المحصّلة ناقص تكلفة المنتجات", profit_part: "بعض المنتجات بلا سعر تكلفة بعد، لذلك لم تُحتسب", stockval: "قيمة المخزون", stockval_s: "تكلفة البضاعة الموجودة لديك", th_profit: "الربح", th_cost: "التكلفة", th_margin: "الهامش", f_cost: "سعر التكلفة بالدينار", f_cost_h: "ما دفعته للوحدة الواحدة. يظهر لك فقط ولا يظهر في المتجر أبدًا.", margin_line: (g, pc) => `الربح للوحدة: ${g} (هامش ${pc}%)`, margin_loss: g => `أقل من التكلفة: تخسر ${g} للوحدة`,
       avg: "متوسط الطلب", active: "العملاء", active_s: n => `${n} عائدون`,
       daily_h: "المحصّل يوميًا", daily_s: n => `آخر ${n} يومًا، بالدينار`, weekly_h: "الطلبات أسبوعيًا", weekly_s: "آخر 12 أسبوعًا، يبدأ الأسبوع يوم الأحد",
       pay_h: "طريقة الدفع", pay_s: "طلبات هذه الفترة", knet: "كي نت", card: "بطاقة", apple: "Apple Pay", cod: "الدفع عند الاستلام",
@@ -171,6 +173,8 @@
     const tiles = `<div class="tiles">
       <div class="tile"><p class="k">${t("orders")}</p><p class="v num">${nf(placed)}</p><p class="s">${t("d", s.days)}</p></div>
       <div class="tile"><p class="k">${t("revenue")}</p><p class="v num">${kwd(s.totals.revenue_fils)}</p><p class="s">${t("revenue_s")}</p></div>
+      ${s.totals.profit_fils !== null && s.totals.profit_fils !== undefined ? `<div class="tile"><p class="k">${t("profit")}</p><p class="v num">${kwd(s.totals.profit_fils)}</p><p class="s">${s.totals.profit_partial ? t("profit_part") : t("profit_s")}</p></div>` : ""}
+      ${s.totals.stock_value_fils !== null && s.totals.stock_value_fils !== undefined ? `<div class="tile"><p class="k">${t("stockval")}</p><p class="v num">${kwd(s.totals.stock_value_fils)}</p><p class="s">${t("stockval_s")}</p></div>` : ""}
       <div class="tile"><p class="k">${t("collect")}</p><p class="v num">${kwd(s.totals.to_collect_fils)}</p><p class="s">${t("collect_s")}</p></div>
       <div class="tile"><p class="k">${t("avg")}</p><p class="v num">${kwd(s.totals.average_fils)}</p><p class="s">${t("d", s.days)}</p></div>
       <div class="tile"><p class="k">${t("active")}</p><p class="v num">${nf(s.customers.active)}</p><p class="s">${t("active_s", nf(s.customers.returning))}</p></div></div>`;
@@ -184,7 +188,7 @@
       <td class="num">${esc(o.id)}</td><td>${df(o.created_at)}</td><td>${esc(o.items.map(i => i.qty + " × " + pname(i)).join(lang === "ar" ? "، " : ", "))}</td><td>${o.gov ? t(o.gov) : "—"}</td>
       <td>${t(o.method) || "—"}</td><td class="r num">${kwd(o.total_fils)}</td><td class="r"><button class="btn small" type="button" data-deliver="${esc(o.id)}">${t("mark")}</button> <button class="btn small ghost" type="button" data-cancel="${esc(o.id)}">${t("cxl")}</button></td></tr>`).join("")}</tbody></table></div>` : empty("e_none_open");
     const pmax = Math.max(1, ...s.products.map(p => p.units));
-    const prod = `<div class="tscroll"><table><thead><tr><th>${t("th_product")}</th><th class="r">${t("th_units")}</th><th class="r">${t("th_rev")}</th></tr></thead><tbody>${s.products.map(p => `<tr><td>${esc(pname(p))}</td><td class="r num">${nf(p.units)}${p.units ? `<span class="inbar" style="width:${Math.max(2, p.units / pmax * 60)}px" aria-hidden="true"></span>` : ""}</td><td class="r num">${kwd(p.revenue_fils)}</td></tr>`).join("")}</tbody></table></div>`;
+    const prod = `<div class="tscroll"><table><thead><tr><th>${t("th_product")}</th><th class="r">${t("th_units")}</th><th class="r">${t("th_rev")}</th><th class="r">${t("th_profit")}</th></tr></thead><tbody>${s.products.map(p => `<tr><td>${esc(pname(p))}</td><td class="r num">${nf(p.units)}${p.units ? `<span class="inbar" style="width:${Math.max(2, p.units / pmax * 60)}px" aria-hidden="true"></span>` : ""}</td><td class="r num">${kwd(p.revenue_fils)}</td><td class="r num">${p.profit_fils === null || p.profit_fils === undefined ? "—" : kwd(p.profit_fils)}</td></tr>`).join("")}</tbody></table></div>`;
     const anyStock = s.stock.some(r => r.units !== null);
     const stock = `<div class="tscroll"><table><thead><tr><th>${t("th_product")}</th><th class="r">${t("th_left")}</th><th class="r">${t("th_low")}</th><th></th><th></th></tr></thead><tbody>${s.stock.map(r => `<tr>
       <td>${esc(pname(r))}</td><td class="r"><input class="stock-in num" type="number" min="0" step="1" inputmode="numeric" id="u-${r.id}" value="${r.units ?? ""}" aria-label="${esc(pname(r) + ": " + t("th_left"))}"></td>
@@ -218,11 +222,21 @@
       <td><b>${esc(lang === "ar" ? p.name_ar : p.name_en)}</b><br><span class="muted" lang="${lang === "ar" ? "en" : "ar"}">${esc(lang === "ar" ? p.name_en : p.name_ar)}</span></td>
       <td>${esc(catName(p.cat))}${p.sub ? ", " + esc(t("s_" + p.sub)) : ""}</td>
       <td class="r num">${p.price_fils == null ? `<span class="muted">${t("ask")}</span>` : kwd(p.price_fils)}</td>
+      <td class="r num">${p.cost_fils == null ? "—" : kwd(p.cost_fils)}</td>
+      <td class="r num">${p.cost_fils == null || p.price_fils == null ? "—" : Math.round((p.price_fils - p.cost_fils) / p.price_fils * 100) + "%"}</td>
       <td class="r num">${stockOf(p.id) ?? "—"}</td>
       <td>${p.visible ? chip("good", t("visible"), 0).replace(/ <span class="num">0<\/span>/, "") : chip("neutral", t("hidden"), 0).replace(/ <span class="num">0<\/span>/, "")}</td>
       <td class="r" style="white-space:nowrap"><button class="btn ghost small" type="button" data-editp="${esc(p.id)}">${t("edit")}</button> <button class="btn ghost small" type="button" data-togglep="${esc(p.id)}">${p.visible ? t("hide") : t("show")}</button></td></tr>`).join("");
-    return form + `<div class="tscroll"><table class="cards prod"><thead><tr><th>${t("th_photo")}</th><th>${t("th_product")}</th><th>${t("th_cat")}</th><th class="r">${t("th_price")}</th><th class="r">${t("th_left")}</th><th>${t("th_state")}</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>`;
+    return form + `<div class="tscroll"><table class="cards prod"><thead><tr><th>${t("th_photo")}</th><th>${t("th_product")}</th><th>${t("th_cat")}</th><th class="r">${t("th_price")}</th><th class="r">${t("th_cost")}</th><th class="r">${t("th_margin")}</th><th class="r">${t("th_left")}</th><th>${t("th_state")}</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>`;
   }
+  // live profit-per-unit line under the price and cost boxes
+  function marginNote(price, cost) {
+    const pr = Number(String(price).replace(",", ".")), co = Number(String(cost).replace(",", "."));
+    if (!(pr > 0) || String(cost).trim() === "" || !(co >= 0)) return "";
+    const g = Math.round((pr - co) * 1000);
+    return g < 0 ? t("margin_loss", kwd(-g)) : t("margin_line", kwd(g), Math.round(g / (pr * 1000) * 100));
+  }
+  document.addEventListener("input", e => { if (e.target.id === "pf-price" || e.target.id === "pf-cost") { const n = $("#pf-margin"); if (n) n.textContent = marginNote($("#pf-price").value, $("#pf-cost").value); } });
   function productForm(p, s) {
     p = p || { cat: "", visible: true, fit: "cover", sort: 100 };
     const v = k => esc(p[k] ?? ""), st = p.id ? s.stock.find(r => r.id === p.id) : null;
@@ -238,6 +252,8 @@
         ${field("what_en", "f_what_en", { dir: "ltr", max: 160 })}${field("what_ar", "f_what_ar", { dir: "rtl", max: 160 })}
         ${field("desc_en", "f_desc_en", { area: 1, dir: "ltr" })}${field("desc_ar", "f_desc_ar", { area: 1, dir: "rtl" })}
         ${field("price", "f_price", { mode: "decimal", max: 12, value: p.price_fils == null ? "" : (p.price_fils / 1000).toFixed(3), help: "f_price_h", dir: "ltr" })}
+        ${field("cost", "f_cost", { mode: "decimal", max: 12, value: p.cost_fils == null ? "" : (p.cost_fils / 1000).toFixed(3), help: "f_cost_h", dir: "ltr" })}
+        <p class="note full" id="pf-margin" aria-live="polite">${marginNote(p.price_fils == null ? "" : p.price_fils / 1000, p.cost_fils == null ? "" : p.cost_fils / 1000)}</p>
         ${field("sort", "f_sort", { type: "number", mode: "numeric", max: 4, value: p.sort ?? 100, help: "f_sort_h" })}
         ${Array.isArray(p.colors) && p.colors.length ? `<p class="note full">${t("f_units_colors")}</p>` : field("units", "f_units", { type: "number", mode: "numeric", max: 6, value: st && st.units != null ? st.units : "" })}
         ${Array.isArray(p.colors) && p.colors.length ? "" : field("low_at", "f_low", { type: "number", mode: "numeric", max: 4, value: st && st.low_at != null ? st.low_at : 2 })}
@@ -262,7 +278,7 @@
     const base = editing === "new" ? {} : (data.catalog.find(p => p.id === editing) || {});
     const colors = Array.isArray(base.colors) ? base.colors.map((c, i) => { const box = $(`#pform [data-color="${i}"]`); return { ...c, sold_out: box ? !box.checked : !!c.sold_out }; }) : [];
     const prod = { id: base.id, facts: base.facts, colors, img: base.img, name_en: g("name_en"), name_ar: g("name_ar"), brand: g("brand"), cat: g("cat"), sub: g("sub") || null, kind_en: g("kind_en"), kind_ar: g("kind_ar"),
-      what_en: g("what_en"), what_ar: g("what_ar"), desc_en: g("desc_en"), desc_ar: g("desc_ar"), price: g("price"), sort: g("sort"), units: g("units"), low_at: g("low_at"), fit: g("fit") ? "contain" : "cover", visible: g("vis") };
+      what_en: g("what_en"), what_ar: g("what_ar"), desc_en: g("desc_en"), desc_ar: g("desc_ar"), price: g("price"), cost: g("cost"), sort: g("sort"), units: g("units"), low_at: g("low_at"), fit: g("fit") ? "contain" : "cover", visible: g("vis") };
     try {
       if (photoData) { toast(t("uploading")); const up = await api("POST", { action: "product_photo", product_id: prod.id || prod.name_en, data_url: photoData });
         if (up.status !== 200) throw new Error(up.d.message || t("e_save")); prod.img = up.d.url; }
@@ -319,7 +335,7 @@
     if (el.dataset.editp) { editing = el.dataset.editp; photoData = null; render(); return $("#pform").scrollIntoView({ block: "start" }); }
     if (el.id === "pcancel") { editing = null; photoData = null; return render(); }
     if (el.dataset.togglep) { const p = data.catalog.find(x => x.id === el.dataset.togglep); if (!p) return; el.disabled = true;
-      const r = await api("POST", { action: "product_save", product: { ...p, price: p.price_fils == null ? "" : p.price_fils / 1000, visible: !p.visible } });
+      const r = await api("POST", { action: "product_save", product: { ...p, price: p.price_fils == null ? "" : p.price_fils / 1000, cost: p.cost_fils == null ? "" : p.cost_fils / 1000, visible: !p.visible } });
       if (r.status === 200) { toast(t("savedp")); return load(); } el.disabled = false; return toast(r.d.message || t("e_save")); }
     if (el.dataset.stock) { const id = el.dataset.stock; el.disabled = true;
       const r = await api("POST", { action: "stock", product_id: id, units: document.getElementById("u-" + id).value, low_at: document.getElementById("l-" + id).value });

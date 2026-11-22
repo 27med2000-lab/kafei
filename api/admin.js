@@ -13,7 +13,7 @@ const weekKey = d => { const x = new Date(new Date(d).toISOString().slice(0, 10)
 // the product list: database rows when connected, prices.json otherwise
 let PRODUCTS = Object.entries(CATALOGUE).filter(([k]) => !k.startsWith("_")).map(([id, p]) => ({ id, name: p.name, name_ar: p.name }));
 const products = () => PRODUCTS;
-const setProducts = rows => { if (rows) PRODUCTS = rows.map(r => ({ id: r.id, name: r.name_en, name_ar: r.name_ar, visible: r.visible, colors: Array.isArray(r.colors) ? r.colors : [] })); };
+const setProducts = rows => { if (rows) PRODUCTS = rows.map(r => ({ id: r.id, name: r.name_en, name_ar: r.name_ar, visible: r.visible, colors: Array.isArray(r.colors) ? r.colors : [], cost_fils: Number.isFinite(r.cost_fils) ? r.cost_fils : null })); };
 // stock lines: one per product, or one per colour (product:colour) when the product has colours
 const stockLines = () => products().flatMap(p => p.colors && p.colors.length
   ? p.colors.map(c => ({ id: `${p.id}:${c.id}`, name: `${p.name} (${c.name_en})`, name_ar: `${p.name_ar} (${c.name_ar})`, product: p.id, visible: p.visible }))
@@ -61,8 +61,13 @@ export function summarise(allOrders, stockRows, signupDates, now = Date.now(), d
   }
   for (const s of signupDates || []) { const w = wIdx[weekKey(s)]; if (w !== undefined) weeks[w].signups++; }
 
-  const byProduct = Object.fromEntries(products().map(p => [p.id, { id: p.id, name: p.name, name_ar: p.name_ar, units: 0, revenue_fils: 0 }]));
-  for (const o of placed) for (const it of o.items || []) { const p = byProduct[it.id]; if (!p) continue; p.units += it.qty || 0; if (collected(o)) p.revenue_fils += (it.price_fils || 0) * (it.qty || 0); }
+  // profit uses each product's cost price as it is set now; products without a cost are left out (and flagged)
+  const costOf = Object.fromEntries(products().map(p => [p.id, p.cost_fils ?? null]));
+  const byProduct = Object.fromEntries(products().map(p => [p.id, { id: p.id, name: p.name, name_ar: p.name_ar, units: 0, revenue_fils: 0, profit_fils: costOf[p.id] === null ? null : 0 }]));
+  let profit = 0, profitKnown = false, profitMissing = false;
+  for (const o of placed) for (const it of o.items || []) { const p = byProduct[it.id]; if (!p) continue; p.units += it.qty || 0;
+    if (collected(o)) { const q = it.qty || 0, line = (it.price_fils || 0) * q; p.revenue_fils += line;
+      if (costOf[it.id] === null) profitMissing = true; else { const g = line - costOf[it.id] * q; p.profit_fils += g; profit += g; profitKnown = true; } } }
 
   const methods = { knet: 0, card: 0, apple: 0, cod: 0 };
   for (const o of placed) if (o.method in methods) methods[o.method]++;
@@ -86,9 +91,12 @@ export function summarise(allOrders, stockRows, signupDates, now = Date.now(), d
   const stock = stockLines().map(l => { const s = stockRows.find(r => r.product_id === l.id); const units = s && s.units !== undefined ? s.units : null, low_at = s ? s.low_at : null;
     return { id: l.id, product: l.product, name: l.name, name_ar: l.name_ar, hidden: l.visible === false, units, low_at, low: units === null || low_at === null ? null : units <= low_at, out: units === 0 }; });
 
+  // what the stock on the shelf cost you (colour lines share their product's cost)
+  let stockValue = 0, stockValueKnown = false;
+  for (const r of stock) { const c = costOf[r.product || r.id]; if (r.units > 0 && c !== null && c !== undefined) { stockValue += r.units * c; stockValueKnown = true; } }
   return {
     generated_at: new Date(now).toISOString(), days,
-    totals: { orders: placed.length, revenue_fils: revenue, to_collect_fils: toCollect, average_fils: placed.length ? Math.round(placed.reduce((s, o) => s + (o.total_fils || 0), 0) / placed.length) : null },
+    totals: { orders: placed.length, revenue_fils: revenue, profit_fils: profitKnown ? profit : null, profit_partial: profitKnown && profitMissing, stock_value_fils: stockValueKnown ? stockValue : null, to_collect_fils: toCollect, average_fils: placed.length ? Math.round(placed.reduce((s, o) => s + (o.total_fils || 0), 0) / placed.length) : null },
     daily, weeks, products: Object.values(byProduct), methods, states, gov, same_day: sameDay, delivery, open,
     customers: { active: activeKeys.size, new: fresh, returning, signups_known: signupDates !== null },
     stock
@@ -172,6 +180,13 @@ export function cleanProduct(p, existingIds) {
     if (!(kwd > 0 && kwd <= 100000)) return err("Write the price in KWD, for example 4.500, or leave it empty for Ask for price.");
     price_fils = Math.round(kwd * 1000);
   }
+  // cost price: private, optional; what the owner paid the supplier per unit
+  let cost_fils = null;
+  if (p.cost !== undefined && p.cost !== null && String(p.cost).trim() !== "") {
+    const kwd = Number(String(p.cost).replace(",", "."));
+    if (!(kwd >= 0 && kwd <= 100000)) return err("Write the cost price in KWD, for example 3.250, or leave it empty.");
+    cost_fils = Math.round(kwd * 1000);
+  }
   let id = p.id && existingIds.includes(p.id) ? p.id : null;
   if (!id) { const base = slug(name_en) || "product"; id = base.length < 2 ? "product-" + base : base; let i = 2; while (existingIds.includes(id)) id = `${base}-${i++}`; }
   const facts = Array.isArray(p.facts) ? p.facts.filter(f => Array.isArray(f) && f.length === 4).slice(0, 12).map(f => f.map(x => clip(x, 80) || "")) : [];
@@ -182,7 +197,7 @@ export function cleanProduct(p, existingIds) {
   const colors = (Array.isArray(p.colors) ? p.colors : []).slice(0, 12).map(c => ({ id: slug(c && c.id), name_en: clip(c && c.name_en, 40), name_ar: clip(c && c.name_ar, 40),
     hex: /^#[0-9a-f]{6}$/i.test(c && c.hex) ? c.hex : "#cccccc", ...(/^#[0-9a-f]{6}$/i.test(c && c.trim) ? { trim: c.trim } : {}), img: okImg(c && c.img), sold_out: !!(c && c.sold_out) }))
     .filter((c, i, a) => c.id && c.name_en && c.name_ar && a.findIndex(x => x.id === c.id) === i);
-  return { row: { id, cat: p.cat, sub, name_en, name_ar, brand: clip(p.brand, 40) || null, kind_en: clip(p.kind_en, 60), kind_ar: clip(p.kind_ar, 60), what_en: clip(p.what_en, 160), what_ar: clip(p.what_ar, 160),
+  return { row: { id, cat: p.cat, sub, name_en, name_ar, brand: clip(p.brand, 40) || null, cost_fils, kind_en: clip(p.kind_en, 60), kind_ar: clip(p.kind_ar, 60), what_en: clip(p.what_en, 160), what_ar: clip(p.what_ar, 160),
     desc_en: clip(p.desc_en, 800), desc_ar: clip(p.desc_ar, 800), facts, colors, price_fils, img, fit: p.fit === "contain" ? "contain" : "cover", visible: p.visible !== false,
     sort: Number.isFinite(Number(p.sort)) ? Math.max(0, Math.min(9999, Math.floor(Number(p.sort)))) : 100, updated_at: new Date().toISOString() }, isNew: !(p.id && existingIds.includes(p.id)) };
 }
