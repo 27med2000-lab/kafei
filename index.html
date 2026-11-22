@@ -620,7 +620,13 @@ a.soc{display:inline-flex;align-items:center;gap:8px}a.soc svg{flex:none}a.soc .
 .menu-social{list-style:none;padding:0;margin:18px 0 0;display:flex;flex-wrap:wrap;gap:6px 20px}.menu-social a.soc{min-height:44px;text-decoration:none;color:var(--ink);font-weight:500}
 .consent{position:fixed;inset-inline:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:60;max-width:560px;margin-inline:auto;display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;padding:16px 18px;border-radius:14px;background:var(--ink);color:var(--ground);box-shadow:0 12px 40px rgba(29,18,9,.28)}.consent p{flex:1 1 260px;margin:0;font-size:var(--t-small);line-height:1.5}.consent a{color:var(--ground)}.consent-b{display:flex;gap:8px}.consent .btn{background:var(--crema);color:var(--ink)}.consent .btn.ghost{background:transparent;color:var(--ground);box-shadow:inset 0 0 0 1.5px var(--ground)}
 .codebox{display:flex;gap:10px}.codebox input{flex:1;min-width:0;min-height:54px;padding:10px 16px;border:0;border-radius:10px;box-shadow:inset 0 0 0 1px var(--dust);background:var(--sand);font-size:1.0625rem;text-transform:uppercase;letter-spacing:.04em}.codebox input:focus{outline:2px solid var(--crema);outline-offset:0}.codebox input[readonly]{box-shadow:inset 0 0 0 1.5px var(--crema)}.codebox .btn{min-height:54px;padding:0 22px}#code-msg{margin-top:8px}
-.hero video.alt{object-position:88% 50%}   /* the espresso machine sits further right than the pour-over */
+.hero video.alt{object-position:88% 50%}
+.hero .brew{position:absolute;inset-inline-end:clamp(16px,4vw,48px);bottom:clamp(16px,4vh,40px);z-index:2}
+.brew{display:flex;width:fit-content;gap:2px;padding:4px;border-radius:999px;background:color-mix(in srgb,var(--ground) 82%,transparent);box-shadow:inset 0 0 0 1px var(--dust);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.brew button{min-height:40px;padding:0 18px;border:0;border-radius:999px;background:transparent;color:var(--ink);font:inherit;font-size:var(--t-small);font-weight:600;cursor:pointer;transition:background-color 220ms var(--ease),color 220ms var(--ease)}
+.brew button[aria-pressed="true"]{background:var(--ink);color:var(--ground)}
+@media (hover:hover) and (pointer:fine){.brew button[aria-pressed="false"]:hover{background:color-mix(in srgb,var(--ink) 8%,transparent)}}
+@media (max-width:760px){.hero .brew{top:12px;bottom:auto;inset-inline-end:12px}.brew button{min-height:36px;padding:0 14px}}   /* on phones the switch sits on the film itself */   /* the espresso machine sits further right than the pour-over */
 button.textlink{-webkit-appearance:none;appearance:none;border:0;border-radius:0;background-color:transparent;cursor:pointer;line-height:inherit}
 /* carousels with only a few cards fill the row instead of leaving it half empty */
 .tile.tile-soon{align-self:start}
@@ -662,7 +668,7 @@ button.textlink{-webkit-appearance:none;appearance:none;border:0;border-radius:0
 </header>
 <main id="main" tabindex="-1"><section class="hero" aria-labelledby="heroH"><img class="poster" src="img/hero-1280.webp" srcset="img/hero-760.webp 760w, img/hero-1280.webp 1280w" sizes="100vw" alt="" fetchpriority="high" width="1280" height="720"><video muted="" loop="" playsinline="" preload="none" aria-hidden="true" data-src="img/hero-pourover.mp4"></video><video class="alt" muted loop playsinline preload="none" aria-hidden="true" data-src="img/hero-espresso.mp4"></video>
     <div class="wrap hero-in"><div class="hero-copy"><h1 id="heroH" aria-label="Kafei, كفي"><span class="w" aria-hidden="true"><span class="ch">K</span><span class="ch">a</span><span class="ch">f</span><span class="ch">e</span><span class="ch">i</span></span><span class="ar" lang="ar" aria-hidden="true"><span>كفي</span></span></h1>
-    <p class="lead" data-intro="">In the Gulf, you shake your finjan when you've had enough. That little shake is our name.</p><a class="btn" href="#stock" data-intro=""><span>See what's in stock</span></a></div></div></section>
+    <p class="lead" data-intro="">In the Gulf, you shake your finjan when you've had enough. That little shake is our name.</p><a class="btn" href="#stock" data-intro=""><span>See what's in stock</span></a></div></div><div class="brew" role="group" aria-label="Choose your brew"><button type="button" data-brew="filter" aria-pressed="true">Filter</button><button type="button" data-brew="espresso" aria-pressed="false">Espresso</button></div></section>
   <section class="pour sec" id="stock" style="--n:1" aria-labelledby="stockH"><div class="stage wrap">
     <div class="pour-head"><h2 id="stockH">In stock now</h2><p>What we have on the counter today, poured for you one at a time.</p></div>
     <ol class="serve"><li class="cup on" data-i="0">

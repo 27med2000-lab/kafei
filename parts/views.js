@@ -1,11 +1,11 @@
 
 /* ===== v3 copy ===== */
-Object.assign(T.en,{hero_cta:"See what's in stock",pour_p:"What we have on the counter today, poured for you one at a time.",meter:"Products in stock",
+Object.assign(T.en,{brew_l:"Choose your brew",brew_filter:"Filter",brew_espresso:"Espresso",hero_cta:"See what's in stock",pour_p:"What we have on the counter today, poured for you one at a time.",meter:"Products in stock",
   deliv_h:"Same day in the Capital and Hawalli",deliv_sub:"Order before 2 pm.",back:"Back to",
   custom:"In the Gulf, you shake your finjan when you've had enough. That little shake is our name.",
   brand:"Not sure which one suits your counter? Ask us on WhatsApp before you buy.",
   nf_h:"Nothing poured here",nf_p:"This page doesn't exist. The shop is one tap away.",nf_btn:"Go to the shop",acct_signin:"Sign in",sending:"Sending code…",verifying:"Checking the code…",saving:"Saving…",e_link:"That sign-in didn't finish. Try again, or sign in with your email and password.",e_wait:n=>`We just sent you a code. Check your email (and spam folder), or wait ${n} seconds to ask for a new one.`,acct_mine:"Your account",acct_h_in:"Sign in to Kafei",acct_p_in:"We email you a sign-in code. No password needed, and checkout works without an account.",f_email:"Email",send_code:"Send code",code_sent:e=>`We sent a code to ${e}. Use the newest email: each new code replaces the last one.`,f_code:"Code from the email",sign_in:"Sign in",other_email:"Use another email",acct_h:"Your account",saved_h:"Saved details",saved_p:"Checkout fills these in for you.",save:"Save details",saved:"Details saved",orders_h:"Your orders",no_orders:"No orders yet. Orders you pay online appear here.",sign_out:"Sign out",e_email:"Enter an email address, for example name@gmail.com.",e_code:"That code didn't work. Use the code from the newest email, or request a new one.",e_send:"We couldn't send the code. Wait a minute and try again.",e_save:"Your details weren't saved. Check the phone number and try again.",save_addr:"Save these details to my account",st_pending:"Waiting for payment",st_paid:"Paid",st_failed:"Not paid",st_sent:"Sent on WhatsApp",demo_code:"Demo: no email is sent. Your code is",loading:"Loading",paying:"Opening the secure payment page",pay_fail:"The payment page could not open. Try again, or choose another payment method.",cod_instead:"Pay cash on delivery instead",demo_live:"KNET, card and Apple Pay open MyFatoorah's secure page.",checking:"Checking your payment",paid_h:id=>`Paid. Order ${id} is ours to deliver`,paid_p:"We have your payment. Send the order on WhatsApp so we can confirm the delivery time.",paid_send:"Send order on WhatsApp",unpaid_h:"Payment not completed",unpaid_p:"Nothing was charged, and your cart is still here. Try again, or choose another payment method.",back_co:"Back to checkout",check_fail:"We couldn't confirm the payment yet. Message us on WhatsApp with your order number and we'll check.",soon_line:"Not in stock yet:",wa_hello_soon:"Hello Kafei, I'm looking for something you don't list yet.",ask_wa_short:"WhatsApp"});
-Object.assign(T.ar,{hero_cta:"شاهد المتوفر",pour_p:"ما لدينا اليوم، نصبّه لك واحدًا تلو الآخر.",meter:"المنتجات المتوفرة",
+Object.assign(T.ar,{brew_l:"اختر طريقة التحضير",brew_filter:"تقطير",brew_espresso:"إسبريسو",hero_cta:"شاهد المتوفر",pour_p:"ما لدينا اليوم، نصبّه لك واحدًا تلو الآخر.",meter:"المنتجات المتوفرة",
   deliv_h:"في نفس اليوم للعاصمة وحولي",deliv_sub:"اطلب قبل الساعة 2 ظهرًا.",back:"العودة إلى",
   custom:"في الخليج، تهزّ فنجالك حين تكتفي. ومن هذه الهزّة جاء اسمنا.",
   brand:"محتار أيها يناسب مطبخك؟ اسألنا عبر واتساب قبل الشراء.",
@@ -39,9 +39,9 @@ function viewHome(){
       <div class="cup-copy"><h3><a href="#p-${p.id}">${esc(L(p.name))}</a></h3>${arName(p.name)}<p class="kind">${esc(L(p.kind))}</p><p class="what">${esc(L(p.what))}</p>
       <p class="acts">${askLink(p)}${p.colors&&p.colors.length&&p.price!=null?"":`<a class="textlink" href="#p-${p.id}">${t("details")}</a>`}</p></div></li>`).join("");
   const meter=P.length<2?"":`<div class="meter">${FINJAN("meter-cup")}<ol aria-label="${t("meter")}">${P.map((p,i)=>`<li><button type="button" data-pour="${i}" ${i===0?'aria-current="true"':""}><span class="dot" aria-hidden="true"></span><span class="nm">${esc(L(p.name))}</span><span class="sr">${esc(L(p.name))}</span></button></li>`).join("")}</ol></div>`;
-  return `<section class="hero" aria-labelledby="heroH"><img class="poster" src="img/hero-1280.webp" srcset="img/hero-760.webp 760w, img/hero-1280.webp 1280w" sizes="100vw" alt="" fetchpriority="high" width="1280" height="720"><video muted loop playsinline preload="none" aria-hidden="true" data-src="img/hero-pourover.mp4"></video><video class="alt" muted loop playsinline preload="none" aria-hidden="true" data-src="img/hero-espresso.mp4"></video>
+  return `<section class="hero" aria-labelledby="heroH"><img class="poster" ${brew==="espresso"?'src="img/hero-espresso.jpg"':'src="img/hero-1280.webp" srcset="img/hero-760.webp 760w, img/hero-1280.webp 1280w"'} sizes="100vw" alt="" fetchpriority="high" width="1280" height="720"><video muted loop playsinline preload="none" aria-hidden="true" data-src="img/hero-pourover.mp4"></video><video class="alt" muted loop playsinline preload="none" aria-hidden="true" data-src="img/hero-espresso.mp4"></video>
     <div class="wrap hero-in"><div class="hero-copy"><h1 id="heroH" aria-label="Kafei, كفي"><span class="w" aria-hidden="true">${[..."Kafei"].map(c=>`<span class="ch">${c}</span>`).join("")}</span><span class="ar" lang="ar" aria-hidden="true"><span>كفي</span></span></h1>
-    <p class="lead" data-intro>${t("custom")}</p><a class="btn" href="#stock" data-intro><span>${t("hero_cta")}</span></a></div></div></section>
+    <p class="lead" data-intro>${t("custom")}</p><a class="btn" href="#stock" data-intro><span>${t("hero_cta")}</span></a></div></div>${brewSwitch()}</section>
   <section class="pour sec" id="stock" style="--n:${P.length}" aria-labelledby="stockH"><div class="stage wrap">
     <div class="pour-head"><h2 id="stockH">${t("stock_h")}</h2><p>${t("pour_p")}</p></div>
     <ol class="serve">${cups}</ol>${meter}</div></section>
@@ -534,19 +534,23 @@ function route(){
 }
 /* the pour video (home hero, sign-in page): starts once the page has loaded, fades in when it plays,
    and on phones that block autoplay (battery or data saver) starts on the first touch or scroll */
-/* the hero takes turns: pour-over, then an espresso shot, cross-fading every ~8 seconds.
-   The second film only loads once the first is playing, and is skipped for reduced motion or data saver. */
-function heroCycle(){
-  const [a,b]=$$(".hero video"); if(!a) return; startLoop(a);
-  if(!b||reduce.matches||(navigator.connection&&navigator.connection.saveData)) return;
-  let cur=a;
-  const flip=()=>{ if(!a.isConnected) return; const next=cur===a?b:a, prev=cur;
-    next.currentTime=0;
-    next.play().then(()=>{ next.classList.add("on");
-      setTimeout(()=>{ prev.classList.toggle("on",false); setTimeout(()=>{ if(prev!==cur&&prev.isConnected) prev.pause(); },700); },650);
-      cur=next; setTimeout(flip,8000); }).catch(()=>setTimeout(flip,8000)); };
-  a.addEventListener("playing",()=>{ b.muted=true; b.defaultMuted=true; b.playsInline=true; b.setAttribute("playsinline",""); b.preload="auto"; b.src=b.dataset.src; b.load(); setTimeout(flip,8000); },{once:true});
+/* the hero shows the brew the visitor picks: filter (pour-over) or espresso. The choice is remembered on this device. */
+let brew=store.get("kafei-brew","filter")==="espresso"?"espresso":"filter";
+const brewSwitch=()=>`<div class="brew" role="group" aria-label="${t("brew_l")}">${["filter","espresso"].map(k=>`<button type="button" data-brew="${k}" aria-pressed="${brew===k}">${t("brew_"+k)}</button>`).join("")}</div>`;
+function heroCycle(){ const [a,b]=$$(".hero video"); if(a) startLoop(brew==="espresso"&&b?b:a); }
+function setBrew(k){
+  if(k===brew) return; brew=k; store.set("kafei-brew",k);
+  $$(".hero .brew button").forEach(x=>x.setAttribute("aria-pressed",String(x.dataset.brew===k)));
+  const [a,b]=$$(".hero video"), next=k==="espresso"?b:a, prev=k==="espresso"?a:b, poster=$(".hero .poster");
+  if(poster){ poster.removeAttribute("srcset"); poster.src=k==="espresso"?"img/hero-espresso.jpg":"img/hero-1280.webp"; }
+  if(!next||!prev||reduce.matches) return;           // reduced motion: the still photo changes, no film
+  const fadeOut=()=>setTimeout(()=>{ prev.classList.toggle("on",false); setTimeout(()=>{ if(brew!==(prev===a?"filter":"espresso")) prev.pause(); },700); },500);
+  if(!next.dataset.started){ next.addEventListener("playing",fadeOut,{once:true}); next.dataset.started="1";
+    next.muted=true; next.defaultMuted=true; next.playsInline=true; next.setAttribute("playsinline",""); next.src=next.dataset.src;
+    next.addEventListener("playing",()=>next.classList.add("on"),{once:true}); next.play().catch(()=>{}); }
+  else { next.currentTime=0; next.play().then(()=>{ next.classList.add("on"); fadeOut(); }).catch(()=>{}); }
 }
+document.addEventListener("click",e=>{ const b=e.target.closest(".hero .brew button"); if(b) setBrew(b.dataset.brew); });
 function startLoop(vid){
   if(!vid||reduce.matches||vid.dataset.started) return; vid.dataset.started="1";
   const go=()=>{ if(!vid.isConnected||!vid.offsetParent) return; vid.muted=true; vid.defaultMuted=true; vid.playsInline=true; vid.setAttribute("playsinline",""); vid.src=vid.dataset.src;
