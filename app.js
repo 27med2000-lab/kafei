@@ -211,7 +211,7 @@ function viewHome(){
       <div class="cup-copy"><h3><a href="#p-${p.id}">${esc(L(p.name))}</a></h3>${arName(p.name)}<p class="kind">${esc(L(p.kind))}</p><p class="what">${esc(L(p.what))}</p>
       <p class="acts">${askLink(p)}${p.colors&&p.colors.length&&p.price!=null?"":`<a class="textlink" href="#p-${p.id}">${t("details")}</a>`}</p></div></li>`).join("");
   const meter=P.length<2?"":`<div class="meter">${FINJAN("meter-cup")}<ol aria-label="${t("meter")}">${P.map((p,i)=>`<li><button type="button" data-pour="${i}" ${i===0?'aria-current="true"':""}><span class="dot" aria-hidden="true"></span><span class="nm">${esc(L(p.name))}</span><span class="sr">${esc(L(p.name))}</span></button></li>`).join("")}</ol></div>`;
-  return `<section class="hero" aria-labelledby="heroH"><img class="poster" src="img/hero-1280.webp" srcset="img/hero-760.webp 760w, img/hero-1280.webp 1280w" sizes="100vw" alt="" fetchpriority="high" width="1280" height="720"><video muted loop playsinline preload="none" aria-hidden="true" data-src="img/hero-pourover.mp4"></video>
+  return `<section class="hero" aria-labelledby="heroH"><img class="poster" src="img/hero-1280.webp" srcset="img/hero-760.webp 760w, img/hero-1280.webp 1280w" sizes="100vw" alt="" fetchpriority="high" width="1280" height="720"><video muted loop playsinline preload="none" aria-hidden="true" data-src="img/hero-pourover.mp4"></video><video class="alt" muted loop playsinline preload="none" aria-hidden="true" data-src="img/hero-espresso.mp4"></video>
     <div class="wrap hero-in"><div class="hero-copy"><h1 id="heroH" aria-label="Kafei, كفي"><span class="w" aria-hidden="true">${[..."Kafei"].map(c=>`<span class="ch">${c}</span>`).join("")}</span><span class="ar" lang="ar" aria-hidden="true"><span>كفي</span></span></h1>
     <p class="lead" data-intro>${t("custom")}</p><a class="btn" href="#stock" data-intro><span>${t("hero_cta")}</span></a></div></div></section>
   <section class="pour sec" id="stock" style="--n:${P.length}" aria-labelledby="stockH"><div class="stage wrap">
@@ -475,7 +475,7 @@ async function checkGoogle(){ if(googleOn!==null) return googleOn;
 const GLOGO=`<svg viewBox="0 0 48 48" width="20" height="20" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg>`;
 const passField=(id,lab,ac,help)=>`<div class="f"><label for="${id}">${t(lab)}</label><div class="pw"><input id="${id}" type="password" autocomplete="${ac}" required minlength="8" maxlength="200" dir="ltr"><button type="button" class="pw-eye" data-eye="${id}" aria-controls="${id}" aria-pressed="false">${t("show_pass")}</button></div>${help?`<p class="help">${t(help)}</p>`:""}</div>`;
 function authCard(head,err){
-  const page=(h,p,form)=>`<div class="wrap page-head acct-split"><div>${head}<h1>${h}</h1><p class="lead">${p}</p>${form}</div><figure class="acct-art" aria-hidden="true"><img src="img/hero-760.webp" alt="" loading="lazy" decoding="async" width="760" height="428"><video muted loop playsinline preload="none" data-src="img/hero-pourover.mp4"></video></figure></div>`;
+  const page=(h,p,form)=>`<div class="wrap page-head acct-split"><div>${head}<h1>${h}</h1><p class="lead">${p}</p>${form}</div><figure class="acct-art" aria-hidden="true"><img src="img/hero-760.webp" alt="" loading="lazy" decoding="async" width="760" height="428"><video muted loop playsinline preload="none" data-src="img/hero-pourover.mp4"></video><video class="alt" muted loop playsinline preload="none" aria-hidden="true" data-src="img/hero-espresso.mp4"></video></figure></div>`;
   const g=googleOn?`<div class="or"><span>${t("or")}</span></div><button class="btn ghost gbtn" type="button" id="acctGoogle">${GLOGO}<span>${t("google")}</span></button>`:"";
   const emailF=`<div class="f"><label for="email">${t("f_email")}</label><input id="email" type="email" inputmode="email" autocomplete="email" required value="${esc(acctEmail)}" dir="ltr"></div>`;
   const codeF=`<div class="f"><label for="otp">${t("f_code")}</label><input id="otp" class="code" inputmode="numeric" autocomplete="one-time-code" maxlength="12" required dir="ltr"></div>`;
@@ -706,6 +706,19 @@ function route(){
 }
 /* the pour video (home hero, sign-in page): starts once the page has loaded, fades in when it plays,
    and on phones that block autoplay (battery or data saver) starts on the first touch or scroll */
+/* the hero takes turns: pour-over, then an espresso shot, cross-fading every ~8 seconds.
+   The second film only loads once the first is playing, and is skipped for reduced motion or data saver. */
+function heroCycle(){
+  const [a,b]=$$(".hero video"); if(!a) return; startLoop(a);
+  if(!b||reduce.matches||(navigator.connection&&navigator.connection.saveData)) return;
+  let cur=a;
+  const flip=()=>{ if(!a.isConnected) return; const next=cur===a?b:a, prev=cur;
+    next.currentTime=0;
+    next.play().then(()=>{ next.classList.add("on");
+      setTimeout(()=>{ prev.classList.toggle("on",false); setTimeout(()=>{ if(prev!==cur&&prev.isConnected) prev.pause(); },700); },650);
+      cur=next; setTimeout(flip,8000); }).catch(()=>setTimeout(flip,8000)); };
+  a.addEventListener("playing",()=>{ b.muted=true; b.defaultMuted=true; b.playsInline=true; b.setAttribute("playsinline",""); b.preload="auto"; b.src=b.dataset.src; b.load(); setTimeout(flip,8000); },{once:true});
+}
 function startLoop(vid){
   if(!vid||reduce.matches||vid.dataset.started) return; vid.dataset.started="1";
   const go=()=>{ if(!vid.isConnected||!vid.offsetParent) return; vid.muted=true; vid.defaultMuted=true; vid.playsInline=true; vid.setAttribute("playsinline",""); vid.src=vid.dataset.src;
@@ -723,7 +736,7 @@ function swap(){
   $$("#nav a").forEach(a=>{ if(a.dataset.nav===r.nav) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
   closeMenu(false);
   document.documentElement.classList.remove("frame-away");
-  startLoop($(".hero video"));
+  heroCycle();
   if(!quietSwap) scrollToY(0,true);
   setupPage(); requestAnimationFrame(railState);
   updateAcct(); if(r.html.includes('id="coForm"')){ sbLoad().then(prefillCheckout); track("begin_checkout",{value:(sub()-disc(sub())+fee(sub()))/1000}); }
