@@ -102,7 +102,7 @@ export async function settleOrder(orderId, paid, paymentId) {
   if (!r.ok) { console.error("order status update failed", r.status, r.data); return false; }
   // the order changed just now (not a repeat message): a paid order leaves the shelf
   const row = Array.isArray(r.data) ? r.data[0] : null;
-  if (paid && row) await adjustStock(row.items, -1);
+  if (paid && row) { await adjustStock(row.items, -1); await (await import("./alerts.js")).orderAlert(row).catch(e => console.error("order alert failed", e.message)); }
   return true;
 }
 

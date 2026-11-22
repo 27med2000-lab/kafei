@@ -178,6 +178,7 @@ function viewPaid(){
   if(p.state==="paid"){
     if(cart.length){ cart=[]; saveCart(); }
     const text=(pend&&pend.wa?pend.wa+"\n":"")+`${lang==="ar"?"مدفوع":"Paid"}: ${p.method||"MyFatoorah"}, ${lang==="ar"?"رقم الدفع":"payment"} ${p.track}`;
+    if(pend&&pend.id) track("purchase",{value:pend.total,id:pend.id});
     store.set("kafei-pending",null);
     return `<div class="wrap page-head"><h1>${esc(t("paid_h",p.order||(pend&&pend.id)||""))}</h1><p class="lead">${t("paid_p")}</p><p style="display:flex;flex-wrap:wrap;gap:10px;margin-top:28px"><a class="btn" href="${wa(text)}" target="_blank" rel="noopener">${ICON.wa}<span>${t("paid_send")}</span></a><a class="btn ghost" href="#shop"><span>${t("ok_back")}</span></a></p></div>`;
   }
@@ -403,11 +404,33 @@ function view404(){
 /* ===== social accounts ===== */
 const SOCIAL=[["Instagram","https://www.instagram.com/kafei_kw/","M7.03.084c-1.277.06-2.149.264-2.91.563a5.9 5.9 0 0 0-2.124 1.388a5.9 5.9 0 0 0-1.38 2.127C.321 4.926.12 5.8.064 7.076s-.069 1.688-.063 4.947s.021 3.667.083 4.947c.061 1.277.264 2.149.563 2.911c.308.789.72 1.457 1.388 2.123a5.9 5.9 0 0 0 2.129 1.38c.763.295 1.636.496 2.913.552c1.278.056 1.689.069 4.947.063s3.668-.021 4.947-.082c1.28-.06 2.147-.265 2.91-.563a5.9 5.9 0 0 0 2.123-1.388a5.9 5.9 0 0 0 1.38-2.129c.295-.763.496-1.636.551-2.912c.056-1.28.07-1.69.063-4.948c-.006-3.258-.02-3.667-.081-4.947c-.06-1.28-.264-2.148-.564-2.911a5.9 5.9 0 0 0-1.387-2.123a5.9 5.9 0 0 0-2.128-1.38c-.764-.294-1.636-.496-2.914-.55C15.647.009 15.236-.006 11.977 0S8.31.021 7.03.084m.14 21.693c-1.17-.05-1.805-.245-2.228-.408a3.7 3.7 0 0 1-1.382-.895a3.7 3.7 0 0 1-.9-1.378c-.165-.423-.363-1.058-.417-2.228c-.06-1.264-.072-1.644-.08-4.848c-.006-3.204.006-3.583.061-4.848c.05-1.169.246-1.805.408-2.228c.216-.561.477-.96.895-1.382a3.7 3.7 0 0 1 1.379-.9c.423-.165 1.057-.361 2.227-.417c1.265-.06 1.644-.072 4.848-.08c3.203-.006 3.583.006 4.85.062c1.168.05 1.804.244 2.227.408c.56.216.96.475 1.382.895s.681.817.9 1.378c.165.422.362 1.056.417 2.227c.06 1.265.074 1.645.08 4.848c.005 3.203-.006 3.583-.061 4.848c-.051 1.17-.245 1.805-.408 2.23c-.216.56-.477.96-.896 1.38a3.7 3.7 0 0 1-1.378.9c-.422.165-1.058.362-2.226.418c-1.266.06-1.645.072-4.85.079s-3.582-.006-4.848-.06m9.783-16.192a1.44 1.44 0 1 0 1.437-1.442a1.44 1.44 0 0 0-1.437 1.442M5.839 12.012a6.161 6.161 0 1 0 12.323-.024a6.162 6.162 0 0 0-12.323.024M8 12.008A4 4 0 1 1 12.008 16A4 4 0 0 1 8 12.008"],["TikTok","https://www.tiktok.com/@kafei_kw","M12.525.02c1.31-.02 2.61-.01 3.91-.02c.08 1.53.63 3.09 1.75 4.17c1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97c-.57-.26-1.1-.59-1.62-.93c-.01 2.92.01 5.84-.02 8.75c-.08 1.4-.54 2.79-1.35 3.94c-1.31 1.92-3.58 3.17-5.91 3.21c-1.43.08-2.86-.31-4.08-1.03c-2.02-1.19-3.44-3.37-3.65-5.71c-.02-.5-.03-1-.01-1.49c.18-1.9 1.12-3.72 2.58-4.96c1.66-1.44 3.98-2.13 6.15-1.72c.02 1.48-.04 2.96-.04 4.44c-.99-.32-2.15-.23-3.02.37c-.63.41-1.11 1.04-1.36 1.75c-.21.51-.15 1.07-.14 1.61c.24 1.64 1.82 3.02 3.5 2.87c1.12-.01 2.19-.66 2.77-1.61c.19-.33.4-.67.41-1.06c.1-1.79.06-3.57.07-5.36c.01-4.03-.01-8.05.02-12.07"]];
 const socialLinks=cls=>SOCIAL.map(([name,url,d])=>`<li><a class="${cls}" href="${url}" target="_blank" rel="noopener me"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="${d}"/></svg><span>${name}</span> <span class="handle" dir="ltr">@kafei_kw</span></a></li>`).join("");
+/* ===== visitor tracking: only after "Accept" on the cookie bar ===== */
+const TRK=CONFIG.analytics||{}, trkOn=!!(TRK.ga4||TRK.metaPixel)&&/^https?:$/.test(location.protocol)&&!/claude|anthropic/i.test(location.hostname);
+let trkLoaded=false;
+function trkLoad(){ if(trkLoaded||!trkOn) return; trkLoaded=true;
+  if(TRK.ga4){ window.dataLayer=window.dataLayer||[]; window.gtag=function(){ dataLayer.push(arguments); }; gtag("js",new Date()); gtag("config",TRK.ga4,{send_page_view:false});
+    const s=document.createElement("script"); s.async=true; s.src="https://www.googletagmanager.com/gtag/js?id="+encodeURIComponent(TRK.ga4); document.head.appendChild(s); }
+  if(TRK.metaPixel){ const f=window.fbq=function(){ f.callMethod?f.callMethod.apply(f,arguments):f.queue.push(arguments); }; if(!window._fbq) window._fbq=f; f.push=f; f.loaded=true; f.version="2.0"; f.queue=[];
+    const s=document.createElement("script"); s.async=true; s.src="https://connect.facebook.net/en_US/fbevents.js"; document.head.appendChild(s); fbq("init",TRK.metaPixel); }
+  track("page_view"); }
+// one call for both: page_view, add_to_cart, begin_checkout, purchase
+function track(ev,o={}){ if(!trkLoaded) return;
+  const money=o.value!=null?{value:Number(o.value),currency:"KWD"}:{};
+  if(window.gtag) gtag("event",ev,ev==="page_view"?{page_location:location.href,page_title:document.title}:{...money,...(o.id?{transaction_id:o.id}:{}),...(o.item?{items:[{item_id:o.item}]}:{})});
+  if(window.fbq){ const m={page_view:"PageView",add_to_cart:"AddToCart",begin_checkout:"InitiateCheckout",purchase:"Purchase"}[ev]; if(m) fbq("track",m,{...money,...(o.item?{content_ids:[o.item],content_type:"product"}:{})}); } }
+function consentBar(force){
+  if(!trkOn) return; const c=store.get("kafei-consent",null);
+  if(c==="yes"&&!force){ trkLoad(); return; } if(c&&!force) return;
+  let bar=$("#consent"); if(bar) bar.remove();
+  document.body.insertAdjacentHTML("beforeend",`<div class="consent" id="consent" role="region" aria-label="${lang==="ar"?"ملفات تعريف الارتباط":"Cookies"}"><p>${lang==="ar"?`نستخدم ملفات تعريف الارتباط لنعرف كيف تصل إلينا وما الذي يعجبك، ولنقيس إعلاناتنا. <a href="/privacy">التفاصيل</a>`:`We use cookies to see how people find us and what they like, and to measure our ads. <a href="/privacy">Details</a>`}</p><div class="consent-b"><button class="btn small" type="button" data-consent="yes">${lang==="ar"?"موافق":"Accept"}</button><button class="btn ghost small" type="button" data-consent="no">${lang==="ar"?"رفض":"Decline"}</button></div></div>`);
+}
+document.addEventListener("click",e=>{ const b=e.target.closest("[data-consent]"); if(b){ store.set("kafei-consent",b.dataset.consent); $("#consent").remove(); if(b.dataset.consent==="yes") trkLoad(); else if(trkLoaded) location.reload(); }
+  if(e.target.closest("[data-cookies]")){ e.preventDefault(); consentBar(true); } });
 function renderFooter(){
   $("#footer").innerHTML=`<div class="wrap"><div class="name"><p class="word" lang="ar">كفي</p>${FINJAN("finjan")}<p class="custom">${t("lead")}</p></div>
   <p class="brand">${t("brand")}</p>
   <nav aria-labelledby="fShop"><h2 id="fShop">${t("f_shop")}</h2><ul><li><a href="#shop">${t("all_products")}</a></li>${CATS.filter(c=>inCat(c).length).map(c=>`<li><a href="#shop-${c.id}">${esc(L(c.name))}</a></li>`).join("")}</ul></nav>
-  <nav aria-labelledby="fHelp"><h2 id="fHelp">${t("f_help")}</h2><ul><li><a href="#delivery">${t("nav_delivery")}</a></li><li><a href="#about">${t("nav_about")}</a></li><li><a href="/returns">${lang==="ar"?"الإرجاع والاستبدال":"Returns and exchanges"}</a></li><li><a href="/terms">${lang==="ar"?"شروط البيع":"Terms of sale"}</a></li><li><a href="/privacy">${lang==="ar"?"سياسة الخصوصية":"Privacy policy"}</a></li><li><a href="${wa(t("wa_hello"))}" target="_blank" rel="noopener">${t("ask_wa_short")} <bdi dir="ltr" class="num">${CONFIG.phoneDisplay}</bdi></a></li></ul></nav>
+  <nav aria-labelledby="fHelp"><h2 id="fHelp">${t("f_help")}</h2><ul><li><a href="#delivery">${t("nav_delivery")}</a></li><li><a href="#about">${t("nav_about")}</a></li><li><a href="/returns">${lang==="ar"?"الإرجاع والاستبدال":"Returns and exchanges"}</a></li><li><a href="/terms">${lang==="ar"?"شروط البيع":"Terms of sale"}</a></li><li><a href="/privacy">${lang==="ar"?"سياسة الخصوصية":"Privacy policy"}</a></li>${trkOn?`<li><a href="/privacy" data-cookies>${lang==="ar"?"إعدادات ملفات تعريف الارتباط":"Cookie settings"}</a></li>`:""}<li><a href="${wa(t("wa_hello"))}" target="_blank" rel="noopener">${t("ask_wa_short")} <bdi dir="ltr" class="num">${CONFIG.phoneDisplay}</bdi></a></li></ul></nav>
   <nav aria-labelledby="fSocial"><h2 id="fSocial">${lang==="ar"?"تابعنا":"Follow us"}</h2><ul>${socialLinks("soc")}</ul></nav>
   <p class="imprint">${t("f_imprint")}</p></div>`;
 }
@@ -531,7 +554,8 @@ function swap(){
   startLoop($(".hero video"));
   if(!quietSwap) scrollToY(0,true);
   setupPage(); requestAnimationFrame(railState);
-  updateAcct(); if(r.html.includes('id="coForm"')) sbLoad().then(prefillCheckout);
+  updateAcct(); if(r.html.includes('id="coForm"')){ sbLoad().then(prefillCheckout); track("begin_checkout",{value:(sub()-disc(sub())+fee(sub()))/1000}); }
+  track("page_view");
   const el=r.target&&document.getElementById(r.target);
   if(el&&r.target!=="main") requestAnimationFrame(()=>scrollToY(el.getBoundingClientRect().top+scrollY-8,true));
   if(!firstRender&&!quietSwap&&pendingFocus!==false) $("#main").focus({preventScroll:true});
@@ -551,6 +575,6 @@ function applyLang(){
   const r=document.documentElement; r.lang=lang; r.dir=lang==="ar"?"rtl":"ltr";
   $("#langBtn").innerHTML=`<span class="full">${t("lang")}</span><span class="short" aria-hidden="true">${lang==="ar"?"EN":"ع"}</span>`; $("#langBtn").setAttribute("lang",lang==="ar"?"en":"ar"); $("#langBtn").setAttribute("aria-label",t("lang"));
   $$("[data-t]").forEach(e=>e.textContent=t(e.dataset.t)); $("#skip").textContent=t("skip");
-  renderFooter(); updateCount();
+  renderFooter(); updateCount(); consentBar();
 }
 
