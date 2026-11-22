@@ -13,6 +13,6 @@ await check("account and checkout are kept out of search", async () => { assert.
 await check("unknown addresses are not pages", async () => { for (const u of ["/p/nope", "/shop/nope", "/shop/grinders/nope", "/zzz", "/a/b/c"]) assert.equal(await appPage(u), null, u); });
 await check("files and the home page are left to the file server", async () => { for (const u of ["/", "/img/xbloom.webp", "/privacy.html", "/app.js"]) assert.equal(await appPage(u), null, u); });
 await check("sitemap lists the pages and the products", async () => { const r = await appPage("/sitemap.xml"); assert.equal(r.type, "application/xml");
-  for (const u of ["/", "/shop", "/delivery", "/about", "/privacy", "/p/xbloom-studio"]) assert.ok(r.body.includes(`<loc>https://kafeikw.com${u}</loc>`), u); });
+  for (const u of ["/", "/shop", "/delivery", "/about", "/privacy", "/terms", "/returns", "/p/xbloom-studio"]) assert.ok(r.body.includes(`<loc>https://kafeikw.com${u}</loc>`), u); });
 for (const [s, n] of results) console.log(s, n);
 if (results.some(r => r[0] === "FAIL")) process.exit(1);

@@ -63,7 +63,7 @@ async function describe(pathname) {
 // {status, body, type} for a shop page or the sitemap; null to let the server look for a file
 export async function appPage(pathname) {
   if (pathname === "/sitemap.xml") {
-    const urls = ["/", "/shop", "/delivery", "/about", "/privacy"];
+    const urls = ["/", "/shop", "/delivery", "/about", "/privacy", "/terms", "/returns"];
     const ps = await products().catch(() => []);
     for (const c of new Set(ps.map(x => x.cat).filter(c => CATS[c]))) urls.push("/shop/" + c);
     for (const x of ps) urls.push("/p/" + x.id);

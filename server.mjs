@@ -13,7 +13,7 @@ const types = { ".html": "text/html; charset=utf-8", ".js": "text/javascript; ch
   ".png": "image/png", ".jpg": "image/jpeg", ".svg": "image/svg+xml", ".mp4": "video/mp4", ".txt": "text/plain; charset=utf-8", ".xml": "application/xml", ".woff2": "font/woff2", ".css": "text/css; charset=utf-8" };
 const routes = { "/api/checkout": "checkout.js", "/api/status": "status.js", "/api/myfatoorah-webhook": "myfatoorah-webhook.js",
   "/api/admin": "admin.js", "/api/products": "products.js", "/api/login": "login.js" };
-const pages = { "/": "index.html", "/admin": "admin.html", "/privacy": "privacy.html" };
+const pages = { "/": "index.html", "/admin": "admin.html", "/privacy": "privacy.html", "/terms": "terms.html", "/returns": "returns.html" };
 const security = { "X-Content-Type-Options": "nosniff", "Referrer-Policy": "strict-origin-when-cross-origin", "X-Frame-Options": "SAMEORIGIN" };
 
 http.createServer(async (req, res) => {
