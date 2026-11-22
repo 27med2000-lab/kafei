@@ -54,7 +54,7 @@ To build: points and bean card in the customer account, "use my points" at check
 Suggested first: 1, 2 and 4.
 
 ## Still waiting
-- **Move email from Google Workspace to Hostinger before Workspace expires.** Order: create info@kafeikw.com on Hostinger, copy old mail, switch MX/SPF/DKIM, move the website's code emails (Supabase SMTP) to the new mailbox, test dashboard login and customer sign-up, then cancel Google. Check whether the Google sign-in project belongs to the Workspace account.
+- Email stays on Google Workspace (decided 22 Nov 2026). Order alert emails use Gmail SMTP: smtp.gmail.com, port 465, with a Google app password.
 - MyFatoorah live keys and webhook (after approval).
 - Deema reply.
 - Fresh blind review of kafeikw.com after the latest upload.
