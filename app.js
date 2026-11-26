@@ -8,7 +8,7 @@ const CONFIG = {
   freeOver: null, fee: 1500,     // fils
   // Visitor tracking. Paste the IDs to switch it on: Google Analytics "G-..." and the Meta pixel number.
   // Nothing loads until a visitor presses "Accept" on the cookie bar. Empty = no bar and no tracking.
-  analytics: { ga4: "", metaPixel: "" },
+  analytics: { ga4: "G-HXR99YQW73", metaPixel: "924273450680201" },
   // Online payment (MyFatoorah). Works where the /api functions are deployed; the claude.ai demo falls back to WhatsApp.
   // Customer accounts (Supabase). Paste your project URL and anon (public) key from Supabase > Project Settings > API.
   // The anon key is safe in the page: the row-level security in supabase/schema.sql decides what each customer can see.
