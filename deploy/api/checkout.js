@@ -1,7 +1,7 @@
 // POST /api/checkout  {items:[{id,qty,color}], method:"knet"|"card"|"apple", lang, customer:{name,phone}, address:{gov,area,block,street,avenue,house,notes}}
 // Recomputes the total from the shop's own prices, creates a MyFatoorah invoice for the chosen method,
 // records the order as pending and returns {link, orderId, total}. The browser never decides the price.
-import { METHODS, json, readBody, mf, paymentMethodId, money, buildOrder, getCatalogue, saveOrder, userFromToken, bearer } from "./_lib.js";
+import { METHODS, json, readBody, mf, paymentMethodId, money, buildOrder, applyCode, getCatalogue, saveOrder, userFromToken, bearer } from "./_lib.js";
 
 const FAIL = "The payment page could not open. Try again, or choose another payment method.";
 
@@ -15,6 +15,8 @@ export default async function handler(req, res) {
   if (b && !code) return json(res, 400, { error: "method", message: "Choose KNET, card or Apple Pay." });
   const o = buildOrder(b, await getCatalogue());
   if (o.error) return json(res, o.error.status, o.error.body);
+  const codeErr = await applyCode(o, b.code).catch(() => "The discount code could not be checked. Try again.");
+  if (codeErr) return json(res, 400, { error: "code", message: codeErr });
 
   try {
     const methodId = await paymentMethodId(code, Number(money(o.total)));
@@ -33,7 +35,10 @@ export default async function handler(req, res) {
       // shown on the invoice in your MyFatoorah portal, so you can see what to deliver and where
       CustomerAddress: { Block: String(a.block || "").slice(0, 50), Street: String(a.street || "").slice(0, 80), HouseBuildingNo: String(a.house || "").slice(0, 50),
         Address: o.addr.slice(0, 250), AddressInstructions: (o.notes || "").slice(0, 200) },
-      InvoiceItems: o.products.map(p => ({ ItemName: p.name.slice(0, 100), Quantity: p.quantity, UnitPrice: p.price })),
+      // with a discount the lines no longer add up item by item, so the invoice shows one line for the whole order
+      InvoiceItems: o.discount
+        ? [{ ItemName: `${o.lines.join(", ")}${o.fee ? ", delivery" : ""}, code ${o.code} (-KWD ${money(o.discount)})`.slice(0, 100), Quantity: 1, UnitPrice: Number(money(o.total)) }]
+        : o.products.map(p => ({ ItemName: p.name.slice(0, 100), Quantity: p.quantity, UnitPrice: p.price })),
       CallBackUrl: `${site}/?pay=return&order=${o.orderId}`,
       ErrorUrl: `${site}/?pay=cancel&order=${o.orderId}`
     };
@@ -41,7 +46,7 @@ export default async function handler(req, res) {
     const link = r.data?.Data?.PaymentURL;
     if (!r.ok || !link) { console.error("MyFatoorah ExecutePayment failed", r.status, r.data?.Message, JSON.stringify(r.data?.ValidationErrors || null)); return json(res, 502, { error: "gateway", message: FAIL }); }
     const user = await userFromToken(bearer(req));
-    await saveOrder({ id: o.orderId, user_id: user ? user.id : null, status: "pending", method: b.method, total_fils: o.total, items: o.items, address: o.addr, phone: o.phone, gov: o.gov, track_id: String(r.data.Data.InvoiceId || "") || null });
+    await saveOrder({ id: o.orderId, user_id: user ? user.id : null, status: "pending", method: b.method, total_fils: o.total, items: o.items, address: o.addr, phone: o.phone, gov: o.gov, ...(o.code ? { discount_code: o.code, discount_fils: o.discount } : {}), track_id: String(r.data.Data.InvoiceId || "") || null });
     return json(res, 200, { link, orderId: o.orderId, total: money(o.total) });
   } catch (e) {
     console.error("checkout error", e.message);

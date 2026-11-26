@@ -241,7 +241,7 @@ function viewAccount(){
     return `<div id="acctView" data-fast="${acctStep}|${googleOn}">${authCard(crumbs([["home",t("home")],["",t("acct_signin")]]),"")}</div>`; }
   return `<div id="acctView"><div class="wrap page-head">${crumbs([["home",t("home")],["",t("acct_mine")]])}<h1>${t("loading")}</h1></div></div>`;
 }
-async function renderAccount(){ await renderAccountInner(); startLoop($("#acctView .acct-art video")); const h1=$("#acctView h1"); if(h1&&curKey()==="account") document.title=`${h1.textContent.trim()} · ${lang==="ar"?"كفي Kafei":"Kafei كفي"}`; }
+async function renderAccount(){ await renderAccountInner(); gsiMount(); startLoop($("#acctView .acct-art video")); const h1=$("#acctView h1"); if(h1&&curKey()==="account") document.title=`${h1.textContent.trim()} · ${lang==="ar"?"كفي Kafei":"Kafei كفي"}`; }
 async function renderAccountInner(){
   await sbLoad(); const box=$("#acctView"); if(!box) return;
   const head=crumbs([["home",t("home")],["",sbUser?t("acct_h"):t("acct_signin")]]);
@@ -328,6 +328,24 @@ const busy=(btn,label)=>{ if(!btn) return ()=>{}; btn.disabled=true; const old=b
   return ()=>{ if(btn.isConnected){ btn.disabled=false; btn.innerHTML=old; btn.removeAttribute("aria-busy"); } }; };
 const waitSecs=error=>{ const m=/(\d+)\s*seconds?/i.exec(error&&error.message||""); return m?+m[1]:60; };
 const isLimit=error=>!!error&&(error.status===429||/rate|seconds/i.test(error.message||""));
+// Google's own button on kafeikw.com, so Google says "Sign in to kafeikw.com" instead of the Supabase address.
+// If Google's script can't load, the plain button stays and uses the old redirect sign-in.
+let gsiP=null, gsiNonce="";
+function gsiLoad(){ if(!gsiP){ gsiP=new Promise((ok,no)=>{ const s=document.createElement("script"); s.src="https://accounts.google.com/gsi/client"; s.async=true; s.onload=ok; s.onerror=no; document.head.appendChild(s); }); gsiP.catch(()=>{ gsiP=null; }); } return gsiP; }
+const hex=b=>[...new Uint8Array(b)].map(v=>v.toString(16).padStart(2,"0")).join("");
+async function gsiMount(){ const cid=CONFIG.accounts&&CONFIG.accounts.googleClientId;
+  if(!cid||sbUser||!$("#acctGoogle")||!(window.crypto&&crypto.subtle)) return;
+  try{ await gsiLoad(); }catch(e){ return; }
+  const b=$("#acctGoogle"); if(!b||sbUser||!(window.google&&google.accounts&&google.accounts.id)) return;
+  gsiNonce=hex(crypto.getRandomValues(new Uint8Array(16)));
+  const hashed=hex(await crypto.subtle.digest("SHA-256",new TextEncoder().encode(gsiNonce)));
+  google.accounts.id.initialize({client_id:cid,nonce:hashed,callback:gsiDone,ux_mode:"popup",context:"signin",use_fedcm_for_button:true,itp_support:true});
+  const w=Math.max(200,Math.min(400,Math.round(b.getBoundingClientRect().width)||320));
+  const host=document.createElement("div"); host.className="gsi"; host.id="acctGsi"; b.replaceWith(host);
+  google.accounts.id.renderButton(host,{type:"standard",theme:"outline",size:"large",text:"continue_with",shape:"pill",logo_alignment:"center",width:w,locale:lang==="ar"?"ar":"en"}); }
+async function gsiDone(r){ const {error}=await sb.auth.signInWithIdToken({provider:"google",token:r.credential,nonce:gsiNonce});
+  if(error){ acctMsg=t("e_google"); return renderAccount(); }
+  return signedIn(); }
 async function signedIn(session){ if(session) await sb.auth.setSession({access_token:session.access_token,refresh_token:session.refresh_token});
   const {data}=await sb.auth.getSession(); sbUser=data&&data.session?data.session.user:null; acctStep="signin"; if(sbUser) await loadProfile(); updateAcct(); return renderAccount(); }
 document.addEventListener("submit",async e=>{

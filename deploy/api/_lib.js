@@ -102,7 +102,7 @@ export async function settleOrder(orderId, paid, paymentId) {
   if (!r.ok) { console.error("order status update failed", r.status, r.data); return false; }
   // the order changed just now (not a repeat message): a paid order leaves the shelf
   const row = Array.isArray(r.data) ? r.data[0] : null;
-  if (paid && row) await adjustStock(row.items, -1);
+  if (paid && row) { await adjustStock(row.items, -1); await (await import("./alerts.js")).orderAlert(row).catch(e => console.error("order alert failed", e.message)); }
   return true;
 }
 
@@ -163,7 +163,7 @@ export function buildOrder(b, cat = CATALOGUE) {
     items.push({ id: l.id, ...(color ? { color: color.id } : {}), name: label, qty: q, price_fils: p.price });
   }
   if (!products.length) return bad("empty", "The cart is empty.");
-  const fee = sub >= FREE_OVER ? 0 : FEE;
+  const fee = FREE_OVER && sub >= FREE_OVER ? 0 : FEE;   // FREE_OVER null: delivery is always charged
   if (fee) products.push({ name: "Delivery", description: "Delivery in Kuwait", price: Number(money(fee)), quantity: 1 });
   const a = b.address || {};
   if (!a.gov || !a.area || !a.block || !a.street || !a.house) return bad("address", "Fill in the delivery address.");
@@ -206,6 +206,37 @@ export async function saveOrder(row) {
   if (!supaOn()) return false;
   try { const r = await supa("POST", "/rest/v1/orders", row, { Prefer: "return=minimal" }); if (!r.ok) console.error("order save failed", r.status, r.data); return r.ok; }
   catch (e) { console.error("order save failed", e.message); return false; }
+}
+
+// ---------- discount codes ----------
+export const normCode = c => String(c || "").toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 20);
+// How much a code takes off the items (not delivery), in fils.
+export const discountFor = (rule, sub) => rule.kind === "percent" ? Math.round(sub * rule.value / 100) : Math.min(rule.value, sub);
+// Checks a code for this phone and items subtotal. {rule} when it can be used, or {message} saying why not.
+export async function checkCode(code, phone, sub, now = Date.now()) {
+  const c = normCode(code);
+  const no = message => ({ message });
+  if (!c) return no("Type a discount code.");
+  if (!supaOn()) return no("Discount codes aren't available right now.");
+  const r = await supa("GET", `/rest/v1/discount_codes?code=eq.${encodeURIComponent(c)}&select=*`);
+  const rule = r.ok && Array.isArray(r.data) ? r.data[0] : null;
+  if (!rule || !rule.active) return no("That code isn't valid. Check the spelling.");
+  if (rule.ends_at && new Date(rule.ends_at).getTime() < now) return no("That code has ended.");
+  if (rule.min_order_fils && sub !== null && sub < rule.min_order_fils) return no(`That code needs an order of KWD ${money(rule.min_order_fils)} or more.`);
+  if (rule.once_per_customer && phone) {
+    const u = await supa("GET", `/rest/v1/orders?discount_code=eq.${encodeURIComponent(c)}&phone=eq.${encodeURIComponent(phone)}&status=in.(paid,cod)&select=id&limit=1`);
+    if (u.ok && Array.isArray(u.data) && u.data.length) return no("You've already used that code. It works once per customer.");
+  }
+  return { rule: { code: rule.code, kind: rule.kind, value: rule.value, min_order_fils: rule.min_order_fils || null } };
+}
+// Applies a code to a built order (from buildOrder). Returns null when it worked, or a message.
+export async function applyCode(o, code) {
+  if (!code) return null;
+  const k = await checkCode(code, o.phone, o.sub);
+  if (!k.rule) return k.message;
+  const d = discountFor(k.rule, o.sub);
+  o.code = k.rule.code; o.discount = d; o.total = o.sub - d + o.fee;
+  return null;
 }
 
 // ---------- products: the database when connected, prices.json otherwise ----------

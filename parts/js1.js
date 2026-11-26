@@ -15,7 +15,7 @@ const CONFIG = {
   // The anon key is safe in the page: the row-level security in supabase/schema.sql decides what each customer can see.
   // Customer accounts (Supabase). The publishable key is public by design; the database rules decide what each customer can see.
   // Off on the claude.ai preview (it can't reach Supabase); on everywhere else.
-  accounts: (/^https?:$/.test(location.protocol) && !/claude|anthropic/i.test(location.hostname)) ? { url: "https://gupwztbbazuusnimjkvt.supabase.co", anonKey: "sb_publishable_TqNf6lA2qlFbYbVpsDcxjg_r8Gbf70p" } : null,
+  accounts: (/^https?:$/.test(location.protocol) && !/claude|anthropic/i.test(location.hostname)) ? { url: "https://gupwztbbazuusnimjkvt.supabase.co", anonKey: "sb_publishable_TqNf6lA2qlFbYbVpsDcxjg_r8Gbf70p", googleClientId: "735250984104-g1kjolr1tvsmbgk1ajqhg276rdj7o9dc.apps.googleusercontent.com" } : null,
   payments: (/^https?:$/.test(location.protocol) && !/claude|anthropic/i.test(location.hostname)) ? { checkout: "/api/checkout", status: "/api/status", cod: "/api/order-cod", products: "/api/products" } : null
 };
 

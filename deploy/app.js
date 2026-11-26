@@ -5,13 +5,16 @@ const CONFIG = {
   phoneDisplay: "+965 6690 8822",
   whatsapp: "96566908822",
   phoneVerified: true,
-  freeOver: 15000, fee: 1500,     // fils
+  freeOver: null, fee: 1500,     // fils
+  // Visitor tracking. Paste the IDs to switch it on: Google Analytics "G-..." and the Meta pixel number.
+  // Nothing loads until a visitor presses "Accept" on the cookie bar. Empty = no bar and no tracking.
+  analytics: { ga4: "", metaPixel: "" },
   // Online payment (MyFatoorah). Works where the /api functions are deployed; the claude.ai demo falls back to WhatsApp.
   // Customer accounts (Supabase). Paste your project URL and anon (public) key from Supabase > Project Settings > API.
   // The anon key is safe in the page: the row-level security in supabase/schema.sql decides what each customer can see.
   // Customer accounts (Supabase). The publishable key is public by design; the database rules decide what each customer can see.
   // Off on the claude.ai preview (it can't reach Supabase); on everywhere else.
-  accounts: (/^https?:$/.test(location.protocol) && !/claude|anthropic/i.test(location.hostname)) ? { url: "https://gupwztbbazuusnimjkvt.supabase.co", anonKey: "sb_publishable_TqNf6lA2qlFbYbVpsDcxjg_r8Gbf70p" } : null,
+  accounts: (/^https?:$/.test(location.protocol) && !/claude|anthropic/i.test(location.hostname)) ? { url: "https://gupwztbbazuusnimjkvt.supabase.co", anonKey: "sb_publishable_TqNf6lA2qlFbYbVpsDcxjg_r8Gbf70p", googleClientId: "735250984104-g1kjolr1tvsmbgk1ajqhg276rdj7o9dc.apps.googleusercontent.com" } : null,
   payments: (/^https?:$/.test(location.protocol) && !/claude|anthropic/i.test(location.hostname)) ? { checkout: "/api/checkout", status: "/api/status", cod: "/api/order-cod", products: "/api/products" } : null
 };
 
@@ -60,7 +63,7 @@ en:{menu:"Menu",skip:"Skip to content",nav_home:"Home",nav_shop:"Shop",nav_deliv
   film_esp:"An espresso shot through a bottomless portafilter", film_po:"Coffee blooming in a pour-over filter", film_po2:"Pouring water from a kettle into a dripper",
   shop_esp:"Espresso machines", shop_po:"Pour-over machines",
   deliv_more:"Delivery details", deliv_page_h:"Delivery",
-  fx_same:"Same day", fx_fee:"Delivery fee", fx_pay:"Payment", fx_fee_v:"Free over KWD 15. Under that, KWD 1.500.", fx_pay_v:"KNET, card or Apple Pay.", fx_same_v:"Order before 2 pm and it reaches the Capital and Hawalli the same day.",
+  fx_same:"Same day", fx_fee:"Delivery fee", fx_pay:"Payment", fx_fee_v:"KWD 1.500 anywhere in Kuwait.", fx_pay_v:"KNET, card or Apple Pay.", fx_same_v:"Order before 2 pm and it reaches the Capital and Hawalli the same day.",
   how_h:"How ordering works", st1:"Choose a product and tap Ask for price, or add it to your cart.", st2:"We reply on WhatsApp with the price and the delivery time.", st3:"Pay by KNET, card or Apple Pay.",
   far_h:"Outside the Capital and Hawalli?", far_p:"Message us and we'll tell you the delivery day for your area.", far_wa:"Hello Kafei, when can you deliver to my area?",
   about_h:"About us", about_lead:"Kafei sells a short list of coffee machines and beans in Kuwait, in Arabic and English.",
@@ -70,14 +73,14 @@ en:{menu:"Menu",skip:"Skip to content",nav_home:"Home",nav_shop:"Shop",nav_deliv
   cart_n:n=>n===1?"1 item in cart":`${n} items in cart`,
   lead:"A short list of coffee gear, chosen and delivered in Kuwait.",
   t1:"Same day in the Capital and Hawalli when you order before 2 pm",
-  t2:"Free delivery over KWD 15, otherwise KWD 1.500",
+  t2:"Delivery KWD 1.500 anywhere in Kuwait",
   t3:"KNET, card or Apple Pay",
   see_all:"See all four", loom_label:"Kafei's four products",
   ask_price:"Ask for price", details:"Details", color_h:"Colour", choose_color:"Choose a colour", view_colors:"View colours", d_close:"close-up of the brewing head", d_side:"side view", details_h:"Closer look", sold_out:"sold out", all_sold:"Every colour is sold out right now. Ask us when the next ones arrive.", one_sold:"Sold out right now. Ask us when the next ones arrive.", out_ask:"Sold out. Ask us", wa_back:n=>`Hello Kafei, when will the ${n} be back in stock?`, add:"Add to cart", added:n=>`Added ${n} to your cart`,
   price_soon:"Price on request. Message us and we'll reply with today's price and delivery time.",
   wa_item:(n)=>`Hello Kafei, what is the price of the ${n}, and when can you deliver it?`,
   deliv_big:"Order before 2 pm and it reaches the Capital and Hawalli the same day.",
-  d2:"Free over KWD 15. Under that, KWD 1.500", d3:"Pay with KNET, card or Apple Pay",
+  d2:"Delivery KWD 1.500 anywhere in Kuwait", d3:"Pay with KNET, card or Apple Pay",
   ask_h:"Ask us first", ask_p:"Not sure which machine suits your counter or your coffee? Send us a message and we'll help you choose.",
   wa_open:"Message on WhatsApp", copy:"Copy number", copied:"Number copied", copy_fail:"Select the number to copy it",
   shop_h:"Shop", home:"Home",
@@ -85,7 +88,7 @@ en:{menu:"Menu",skip:"Skip to content",nav_home:"Home",nav_shop:"Shop",nav_deliv
   f_shop:"Shop", f_help:"Help", f_imprint:"Kafei, Kuwait. Prices in Kuwaiti dinar.", f_credits:"Brewing footage:",
   qty:"Quantity", dec:"Fewer", inc:"More", remove:"Remove", close:"Close cart",
   cart_h:"Your cart", empty:"Nothing poured yet. Everything we have in stock is in the shop.",
-  subtotal:"Subtotal", delivery:"Delivery", free:"Free", total:"Total", checkout:"Checkout", shop_all:"See all four",
+  subtotal:"Subtotal", delivery:"Delivery", code_l:"Discount code", code_apply:"Apply", code_remove:"Remove", code_on:(c,d)=>`${c} applied: ${d} off`, code_line:c=>`Discount (${c})`, code_need:"Type a discount code first.", code_fail:"The code could not be checked. Try again.", free:"Free", total:"Total", checkout:"Checkout", shop_all:"See all four",
   co_h:"Checkout", co_contact:"Contact", co_addr:"Delivery address", co_pay:"Payment", co_empty:"Your cup is empty, so there's nothing to check out yet.",
   f_name:"Full name", f_phone:"Mobile number", f_phone_help:"We send delivery updates by WhatsApp.", f_gov:"Governorate", f_choose:"Choose a governorate",
   f_area:"Area", f_block:"Block", f_street:"Street", f_avenue:"Avenue (optional)", f_house:"House or building", f_notes:"Notes for the driver (optional)",
@@ -105,7 +108,7 @@ ar:{menu:"القائمة",skip:"انتقل إلى المحتوى",nav_home:"ال
   film_esp:"شوت إسبريسو من حامل فلتر مفتوح", film_po:"قهوة تتفتح في فلتر التقطير", film_po2:"صب الماء من الغلاية في القمع",
   shop_esp:"مكائن الإسبريسو", shop_po:"مكائن التقطير",
   deliv_more:"تفاصيل التوصيل", deliv_page_h:"التوصيل",
-  fx_same:"في نفس اليوم", fx_fee:"رسوم التوصيل", fx_pay:"الدفع", fx_fee_v:"مجاني فوق 15 د.ك، وأقل من ذلك 1.500 د.ك.", fx_pay_v:"كي نت، بطاقة أو Apple Pay.", fx_same_v:"اطلب قبل الساعة 2 ظهرًا ويصلك في العاصمة وحولي في اليوم نفسه.",
+  fx_same:"في نفس اليوم", fx_fee:"رسوم التوصيل", fx_pay:"الدفع", fx_fee_v:"1.500 د.ك لجميع مناطق الكويت.", fx_pay_v:"كي نت، بطاقة أو Apple Pay.", fx_same_v:"اطلب قبل الساعة 2 ظهرًا ويصلك في العاصمة وحولي في اليوم نفسه.",
   how_h:"كيف تطلب", st1:"اختر المنتج واضغط «اسأل عن السعر»، أو أضفه إلى السلة.", st2:"نرد عليك عبر واتساب بالسعر وموعد التوصيل.", st3:"ادفع بالكي نت أو البطاقة أو Apple Pay.",
   far_h:"خارج العاصمة وحولي؟", far_p:"راسلنا ونخبرك بيوم التوصيل لمنطقتك.", far_wa:"مرحبًا كفي، متى يمكن التوصيل لمنطقتي؟",
   about_h:"من نحن", about_lead:"كفي متجر يبيع قائمة قصيرة من مكائن القهوة والبن في الكويت، بالعربية والإنجليزية.",
@@ -115,14 +118,14 @@ ar:{menu:"القائمة",skip:"انتقل إلى المحتوى",nav_home:"ال
   cart_n:n=>n===1?"منتج واحد في السلة":`${n} منتجات في السلة`,
   lead:"قائمة قصيرة من أدوات القهوة، نختارها ونوصّلها في الكويت.",
   t1:"في نفس اليوم للعاصمة وحولي للطلبات قبل الساعة 2 ظهرًا",
-  t2:"توصيل مجاني فوق 15 د.ك، وإلا 1.500 د.ك",
+  t2:"التوصيل 1.500 د.ك لجميع مناطق الكويت",
   t3:"كي نت، بطاقة أو Apple Pay",
   see_all:"اعرض المنتجات الأربعة", loom_label:"منتجات كفي الأربعة",
   ask_price:"اسأل عن السعر", details:"التفاصيل", color_h:"اللون", choose_color:"اختر لونًا", view_colors:"عرض الألوان", d_close:"لقطة قريبة لرأس التحضير", d_side:"منظر جانبي", details_h:"نظرة أقرب", sold_out:"نفد", all_sold:"نفدت كل الألوان حاليًا. اسألنا عن موعد وصول الدفعة القادمة.", one_sold:"نفد حاليًا. اسألنا عن موعد وصول الدفعة القادمة.", out_ask:"نفد. اسألنا", wa_back:n=>`مرحبًا كفي، متى يتوفر ${n} من جديد؟`, add:"أضف إلى السلة", added:n=>`أُضيف ${n} إلى سلتك`,
   price_soon:"السعر عند الطلب. راسلنا ونرد عليك بسعر اليوم وموعد التوصيل.",
   wa_item:(n)=>`مرحبًا كفي، كم سعر ${n}، ومتى يمكن توصيله؟`,
   deliv_big:"اطلب قبل الساعة 2 ظهرًا ويصلك في العاصمة وحولي في اليوم نفسه.",
-  d2:"مجاني فوق 15 د.ك، وأقل من ذلك 1.500 د.ك", d3:"ادفع بالكي نت أو البطاقة أو Apple Pay",
+  d2:"التوصيل 1.500 د.ك لجميع مناطق الكويت", d3:"ادفع بالكي نت أو البطاقة أو Apple Pay",
   ask_h:"اسألنا أولًا", ask_p:"محتار أي ماكينة تناسب مطبخك أو قهوتك؟ راسلنا ونساعدك في الاختيار.",
   wa_open:"راسلنا عبر واتساب", copy:"انسخ الرقم", copied:"تم نسخ الرقم", copy_fail:"حدّد الرقم لنسخه",
   shop_h:"المتجر", home:"الرئيسية",
@@ -130,7 +133,7 @@ ar:{menu:"القائمة",skip:"انتقل إلى المحتوى",nav_home:"ال
   f_shop:"المتجر", f_help:"المساعدة", f_imprint:"كفي، الكويت. الأسعار بالدينار الكويتي.", f_credits:"لقطات التحضير:",
   qty:"الكمية", dec:"أقل", inc:"أكثر", remove:"إزالة", close:"أغلق السلة",
   cart_h:"سلتك", empty:"لم نصبّ شيئًا بعد. كل ما لدينا في المتجر.",
-  subtotal:"المجموع الفرعي", delivery:"التوصيل", free:"مجاني", total:"الإجمالي", checkout:"إتمام الطلب", shop_all:"اعرض المنتجات الأربعة",
+  subtotal:"المجموع الفرعي", delivery:"التوصيل", code_l:"كود الخصم", code_apply:"تطبيق", code_remove:"إزالة", code_on:(c,d)=>`تم تطبيق ${c}: خصم ${d}`, code_line:c=>`الخصم (${c})`, code_need:"اكتب كود الخصم أولًا.", code_fail:"تعذّر التحقق من الكود. حاول مرة أخرى.", free:"مجاني", total:"الإجمالي", checkout:"إتمام الطلب", shop_all:"اعرض المنتجات الأربعة",
   co_h:"إتمام الطلب", co_contact:"بيانات التواصل", co_addr:"عنوان التوصيل", co_pay:"الدفع", co_empty:"فنجالك فارغ، فلا يوجد ما تطلبه بعد.",
   f_name:"الاسم الكامل", f_phone:"رقم الهاتف", f_phone_help:"نرسل تحديثات التوصيل عبر واتساب.", f_gov:"المحافظة", f_choose:"اختر المحافظة",
   f_area:"المنطقة", f_block:"القطعة", f_street:"الشارع", f_avenue:"الجادة (اختياري)", f_house:"المنزل أو المبنى", f_notes:"ملاحظات للسائق (اختياري)",
@@ -169,12 +172,12 @@ const ICON={
 
 
 /* ===== v3 copy ===== */
-Object.assign(T.en,{hero_cta:"See what's in stock",pour_p:"What we have on the counter today, poured for you one at a time.",meter:"Products in stock",
+Object.assign(T.en,{restock_h:"New stock is on its way",restock_p:"We're filling the counter again. Message us and we'll tell you what's arriving and when.",restock_btn:"Ask what's coming",restock_wa:"Hello Kafei, what's arriving next?",brew_l:"Choose your brew",brew_filter:"Filter",brew_espresso:"Espresso",hero_cta:"See what's in stock",pour_p:"What we have on the counter today, poured for you one at a time.",meter:"Products in stock",
   deliv_h:"Same day in the Capital and Hawalli",deliv_sub:"Order before 2 pm.",back:"Back to",
   custom:"In the Gulf, you shake your finjan when you've had enough. That little shake is our name.",
   brand:"Not sure which one suits your counter? Ask us on WhatsApp before you buy.",
   nf_h:"Nothing poured here",nf_p:"This page doesn't exist. The shop is one tap away.",nf_btn:"Go to the shop",acct_signin:"Sign in",sending:"Sending code…",verifying:"Checking the code…",saving:"Saving…",e_link:"That sign-in didn't finish. Try again, or sign in with your email and password.",e_wait:n=>`We just sent you a code. Check your email (and spam folder), or wait ${n} seconds to ask for a new one.`,acct_mine:"Your account",acct_h_in:"Sign in to Kafei",acct_p_in:"We email you a sign-in code. No password needed, and checkout works without an account.",f_email:"Email",send_code:"Send code",code_sent:e=>`We sent a code to ${e}. Use the newest email: each new code replaces the last one.`,f_code:"Code from the email",sign_in:"Sign in",other_email:"Use another email",acct_h:"Your account",saved_h:"Saved details",saved_p:"Checkout fills these in for you.",save:"Save details",saved:"Details saved",orders_h:"Your orders",no_orders:"No orders yet. Orders you pay online appear here.",sign_out:"Sign out",e_email:"Enter an email address, for example name@gmail.com.",e_code:"That code didn't work. Use the code from the newest email, or request a new one.",e_send:"We couldn't send the code. Wait a minute and try again.",e_save:"Your details weren't saved. Check the phone number and try again.",save_addr:"Save these details to my account",st_pending:"Waiting for payment",st_paid:"Paid",st_failed:"Not paid",st_sent:"Sent on WhatsApp",demo_code:"Demo: no email is sent. Your code is",loading:"Loading",paying:"Opening the secure payment page",pay_fail:"The payment page could not open. Try again, or choose another payment method.",cod_instead:"Pay cash on delivery instead",demo_live:"KNET, card and Apple Pay open MyFatoorah's secure page.",checking:"Checking your payment",paid_h:id=>`Paid. Order ${id} is ours to deliver`,paid_p:"We have your payment. Send the order on WhatsApp so we can confirm the delivery time.",paid_send:"Send order on WhatsApp",unpaid_h:"Payment not completed",unpaid_p:"Nothing was charged, and your cart is still here. Try again, or choose another payment method.",back_co:"Back to checkout",check_fail:"We couldn't confirm the payment yet. Message us on WhatsApp with your order number and we'll check.",soon_line:"Not in stock yet:",wa_hello_soon:"Hello Kafei, I'm looking for something you don't list yet.",ask_wa_short:"WhatsApp"});
-Object.assign(T.ar,{hero_cta:"شاهد المتوفر",pour_p:"ما لدينا اليوم، نصبّه لك واحدًا تلو الآخر.",meter:"المنتجات المتوفرة",
+Object.assign(T.ar,{restock_h:"بضاعة جديدة في الطريق",restock_p:"نجهّز الرفوف من جديد. راسلنا ونخبرك بما سيصل ومتى.",restock_btn:"اسأل عن الجديد",restock_wa:"مرحبًا كفي، ما الذي سيصل قريبًا؟",brew_l:"اختر طريقة التحضير",brew_filter:"تقطير",brew_espresso:"إسبريسو",hero_cta:"شاهد المتوفر",pour_p:"ما لدينا اليوم، نصبّه لك واحدًا تلو الآخر.",meter:"المنتجات المتوفرة",
   deliv_h:"في نفس اليوم للعاصمة وحولي",deliv_sub:"اطلب قبل الساعة 2 ظهرًا.",back:"العودة إلى",
   custom:"في الخليج، تهزّ فنجالك حين تكتفي. ومن هذه الهزّة جاء اسمنا.",
   brand:"محتار أيها يناسب مطبخك؟ اسألنا عبر واتساب قبل الشراء.",
@@ -208,12 +211,13 @@ function viewHome(){
       <div class="cup-copy"><h3><a href="#p-${p.id}">${esc(L(p.name))}</a></h3>${arName(p.name)}<p class="kind">${esc(L(p.kind))}</p><p class="what">${esc(L(p.what))}</p>
       <p class="acts">${askLink(p)}${p.colors&&p.colors.length&&p.price!=null?"":`<a class="textlink" href="#p-${p.id}">${t("details")}</a>`}</p></div></li>`).join("");
   const meter=P.length<2?"":`<div class="meter">${FINJAN("meter-cup")}<ol aria-label="${t("meter")}">${P.map((p,i)=>`<li><button type="button" data-pour="${i}" ${i===0?'aria-current="true"':""}><span class="dot" aria-hidden="true"></span><span class="nm">${esc(L(p.name))}</span><span class="sr">${esc(L(p.name))}</span></button></li>`).join("")}</ol></div>`;
-  return `<section class="hero" aria-labelledby="heroH"><img class="poster" src="img/hero-1280.webp" srcset="img/hero-760.webp 760w, img/hero-1280.webp 1280w" sizes="100vw" alt="" fetchpriority="high" width="1280" height="720"><video muted loop playsinline preload="none" aria-hidden="true" data-src="img/hero-pourover.mp4"></video>
+  return `<section class="hero" aria-labelledby="heroH"><img class="poster" ${brew==="espresso"?'src="img/hero-espresso.jpg"':'src="img/hero-1280.webp" srcset="img/hero-760.webp 760w, img/hero-1280.webp 1280w"'} sizes="100vw" alt="" fetchpriority="high" width="1280" height="720"><video muted loop playsinline preload="none" aria-hidden="true" data-src="img/hero-pourover.mp4"></video><video class="alt" muted loop playsinline preload="none" aria-hidden="true" data-src="img/hero-espresso.mp4"></video>
     <div class="wrap hero-in"><div class="hero-copy"><h1 id="heroH" aria-label="Kafei, كفي"><span class="w" aria-hidden="true">${[..."Kafei"].map(c=>`<span class="ch">${c}</span>`).join("")}</span><span class="ar" lang="ar" aria-hidden="true"><span>كفي</span></span></h1>
-    <p class="lead" data-intro>${t("custom")}</p><a class="btn" href="#stock" data-intro><span>${t("hero_cta")}</span></a></div></div></section>
-  <section class="pour sec" id="stock" style="--n:${P.length}" aria-labelledby="stockH"><div class="stage wrap">
+    <p class="lead" data-intro>${t("custom")}</p><a class="btn" href="#stock" data-intro><span>${t("hero_cta")}</span></a></div></div>${brewSwitch()}</section>
+  ${P.length?`<section class="pour sec" id="stock" style="--n:${P.length}" aria-labelledby="stockH"><div class="stage wrap">
     <div class="pour-head"><h2 id="stockH">${t("stock_h")}</h2><p>${t("pour_p")}</p></div>
-    <ol class="serve">${cups}</ol>${meter}</div></section>
+    <ol class="serve">${cups}</ol>${meter}</div></section>`:`<section class="sec restock" id="stock" aria-labelledby="stockH"><div class="wrap">
+    <h2 id="stockH">${t("restock_h")}</h2><p>${t("restock_p")}</p><a class="btn" href="${wa(t("restock_wa"))}" target="_blank" rel="noopener">${ICON.wa}<span>${t("restock_btn")}</span></a></div></section>`}
   ${catRail()}${brandRail()}
   <section class="strip" aria-labelledby="delH"><div class="wrap"><h2 id="delH" class="sr">${t("nav_delivery")}</h2>
     <ul><li>${ICON.truck}<span><b>${t("deliv_h")}</b> ${t("deliv_sub")}</span></li><li>${ICON.tag}<span>${t("d2")}</span></li><li>${ICON.card}<span>${t("d3")}</span></li></ul>
@@ -347,6 +351,7 @@ function viewPaid(){
   if(p.state==="paid"){
     if(cart.length){ cart=[]; saveCart(); }
     const text=(pend&&pend.wa?pend.wa+"\n":"")+`${lang==="ar"?"مدفوع":"Paid"}: ${p.method||"MyFatoorah"}, ${lang==="ar"?"رقم الدفع":"payment"} ${p.track}`;
+    if(pend&&pend.id) track("purchase",{value:pend.total,id:pend.id});
     store.set("kafei-pending",null);
     return `<div class="wrap page-head"><h1>${esc(t("paid_h",p.order||(pend&&pend.id)||""))}</h1><p class="lead">${t("paid_p")}</p><p style="display:flex;flex-wrap:wrap;gap:10px;margin-top:28px"><a class="btn" href="${wa(text)}" target="_blank" rel="noopener">${ICON.wa}<span>${t("paid_send")}</span></a><a class="btn ghost" href="#shop"><span>${t("ok_back")}</span></a></p></div>`;
   }
@@ -408,7 +413,7 @@ function viewAccount(){
     return `<div id="acctView" data-fast="${acctStep}|${googleOn}">${authCard(crumbs([["home",t("home")],["",t("acct_signin")]]),"")}</div>`; }
   return `<div id="acctView"><div class="wrap page-head">${crumbs([["home",t("home")],["",t("acct_mine")]])}<h1>${t("loading")}</h1></div></div>`;
 }
-async function renderAccount(){ await renderAccountInner(); startLoop($("#acctView .acct-art video")); const h1=$("#acctView h1"); if(h1&&curKey()==="account") document.title=`${h1.textContent.trim()} · ${lang==="ar"?"كفي Kafei":"Kafei كفي"}`; }
+async function renderAccount(){ await renderAccountInner(); gsiMount(); startLoop($("#acctView .acct-art video")); const h1=$("#acctView h1"); if(h1&&curKey()==="account") document.title=`${h1.textContent.trim()} · ${lang==="ar"?"كفي Kafei":"Kafei كفي"}`; }
 async function renderAccountInner(){
   await sbLoad(); const box=$("#acctView"); if(!box) return;
   const head=crumbs([["home",t("home")],["",sbUser?t("acct_h"):t("acct_signin")]]);
@@ -471,7 +476,7 @@ async function checkGoogle(){ if(googleOn!==null) return googleOn;
 const GLOGO=`<svg viewBox="0 0 48 48" width="20" height="20" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg>`;
 const passField=(id,lab,ac,help)=>`<div class="f"><label for="${id}">${t(lab)}</label><div class="pw"><input id="${id}" type="password" autocomplete="${ac}" required minlength="8" maxlength="200" dir="ltr"><button type="button" class="pw-eye" data-eye="${id}" aria-controls="${id}" aria-pressed="false">${t("show_pass")}</button></div>${help?`<p class="help">${t(help)}</p>`:""}</div>`;
 function authCard(head,err){
-  const page=(h,p,form)=>`<div class="wrap page-head acct-split"><div>${head}<h1>${h}</h1><p class="lead">${p}</p>${form}</div><figure class="acct-art" aria-hidden="true"><img src="img/hero-760.webp" alt="" loading="lazy" decoding="async" width="760" height="428"><video muted loop playsinline preload="none" data-src="img/hero-pourover.mp4"></video></figure></div>`;
+  const page=(h,p,form)=>`<div class="wrap page-head acct-split"><div>${head}<h1>${h}</h1><p class="lead">${p}</p>${form}</div><figure class="acct-art" aria-hidden="true"><img src="img/hero-760.webp" alt="" loading="lazy" decoding="async" width="760" height="428"><video muted loop playsinline preload="none" data-src="img/hero-pourover.mp4"></video><video class="alt" muted loop playsinline preload="none" aria-hidden="true" data-src="img/hero-espresso.mp4"></video></figure></div>`;
   const g=googleOn?`<div class="or"><span>${t("or")}</span></div><button class="btn ghost gbtn" type="button" id="acctGoogle">${GLOGO}<span>${t("google")}</span></button>`:"";
   const emailF=`<div class="f"><label for="email">${t("f_email")}</label><input id="email" type="email" inputmode="email" autocomplete="email" required value="${esc(acctEmail)}" dir="ltr"></div>`;
   const codeF=`<div class="f"><label for="otp">${t("f_code")}</label><input id="otp" class="code" inputmode="numeric" autocomplete="one-time-code" maxlength="12" required dir="ltr"></div>`;
@@ -495,6 +500,24 @@ const busy=(btn,label)=>{ if(!btn) return ()=>{}; btn.disabled=true; const old=b
   return ()=>{ if(btn.isConnected){ btn.disabled=false; btn.innerHTML=old; btn.removeAttribute("aria-busy"); } }; };
 const waitSecs=error=>{ const m=/(\d+)\s*seconds?/i.exec(error&&error.message||""); return m?+m[1]:60; };
 const isLimit=error=>!!error&&(error.status===429||/rate|seconds/i.test(error.message||""));
+// Google's own button on kafeikw.com, so Google says "Sign in to kafeikw.com" instead of the Supabase address.
+// If Google's script can't load, the plain button stays and uses the old redirect sign-in.
+let gsiP=null, gsiNonce="";
+function gsiLoad(){ if(!gsiP){ gsiP=new Promise((ok,no)=>{ const s=document.createElement("script"); s.src="https://accounts.google.com/gsi/client"; s.async=true; s.onload=ok; s.onerror=no; document.head.appendChild(s); }); gsiP.catch(()=>{ gsiP=null; }); } return gsiP; }
+const hex=b=>[...new Uint8Array(b)].map(v=>v.toString(16).padStart(2,"0")).join("");
+async function gsiMount(){ const cid=CONFIG.accounts&&CONFIG.accounts.googleClientId;
+  if(!cid||sbUser||!$("#acctGoogle")||!(window.crypto&&crypto.subtle)) return;
+  try{ await gsiLoad(); }catch(e){ return; }
+  const b=$("#acctGoogle"); if(!b||sbUser||!(window.google&&google.accounts&&google.accounts.id)) return;
+  gsiNonce=hex(crypto.getRandomValues(new Uint8Array(16)));
+  const hashed=hex(await crypto.subtle.digest("SHA-256",new TextEncoder().encode(gsiNonce)));
+  google.accounts.id.initialize({client_id:cid,nonce:hashed,callback:gsiDone,ux_mode:"popup",context:"signin",use_fedcm_for_button:true,itp_support:true});
+  const w=Math.max(200,Math.min(400,Math.round(b.getBoundingClientRect().width)||320));
+  const host=document.createElement("div"); host.className="gsi"; host.id="acctGsi"; b.replaceWith(host);
+  google.accounts.id.renderButton(host,{type:"standard",theme:"outline",size:"large",text:"continue_with",shape:"pill",logo_alignment:"center",width:w,locale:lang==="ar"?"ar":"en"}); }
+async function gsiDone(r){ const {error}=await sb.auth.signInWithIdToken({provider:"google",token:r.credential,nonce:gsiNonce});
+  if(error){ acctMsg=t("e_google"); return renderAccount(); }
+  return signedIn(); }
 async function signedIn(session){ if(session) await sb.auth.setSession({access_token:session.access_token,refresh_token:session.refresh_token});
   const {data}=await sb.auth.getSession(); sbUser=data&&data.session?data.session.user:null; acctStep="signin"; if(sbUser) await loadProfile(); updateAcct(); return renderAccount(); }
 document.addEventListener("submit",async e=>{
@@ -569,11 +592,37 @@ function prefillCheckout(){
 function view404(){
   return `<div class="wrap nf"><div class="vessel" aria-hidden="true"></div><div><h1>${t("nf_h")}</h1><p>${t("nf_p")}</p><a class="btn" href="#shop"><span>${t("nf_btn")}</span></a></div></div>`;
 }
+/* ===== social accounts ===== */
+const SOCIAL=[["Instagram","https://www.instagram.com/kafei_kw/","M7.03.084c-1.277.06-2.149.264-2.91.563a5.9 5.9 0 0 0-2.124 1.388a5.9 5.9 0 0 0-1.38 2.127C.321 4.926.12 5.8.064 7.076s-.069 1.688-.063 4.947s.021 3.667.083 4.947c.061 1.277.264 2.149.563 2.911c.308.789.72 1.457 1.388 2.123a5.9 5.9 0 0 0 2.129 1.38c.763.295 1.636.496 2.913.552c1.278.056 1.689.069 4.947.063s3.668-.021 4.947-.082c1.28-.06 2.147-.265 2.91-.563a5.9 5.9 0 0 0 2.123-1.388a5.9 5.9 0 0 0 1.38-2.129c.295-.763.496-1.636.551-2.912c.056-1.28.07-1.69.063-4.948c-.006-3.258-.02-3.667-.081-4.947c-.06-1.28-.264-2.148-.564-2.911a5.9 5.9 0 0 0-1.387-2.123a5.9 5.9 0 0 0-2.128-1.38c-.764-.294-1.636-.496-2.914-.55C15.647.009 15.236-.006 11.977 0S8.31.021 7.03.084m.14 21.693c-1.17-.05-1.805-.245-2.228-.408a3.7 3.7 0 0 1-1.382-.895a3.7 3.7 0 0 1-.9-1.378c-.165-.423-.363-1.058-.417-2.228c-.06-1.264-.072-1.644-.08-4.848c-.006-3.204.006-3.583.061-4.848c.05-1.169.246-1.805.408-2.228c.216-.561.477-.96.895-1.382a3.7 3.7 0 0 1 1.379-.9c.423-.165 1.057-.361 2.227-.417c1.265-.06 1.644-.072 4.848-.08c3.203-.006 3.583.006 4.85.062c1.168.05 1.804.244 2.227.408c.56.216.96.475 1.382.895s.681.817.9 1.378c.165.422.362 1.056.417 2.227c.06 1.265.074 1.645.08 4.848c.005 3.203-.006 3.583-.061 4.848c-.051 1.17-.245 1.805-.408 2.23c-.216.56-.477.96-.896 1.38a3.7 3.7 0 0 1-1.378.9c-.422.165-1.058.362-2.226.418c-1.266.06-1.645.072-4.85.079s-3.582-.006-4.848-.06m9.783-16.192a1.44 1.44 0 1 0 1.437-1.442a1.44 1.44 0 0 0-1.437 1.442M5.839 12.012a6.161 6.161 0 1 0 12.323-.024a6.162 6.162 0 0 0-12.323.024M8 12.008A4 4 0 1 1 12.008 16A4 4 0 0 1 8 12.008"],["TikTok","https://www.tiktok.com/@kafei_kw","M12.525.02c1.31-.02 2.61-.01 3.91-.02c.08 1.53.63 3.09 1.75 4.17c1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97c-.57-.26-1.1-.59-1.62-.93c-.01 2.92.01 5.84-.02 8.75c-.08 1.4-.54 2.79-1.35 3.94c-1.31 1.92-3.58 3.17-5.91 3.21c-1.43.08-2.86-.31-4.08-1.03c-2.02-1.19-3.44-3.37-3.65-5.71c-.02-.5-.03-1-.01-1.49c.18-1.9 1.12-3.72 2.58-4.96c1.66-1.44 3.98-2.13 6.15-1.72c.02 1.48-.04 2.96-.04 4.44c-.99-.32-2.15-.23-3.02.37c-.63.41-1.11 1.04-1.36 1.75c-.21.51-.15 1.07-.14 1.61c.24 1.64 1.82 3.02 3.5 2.87c1.12-.01 2.19-.66 2.77-1.61c.19-.33.4-.67.41-1.06c.1-1.79.06-3.57.07-5.36c.01-4.03-.01-8.05.02-12.07"]];
+const socialLinks=cls=>SOCIAL.map(([name,url,d])=>`<li><a class="${cls}" href="${url}" target="_blank" rel="noopener me"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="${d}"/></svg><span>${name}</span> <span class="handle" dir="ltr">@kafei_kw</span></a></li>`).join("");
+/* ===== visitor tracking: only after "Accept" on the cookie bar ===== */
+const TRK=CONFIG.analytics||{}, trkOn=!!(TRK.ga4||TRK.metaPixel)&&/^https?:$/.test(location.protocol)&&!/claude|anthropic/i.test(location.hostname);
+let trkLoaded=false;
+function trkLoad(){ if(trkLoaded||!trkOn) return; trkLoaded=true;
+  if(TRK.ga4){ window.dataLayer=window.dataLayer||[]; window.gtag=function(){ dataLayer.push(arguments); }; gtag("js",new Date()); gtag("config",TRK.ga4,{send_page_view:false});
+    const s=document.createElement("script"); s.async=true; s.src="https://www.googletagmanager.com/gtag/js?id="+encodeURIComponent(TRK.ga4); document.head.appendChild(s); }
+  if(TRK.metaPixel){ const f=window.fbq=function(){ f.callMethod?f.callMethod.apply(f,arguments):f.queue.push(arguments); }; if(!window._fbq) window._fbq=f; f.push=f; f.loaded=true; f.version="2.0"; f.queue=[];
+    const s=document.createElement("script"); s.async=true; s.src="https://connect.facebook.net/en_US/fbevents.js"; document.head.appendChild(s); fbq("init",TRK.metaPixel); }
+  track("page_view"); }
+// one call for both: page_view, add_to_cart, begin_checkout, purchase
+function track(ev,o={}){ if(!trkLoaded) return;
+  const money=o.value!=null?{value:Number(o.value),currency:"KWD"}:{};
+  if(window.gtag) gtag("event",ev,ev==="page_view"?{page_location:location.href,page_title:document.title}:{...money,...(o.id?{transaction_id:o.id}:{}),...(o.item?{items:[{item_id:o.item}]}:{})});
+  if(window.fbq){ const m={page_view:"PageView",add_to_cart:"AddToCart",begin_checkout:"InitiateCheckout",purchase:"Purchase"}[ev]; if(m) fbq("track",m,{...money,...(o.item?{content_ids:[o.item],content_type:"product"}:{})}); } }
+function consentBar(force){
+  if(!trkOn) return; const c=store.get("kafei-consent",null);
+  if(c==="yes"&&!force){ trkLoad(); return; } if(c&&!force) return;
+  let bar=$("#consent"); if(bar) bar.remove();
+  document.body.insertAdjacentHTML("beforeend",`<div class="consent" id="consent" role="region" aria-label="${lang==="ar"?"ملفات تعريف الارتباط":"Cookies"}"><p>${lang==="ar"?`نستخدم ملفات تعريف الارتباط لنعرف كيف تصل إلينا وما الذي يعجبك، ولنقيس إعلاناتنا. <a href="/privacy">التفاصيل</a>`:`We use cookies to see how people find us and what they like, and to measure our ads. <a href="/privacy">Details</a>`}</p><div class="consent-b"><button class="btn small" type="button" data-consent="yes">${lang==="ar"?"موافق":"Accept"}</button><button class="btn ghost small" type="button" data-consent="no">${lang==="ar"?"رفض":"Decline"}</button></div></div>`);
+}
+document.addEventListener("click",e=>{ const b=e.target.closest("[data-consent]"); if(b){ store.set("kafei-consent",b.dataset.consent); $("#consent").remove(); if(b.dataset.consent==="yes") trkLoad(); else if(trkLoaded) location.reload(); }
+  if(e.target.closest("[data-cookies]")){ e.preventDefault(); consentBar(true); } });
 function renderFooter(){
   $("#footer").innerHTML=`<div class="wrap"><div class="name"><p class="word" lang="ar">كفي</p>${FINJAN("finjan")}<p class="custom">${t("lead")}</p></div>
   <p class="brand">${t("brand")}</p>
   <nav aria-labelledby="fShop"><h2 id="fShop">${t("f_shop")}</h2><ul><li><a href="#shop">${t("all_products")}</a></li>${CATS.filter(c=>inCat(c).length).map(c=>`<li><a href="#shop-${c.id}">${esc(L(c.name))}</a></li>`).join("")}</ul></nav>
-  <nav aria-labelledby="fHelp"><h2 id="fHelp">${t("f_help")}</h2><ul><li><a href="#delivery">${t("nav_delivery")}</a></li><li><a href="#about">${t("nav_about")}</a></li><li><a href="/privacy">${lang==="ar"?"سياسة الخصوصية":"Privacy policy"}</a></li><li><a href="${wa(t("wa_hello"))}" target="_blank" rel="noopener">${t("ask_wa_short")} <bdi dir="ltr" class="num">${CONFIG.phoneDisplay}</bdi></a></li></ul></nav>
+  <nav aria-labelledby="fHelp"><h2 id="fHelp">${t("f_help")}</h2><ul><li><a href="#delivery">${t("nav_delivery")}</a></li><li><a href="#about">${t("nav_about")}</a></li><li><a href="/returns">${lang==="ar"?"الإرجاع والاستبدال":"Returns and exchanges"}</a></li><li><a href="/terms">${lang==="ar"?"شروط البيع":"Terms of sale"}</a></li><li><a href="/privacy">${lang==="ar"?"سياسة الخصوصية":"Privacy policy"}</a></li>${trkOn?`<li><a href="/privacy" data-cookies>${lang==="ar"?"إعدادات ملفات تعريف الارتباط":"Cookie settings"}</a></li>`:""}<li><a href="${wa(t("wa_hello"))}" target="_blank" rel="noopener">${t("ask_wa_short")} <bdi dir="ltr" class="num">${CONFIG.phoneDisplay}</bdi></a></li></ul></nav>
+  <nav aria-labelledby="fSocial"><h2 id="fSocial">${lang==="ar"?"تابعنا":"Follow us"}</h2><ul>${socialLinks("soc")}</ul></nav>
   <p class="imprint">${t("f_imprint")}</p></div>`;
 }
 
@@ -676,6 +725,23 @@ function route(){
 }
 /* the pour video (home hero, sign-in page): starts once the page has loaded, fades in when it plays,
    and on phones that block autoplay (battery or data saver) starts on the first touch or scroll */
+/* the hero shows the brew the visitor picks: filter (pour-over) or espresso. The choice is remembered on this device. */
+let brew=store.get("kafei-brew","filter")==="espresso"?"espresso":"filter";
+const brewSwitch=()=>`<div class="brew" role="group" aria-label="${t("brew_l")}">${["filter","espresso"].map(k=>`<button type="button" data-brew="${k}" aria-pressed="${brew===k}">${t("brew_"+k)}</button>`).join("")}</div>`;
+function heroCycle(){ const [a,b]=$$(".hero video"); if(a) startLoop(brew==="espresso"&&b?b:a); }
+function setBrew(k){
+  if(k===brew) return; brew=k; store.set("kafei-brew",k);
+  $$(".hero .brew button").forEach(x=>x.setAttribute("aria-pressed",String(x.dataset.brew===k)));
+  const [a,b]=$$(".hero video"), next=k==="espresso"?b:a, prev=k==="espresso"?a:b, poster=$(".hero .poster");
+  if(poster){ poster.removeAttribute("srcset"); poster.src=k==="espresso"?"img/hero-espresso.jpg":"img/hero-1280.webp"; }
+  if(!next||!prev||reduce.matches) return;           // reduced motion: the still photo changes, no film
+  const fadeOut=()=>setTimeout(()=>{ prev.classList.toggle("on",false); setTimeout(()=>{ if(brew!==(prev===a?"filter":"espresso")) prev.pause(); },700); },500);
+  if(!next.dataset.started){ next.addEventListener("playing",fadeOut,{once:true}); next.dataset.started="1";
+    next.muted=true; next.defaultMuted=true; next.playsInline=true; next.setAttribute("playsinline",""); next.src=next.dataset.src;
+    next.addEventListener("playing",()=>next.classList.add("on"),{once:true}); next.play().catch(()=>{}); }
+  else { next.currentTime=0; next.play().then(()=>{ next.classList.add("on"); fadeOut(); }).catch(()=>{}); }
+}
+document.addEventListener("click",e=>{ const b=e.target.closest(".hero .brew button"); if(b) setBrew(b.dataset.brew); });
 function startLoop(vid){
   if(!vid||reduce.matches||vid.dataset.started) return; vid.dataset.started="1";
   const go=()=>{ if(!vid.isConnected||!vid.offsetParent) return; vid.muted=true; vid.defaultMuted=true; vid.playsInline=true; vid.setAttribute("playsinline",""); vid.src=vid.dataset.src;
@@ -693,10 +759,11 @@ function swap(){
   $$("#nav a").forEach(a=>{ if(a.dataset.nav===r.nav) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
   closeMenu(false);
   document.documentElement.classList.remove("frame-away");
-  startLoop($(".hero video"));
+  heroCycle();
   if(!quietSwap) scrollToY(0,true);
   setupPage(); requestAnimationFrame(railState);
-  updateAcct(); if(r.html.includes('id="coForm"')) sbLoad().then(prefillCheckout);
+  updateAcct(); if(r.html.includes('id="coForm"')){ sbLoad().then(prefillCheckout); track("begin_checkout",{value:(sub()-disc(sub())+fee(sub()))/1000}); }
+  track("page_view");
   const el=r.target&&document.getElementById(r.target);
   if(el&&r.target!=="main") requestAnimationFrame(()=>scrollToY(el.getBoundingClientRect().top+scrollY-8,true));
   if(!firstRender&&!quietSwap&&pendingFocus!==false) $("#main").focus({preventScroll:true});
@@ -716,7 +783,7 @@ function applyLang(){
   const r=document.documentElement; r.lang=lang; r.dir=lang==="ar"?"rtl":"ltr";
   $("#langBtn").innerHTML=`<span class="full">${t("lang")}</span><span class="short" aria-hidden="true">${lang==="ar"?"EN":"ع"}</span>`; $("#langBtn").setAttribute("lang",lang==="ar"?"en":"ar"); $("#langBtn").setAttribute("aria-label",t("lang"));
   $$("[data-t]").forEach(e=>e.textContent=t(e.dataset.t)); $("#skip").textContent=t("skip");
-  renderFooter(); updateCount();
+  renderFooter(); updateCount(); consentBar();
 }
 
 /* ===== brands, slide-out menu and home carousels ===== */
@@ -796,6 +863,7 @@ function renderMenu(){
         <div class="menu-sub" id="menuCats"><ul ${catsOpen?"":"inert"}>${CATS.map(c=>`<li><a href="#shop-${c.id}" ${cur.startsWith("shop-"+c.id)?'aria-current="page"':""}>${catIcon(c)}<span>${esc(L(c.name))}</span>${inCat(c).length?"":`<span class="n n-soon">${t("soon_short")}</span>`}</a></li>`).join("")}</ul></div></li></ul>
     ${bs.length?`<h3>${t("m_brands")}</h3><ul class="menu-list">${bs.map(b=>link("brand-"+b.id,`<bdi>${esc(b.name)}</bdi>`)).join("")}</ul>`:""}
     <h3>${t("m_more")}</h3><ul class="menu-list">${link("delivery",t("nav_delivery"))}${link("about",t("nav_about"))}${accountsOn()?link("account",sbUser?t("acct_mine"):t("acct_signin")):""}</ul>
+    <ul class="menu-social">${socialLinks("soc")}</ul>
   </nav>
   <div class="drawer-foot menu-foot"><a class="btn" href="${wa(t("wa_hello"))}" target="_blank" rel="noopener">${ICON.wa}<span>${t("m_wa")}</span></a><button class="btn ghost" type="button" id="menuLang">${t("lang")}</button></div>`;
 }
@@ -833,18 +901,40 @@ document.addEventListener("keydown",e=>{
 /* ===== cart ===== */
 const sub=()=>cart.reduce((s,l)=>s+byId[l.id].price*l.qty,0);
 const count=()=>cart.reduce((s,l)=>s+l.qty,0);
-const fee=s=>s===0||s>=CONFIG.freeOver?0:CONFIG.fee;
+const fee=s=>s===0||(CONFIG.freeOver&&s>=CONFIG.freeOver)?0:CONFIG.fee;
 function saveCart(){ store.set("kafei-cart2",cart); updateCount(); }
 function updateCount(){ $("#cartCount").textContent=count(); $("#cartSr").textContent=t("cart_n",count()); }
 function addToCart(id,q=1,color=null){ const p=byId[id]; if(!p||p.price==null||p.out) return; let c=null;
   if(p.colors&&p.colors.length){ c=colorOf(p,color)||firstColor(p); if(!c||c.out) return; }
-  const k=lineKey({id,color:c&&c.id}), l=cart.find(x=>lineKey(x)===k); if(l) l.qty=Math.min(99,l.qty+q); else cart.push(c?{id,qty:q,color:c.id}:{id,qty:q}); saveCart(); replay($("#cartCount"),"tick"); toast(t("added",cName(p,c))); }
+  const k=lineKey({id,color:c&&c.id}), l=cart.find(x=>lineKey(x)===k); if(l) l.qty=Math.min(99,l.qty+q); else cart.push(c?{id,qty:q,color:c.id}:{id,qty:q}); saveCart(); replay($("#cartCount"),"tick"); toast(t("added",cName(p,c))); if(typeof track==="function") track("add_to_cart",{value:p.price/1000,item:id}); }
 /* restart a one-shot CSS animation (the stylesheet turns these off for reduced motion) */
 function replay(el,cls){ if(!el) return; el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); el.addEventListener("animationend",()=>el.classList.remove(cls),{once:true}); }
 let toastT; function toast(m){ const e=$("#toast"); e.textContent=m; e.classList.add("show"); clearTimeout(toastT); toastT=setTimeout(()=>e.classList.remove("show"),3200); }
 
 function field(id,label,o={}){ const req=o.req!==false;
   return `<div class="f ${o.full?"full":""}"><label for="${id}">${label}${req?' <span class="req" aria-hidden="true">*</span>':""}</label>${o.type==="textarea"?`<textarea id="${id}"></textarea>`:`<input id="${id}" type="text" ${req?'required aria-required="true"':""} ${o.auto?`autocomplete="${o.auto}"`:""} ${o.mode?`inputmode="${o.mode}"`:""}>`}<p class="err" id="${id}-err" hidden></p></div>`; }
+/* ===== discount code (checked again by the server when paying) ===== */
+let promo=null;
+const disc=s=>!promo||!s?0:promo.kind==="percent"?Math.round(s*promo.value/100):Math.min(promo.value,s);
+const promoLabel=p=>p.kind==="percent"?`${p.value}%`:money(p.value);
+const coTotals=(s,f)=>`<dt>${t("subtotal")}</dt><dd class="num">${money(s)}</dd>${promo?`<dt>${esc(t("code_line",promo.code))}</dt><dd class="num">−${money(disc(s))}</dd>`:""}<dt>${t("delivery")}</dt><dd>${f?money(f):t("free")}</dd><dt class="grand">${t("total")}</dt><dd class="grand num">${money(s-disc(s)+f)}</dd>`;
+function coRefresh(){ const s=sub(),f=fee(s),d=$("#coTotals"),p=$("#coPay"),i=$("#code"),b=$("#codeBtn");
+  if(d) d.innerHTML=coTotals(s,f); if(p) p.textContent=money(s-disc(s)+f);
+  if(i){ i.readOnly=!!promo; if(promo) i.value=promo.code; } if(b) b.textContent=promo?t("code_remove"):t("code_apply"); }
+async function applyPromo(){
+  const i=$("#code"), m=$("#code-msg"), b=$("#codeBtn");
+  if(promo){ promo=null; m.textContent=""; coRefresh(); i.value=""; i.focus(); return; }
+  const code=i.value.trim(); if(!code){ m.textContent=t("code_need"); i.focus(); return; }
+  b.disabled=true;
+  try{ const r=await fetch("/api/discount",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({code,phone:($("#phone")||{}).value||"",sub:sub()})});
+    const d=await r.json().catch(()=>({}));
+    if(r.ok&&d.code){ promo=d; m.textContent=t("code_on",d.code,promoLabel(d)); coRefresh(); }
+    else m.textContent=d.message||t("code_fail");
+  }catch(e){ m.textContent=t("code_fail"); }
+  b.disabled=false;
+}
+document.addEventListener("click",e=>{ if(e.target.closest("#codeBtn")) applyPromo(); });
+document.addEventListener("keydown",e=>{ if(e.key==="Enter"&&e.target.id==="code"){ e.preventDefault(); if(!promo) applyPromo(); } });
 function viewCheckout(){
   if(!cart.length) return `<div class="wrap page-head"><h1 class="display">${t("co_h")}</h1><div class="empty"><p>${t("co_empty")}</p><a class="btn" href="#shop">${t("shop_all")}</a></div></div>`;
   const s=sub(), f=fee(s);
@@ -855,11 +945,12 @@ function viewCheckout(){
     <fieldset><legend>${t("co_addr")}</legend><div class="fgrid">
       <div class="f"><label for="gov">${t("f_gov")} <span class="req" aria-hidden="true">*</span></label><select id="gov" required aria-required="true"><option value="">${t("f_choose")}</option>${GOVS.map(g=>`<option value="${g[0]}">${lang==="ar"?g[2]:g[1]}</option>`).join("")}</select><p class="err" id="gov-err" hidden></p></div>
       ${field("area",t("f_area"))}${field("block",t("f_block"),{mode:"numeric"})}${field("street",t("f_street"))}${field("avenue",t("f_avenue"),{req:false})}${field("house",t("f_house"))}${field("notes",t("f_notes"),{type:"textarea",req:false,full:true})}</div></fieldset>
+    <fieldset><legend>${t("code_l")}</legend><div class="codebox"><input id="code" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="20" aria-describedby="code-msg" value="${promo?esc(promo.code):""}" ${promo?"readonly":""}><button class="btn ghost" type="button" id="codeBtn">${promo?t("code_remove"):t("code_apply")}</button></div><p class="help" id="code-msg" aria-live="polite">${promo?esc(t("code_on",promo.code,promoLabel(promo))):""}</p></fieldset>
     <fieldset><legend>${t("co_pay")}</legend><div class="radios">${["knet","card","apple"].map((m,i)=>`<label class="radio"><input type="radio" name="pay" value="${m}" ${i===0?"checked":""}><span>${t("pay_"+m)}</span></label>`).join("")}</div></fieldset>
-    <button class="btn" type="submit" style="width:100%;min-height:58px">${t("place")}, <span class="num">${money(s+f)}</span></button><p class="demo">${t(CONFIG.payments?"demo_live":"demo")}</p>
+    <button class="btn" type="submit" style="width:100%;min-height:58px">${t("place")}, <span class="num" id="coPay">${money(s-disc(s)+f)}</span></button><p class="demo">${t(CONFIG.payments?"demo_live":"demo")}</p><p class="demo">${lang==="ar"?`بالدفع فأنت توافق على <a href="/terms">شروط البيع</a> و<a href="/returns">سياسة الإرجاع</a>.`:`By paying you agree to our <a href="/terms">terms of sale</a> and <a href="/returns">returns policy</a>.`}</p>
   </form>
   <aside class="summary" aria-labelledby="sumH"><h2 id="sumH">${t("cart_h")}</h2>${cart.map(l=>`<p style="display:flex;justify-content:space-between;gap:12px;padding:6px 0"><span>${l.qty} × ${esc(cName(byId[l.id],colorOf(byId[l.id],l.color)))}</span><span class="num">${money(byId[l.id].price*l.qty)}</span></p>`).join("")}
-    <dl class="totals" style="margin-top:12px"><dt>${t("subtotal")}</dt><dd class="num">${money(s)}</dd><dt>${t("delivery")}</dt><dd>${f?money(f):t("free")}</dd><dt class="grand">${t("total")}</dt><dd class="grand num">${money(s+f)}</dd></dl></aside></div>`;
+    <dl class="totals" id="coTotals" style="margin-top:12px">${coTotals(s,f)}</dl></aside></div>`;
 }
 function viewOrder(){
   if(!lastOrder) return viewShop();
@@ -884,7 +975,7 @@ function submitCheckout(e){
   e.preventDefault(); const bad=Object.keys(RULES).filter(id=>!validate(id)); const box=$("#errSum");
   if(bad.length){ box.innerHTML=`<div class="err-summary" role="alert" tabindex="-1" id="errBox"><h2>${t("e_sum",bad.length)}</h2><ul>${bad.map(id=>`<li><a href="#${id}" data-focus="${id}">${t("e_"+id)}</a></li>`).join("")}</ul></div>`; $("#errBox").focus(); return; }
   const v=id=>document.getElementById(id).value.trim(), g=GOVS.find(x=>x[0]===v("gov")), s=sub(), f=fee(s);
-  const lines=[t("wa_order"),...cart.map(l=>`• ${l.qty} × ${cName(byId[l.id],colorOf(byId[l.id],l.color))}: ${money(byId[l.id].price*l.qty)}`),`${t("delivery")}: ${f?money(f):t("free")}`,`${t("total")}: ${money(s+f)}`,`${t("f_name")}: ${v("name")}`,`${t("f_phone")}: +965 ${v("phone")}`,`${t("co_addr")}: ${lang==="ar"?g[2]:g[1]}, ${v("area")}, ${t("f_block")} ${v("block")}, ${t("f_street")} ${v("street")}${v("avenue")?", "+v("avenue"):""}, ${v("house")}`,`${t("co_pay")}: ${t("pay_"+$("input[name=pay]:checked").value)}`];
+  const lines=[t("wa_order"),...cart.map(l=>`• ${l.qty} × ${cName(byId[l.id],colorOf(byId[l.id],l.color))}: ${money(byId[l.id].price*l.qty)}`),...(promo?[`${t("code_line",promo.code)}: −${money(disc(s))}`]:[]),`${t("delivery")}: ${f?money(f):t("free")}`,`${t("total")}: ${money(s-disc(s)+f)}`,`${t("f_name")}: ${v("name")}`,`${t("f_phone")}: +965 ${v("phone")}`,`${t("co_addr")}: ${lang==="ar"?g[2]:g[1]}, ${v("area")}, ${t("f_block")} ${v("block")}, ${t("f_street")} ${v("street")}${v("avenue")?", "+v("avenue"):""}, ${v("house")}`,`${t("co_pay")}: ${t("pay_"+$("input[name=pay]:checked").value)}`];
   if(sbUser&&$("#saveAddr")&&$("#saveAddr").checked) saveProfile({name:v("name"),phone:v("phone").replace(/\D/g,""),gov:v("gov"),area:v("area"),block:v("block"),street:v("street"),avenue:v("avenue"),house:v("house"),notes:v("notes")},true);
   const method=$("input[name=pay]:checked").value;
   if(CONFIG.payments){ startPayment(method,v,g,lines); return; }
@@ -909,7 +1000,7 @@ async function placeCod(v,g,lines,s,f){
 async function startPayment(method,v,g,lines){
   const btn=$("#coForm button[type=submit]"), box=$("#errSum"), label=btn.innerHTML;
   btn.disabled=true; btn.innerHTML=`<span>${t("paying")}</span>`;
-  const body={items:cart.map(l=>({id:l.id,qty:l.qty,color:l.color})),method,lang,customer:{name:v("name"),phone:v("phone")},
+  const body={items:cart.map(l=>({id:l.id,qty:l.qty,color:l.color})),method,lang,code:promo?promo.code:undefined,customer:{name:v("name"),phone:v("phone")},
     address:{gov:g[1],area:v("area"),block:v("block"),street:v("street"),avenue:v("avenue"),house:v("house"),notes:v("notes")}};
   try{
     const tok=await sbToken(), hd={"Content-Type":"application/json"}; if(tok) hd.Authorization="Bearer "+tok;
@@ -971,15 +1062,20 @@ applyLang();
 let booted=false; const boot=()=>{ if(booted) return; booted=true; render(); };
 /* a link straight to an inner page draws at once (the pre-built home was cleared for it), unless it names a product only the server knows */
 const deepNow=()=>{ if(!document.documentElement.classList.contains("deep")) return false; const h=curKey(); return !(h.startsWith("p-")&&!byId[h.slice(2)])&&!h.startsWith("brand-"); };
-if(CONFIG.payments&&CONFIG.payments.products){ setTimeout(boot,1500); if(deepNow()) boot();
+if(CONFIG.payments&&CONFIG.payments.products){
+  // until the server answers, show nothing rather than the built-in list (it may hold products you've hidden)
+  const BUILTIN=P.slice(); P.length=0; for(const k of Object.keys(byId)) delete byId[k];
+  const useBuiltin=()=>{ if(P.length) return; BUILTIN.forEach(x=>P.push(x)); P.forEach(x=>byId[x.id]=x); renderFooter(); };
+  setTimeout(boot,1500); if(deepNow()) boot();
   fetch(CONFIG.payments.products).then(r=>{
-  if(r.status===404||r.status===405){ CONFIG.payments=null; if(booted&&curKey()==="checkout") refreshInPlace(); return null; }
+  if(r.status===404||r.status===405){ CONFIG.payments=null; useBuiltin(); if(booted) refreshInPlace(); return null; }
   return r.status===200?r.json():null; }).then(list=>{
-  if(!Array.isArray(list)||!list.length||JSON.stringify(list)===JSON.stringify(P)) return boot();
+  if(!Array.isArray(list)){ useBuiltin(); if(booted) refreshInPlace(); return boot(); }   // no database (204) or no answer: the built-in list
+  if(JSON.stringify(list)===JSON.stringify(P)){ renderFooter(); return boot(); }
   P.length=0; list.forEach(x=>P.push(x)); for(const k of Object.keys(byId)) delete byId[k]; P.forEach(x=>byId[x.id]=x);
   const have=new Set(cart.map(lineKey)); cart=cart.filter(okLine);
   for(const l of cartSaved) if(!have.has(lineKey(l))&&okLine(l)) cart.push(l);
-  updateCount(); if(booted) refreshInPlace(); else boot();
-}).catch(boot); } else boot();
+  updateCount(); renderFooter(); if(booted) refreshInPlace(); else boot();
+}).catch(()=>{ useBuiltin(); if(booted) refreshInPlace(); boot(); }); } else boot();
 })();
 
