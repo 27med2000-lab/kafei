@@ -5,9 +5,16 @@
         "source": "github",
         "repo": "heygen-com/hyperframes"
       }
+    },
+    "instagram-agent-skill": {
+      "source": {
+        "source": "github",
+        "repo": "Jakeschincariol/instagram-agent-skill"
+      }
     }
   },
   "enabledPlugins": {
-    "hyperframes@hyperframes": true
+    "hyperframes@hyperframes": true,
+    "instagram-agent@instagram-agent-skill": true
   }
 }
