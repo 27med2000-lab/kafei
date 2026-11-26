@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "sh",
+      "args": ["-c", "exec npx -y @playwright/mcp@latest --headless --isolated --no-sandbox --executable-path \"$(ls -d /opt/pw-browsers/chromium-*/chrome-linux64/chrome | sort -V | tail -1)\""]
+    }
+  }
+}
